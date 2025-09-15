@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Camera, VideoOff, AlertCircle, Loader2 } from 'lucide-react';
 import type { FC } from 'react';
+import { cn } from '@/lib/utils';
 
 interface CameraCaptureProps {
   onCapture: (imageDataUrl: string) => void;
