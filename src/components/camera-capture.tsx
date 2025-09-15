@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
@@ -15,6 +16,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
   const videoRef = useRef<HTMLVideoElement>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   useEffect(() => {
     let mediaStream: MediaStream;
@@ -57,14 +59,27 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
     };
   }, [onCameraError]);
 
-  const handleCapture = () => {
+  const startCountdown = () => {
+    setCountdown(3);
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev === null || prev <= 1) {
+          clearInterval(timer);
+          captureImage();
+          return null;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const captureImage = () => {
     if (videoRef.current) {
       const canvas = document.createElement('canvas');
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
       const context = canvas.getContext('2d');
       if (context) {
-        // Flip the image horizontally for a mirror effect
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
@@ -95,10 +110,15 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
             <p className="mt-2">Requesting camera access...</p>
           </div>
         )}
+        {countdown !== null && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+            <span className="text-white text-9xl font-bold">{countdown}</span>
+          </div>
+        )}
       </div>
-      <Button onClick={handleCapture} disabled={!stream} size="lg">
+      <Button onClick={startCountdown} disabled={!stream || countdown !== null} size="lg">
         <Camera className="mr-2 h-5 w-5" />
-        Take Selfie
+        {countdown !== null ? 'Taking...' : 'Take Selfie'}
       </Button>
     </div>
   );
