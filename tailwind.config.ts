@@ -10,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        body: ['GoogleSans', 'sans-serif'],
-        headline: ['GoogleSans-Bold', 'sans-serif'],
+        body: ['GoogleSans'],
+        headline: ['GoogleSans-Bold'],
         code: ['monospace'],
       },
       colors: {
