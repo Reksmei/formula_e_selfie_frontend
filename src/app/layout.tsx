@@ -15,9 +15,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              @font-face {
+                font-family: 'GoogleSans';
+                src: url('https://storage.googleapis.com/gemini_cycle_tour_tech_logo_reks/GoogleSans-Regular.ttf') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+              }
+            `,
+          }}
+        />
       </head>
       <body className="font-body antialiased">
         {children}
