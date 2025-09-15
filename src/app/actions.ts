@@ -2,6 +2,8 @@
 
 import { generateFormulaEImage, GenerateFormulaEImageInput } from '@/ai/flows/generate-formula-e-image';
 import { suggestFormulaEPrompts } from '@/ai/flows/suggest-formula-e-prompts';
+import { editFormulaEImage, EditFormulaEImageInput } from '@/ai/flows/edit-formula-e-image';
+import { generateFormulaEVideo, GenerateFormulaEVideoInput } from '@/ai/flows/generate-formula-e-video';
 
 export async function suggestFormulaEPromptsAction(): Promise<string[]> {
   try {
@@ -23,4 +25,14 @@ export async function suggestFormulaEPromptsAction(): Promise<string[]> {
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<string> {
   const result = await generateFormulaEImage(input);
   return result.generatedImageDataUri;
+}
+
+export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<string> {
+    const result = await editFormulaEImage(input);
+    return result.editedImageDataUri;
+}
+
+export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<string> {
+    const result = await generateFormulaEVideo(input);
+    return result.videoDataUri;
 }

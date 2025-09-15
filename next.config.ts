@@ -30,6 +30,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+      serverActions: {
+          bodySizeLimit: '4.5mb',
+          // timeout for 2 mins for Veo
+          timeout: 120,
+      }
+  }
 };
 
 export default nextConfig;
