@@ -146,7 +146,7 @@ export default function SelfiePage() {
         return (
           <div className="w-full max-w-lg text-center">
             <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl font-headline">E-Prix Imagery</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-muted-foreground font-body">
               Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
             </p>
             <div className="mt-8">
@@ -160,7 +160,7 @@ export default function SelfiePage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline"><User /> Your Selfie</CardTitle>
-                <CardDescription>This is the picture we'll use for the AI generation.</CardDescription>
+                <CardDescription className="font-body">This is the picture we'll use for the AI generation.</CardDescription>
               </CardHeader>
               <CardContent>
                 {selfie && (
@@ -172,7 +172,7 @@ export default function SelfiePage() {
                     className="rounded-lg object-cover aspect-video"
                   />
                 )}
-                <Button onClick={retake} variant="outline" className="w-full mt-4">
+                <Button onClick={retake} variant="outline" className="w-full mt-4 font-body">
                   <RotateCcw className="mr-2 h-4 w-4" /> Retake
                 </Button>
               </CardContent>
@@ -180,7 +180,7 @@ export default function SelfiePage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline"><Sparkles /> Choose a Prompt</CardTitle>
-                <CardDescription>Select a scenario for your E-Prix image.</CardDescription>
+                <CardDescription className="font-body">Select a scenario for your E-Prix image.</CardDescription>
               </CardHeader>
               <CardContent>
                 {isLoadingPrompts ? (
@@ -195,12 +195,12 @@ export default function SelfiePage() {
                     {prompts.map((prompt, index) => (
                       <div key={index} className="flex items-center space-x-2 rounded-md border p-3 hover:bg-secondary/50 transition-colors">
                         <RadioGroupItem value={prompt} id={`prompt-${index}`} />
-                        <Label htmlFor={`prompt-${index}`} className="flex-1 cursor-pointer">{prompt}</Label>
+                        <Label htmlFor={`prompt-${index}`} className="flex-1 cursor-pointer font-body">{prompt}</Label>
                       </div>
                     ))}
                   </RadioGroup>
                 )}
-                <Button onClick={handleGenerate} disabled={!selectedPrompt} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90">
+                <Button onClick={handleGenerate} disabled={!selectedPrompt} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
                   Generate Image
                 </Button>
               </CardContent>
@@ -212,14 +212,14 @@ export default function SelfiePage() {
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <Loader2 className="h-16 w-16 animate-spin text-primary" />
             <h2 className="text-3xl font-bold font-headline">Generating your E-Prix moment...</h2>
-            <p className="text-muted-foreground">The AI is working its magic. This might take a moment.</p>
+            <p className="text-muted-foreground font-body">The AI is working its magic. This might take a moment.</p>
           </div>
         );
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-primary font-headline">Your E-Prix Image is Ready!</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
+            <p className="mt-4 text-lg text-muted-foreground font-body">
               You can now edit your image with a prompt, or generate a video.
             </p>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -244,7 +244,7 @@ export default function SelfiePage() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2 font-headline"><Pencil /> Edit Your Image</CardTitle>
-                        <CardDescription>Describe the changes you'd like to make.</CardDescription>
+                        <CardDescription className="font-body">Describe the changes you'd like to make.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="flex gap-2">
@@ -253,8 +253,9 @@ export default function SelfiePage() {
                                 value={editPrompt}
                                 onChange={(e) => setEditPrompt(e.target.value)}
                                 disabled={isEditing}
+                                className="font-body"
                             />
-                            <Button onClick={handleEdit} disabled={!editPrompt || isEditing}>
+                            <Button onClick={handleEdit} disabled={!editPrompt || isEditing} className="font-body">
                                 {isEditing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                                 <span className="ml-2">Apply</span>
                             </Button>
@@ -263,10 +264,10 @@ export default function SelfiePage() {
                 </Card>
              </div>
             <div className="mt-8 flex justify-center gap-4">
-                <Button onClick={reset} size="lg" variant="outline">
+                <Button onClick={reset} size="lg" variant="outline" className="font-body">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                 </Button>
-                <Button onClick={handleGenerateVideo} size="lg">
+                <Button onClick={handleGenerateVideo} size="lg" className="font-body">
                     <Film className="mr-2 h-4 w-4" /> Generate Video
                 </Button>
             </div>
@@ -277,7 +278,7 @@ export default function SelfiePage() {
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <Loader2 className="h-16 w-16 animate-spin text-primary" />
             <h2 className="text-3xl font-bold font-headline">Generating your video...</h2>
-            <p className="text-muted-foreground">This can take a minute or two. Please be patient.</p>
+            <p className="text-muted-foreground font-body">This can take a minute or two. Please be patient.</p>
             {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
           </div>
         );
@@ -293,11 +294,11 @@ export default function SelfiePage() {
                 </CardContent>
              </Card>
              <div className="mt-8 flex justify-center gap-4">
-                <Button onClick={reset} size="lg" variant="outline">
+                <Button onClick={reset} size="lg" variant="outline" className="font-body">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                 </Button>
                 <a href={generatedVideo!} download="e-prix-video.mp4">
-                    <Button size="lg">
+                    <Button size="lg" className="font-body">
                         <Download className="mr-2 h-4 w-4" /> Download
                     </Button>
                 </a>
@@ -308,10 +309,10 @@ export default function SelfiePage() {
          return (
           <div className="w-full max-w-lg text-center">
              <h1 className="text-4xl font-bold tracking-tight text-destructive sm:text-5xl font-headline">Something went wrong</h1>
-             <p className="mt-4 text-lg text-muted-foreground">
+             <p className="mt-4 text-lg text-muted-foreground font-body">
                We couldn't access your camera. Please check your browser permissions and try again.
              </p>
-             <Button onClick={reset} variant="outline" size="lg" className="mt-8">
+             <Button onClick={reset} variant="outline" size="lg" className="mt-8 font-body">
                <Repeat className="mr-2 h-4 w-4" /> Try Again
              </Button>
            </div>
@@ -321,7 +322,7 @@ export default function SelfiePage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-background transition-colors duration-500">
-       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
       </Link>
