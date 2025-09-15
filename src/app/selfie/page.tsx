@@ -145,7 +145,7 @@ export default function SelfiePage() {
       case 'capture':
         return (
           <div className="w-full max-w-lg text-center">
-            <p className="mt-4 text-lg text-muted-foreground font-body">
+            <p className="mt-12 text-lg text-muted-foreground font-body">
               Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
             </p>
             <div className="mt-8">
