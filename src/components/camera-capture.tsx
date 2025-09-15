@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Camera, VideoOff, AlertCircle } from 'lucide-react';
+import { Camera, VideoOff, AlertCircle, Loader2 } from 'lucide-react';
 import type { FC } from 'react';
 
 interface CameraCaptureProps {
@@ -14,32 +14,32 @@ interface CameraCaptureProps {
 
 const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [isCameraReady, setIsCameraReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
 
   useEffect(() => {
-    let mediaStream: MediaStream;
+    let stream: MediaStream | null = null;
     let isMounted = true;
 
     const enableCamera = async () => {
       try {
-        mediaStream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720, facingMode: 'user' } });
-        if (isMounted) {
-          setStream(mediaStream);
-          if (videoRef.current) {
-            videoRef.current.srcObject = mediaStream;
-          }
+        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720, facingMode: 'user' } });
+        if (isMounted && videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.onloadedmetadata = () => {
+              setIsCameraReady(true);
+          };
         }
       } catch (err) {
         if (isMounted) {
           let message = 'An unknown camera error occurred.';
           if (err instanceof DOMException) {
-              if (err.name === 'NotAllowedError') {
+              if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
                   message = 'Camera access was denied. Please allow camera access in your browser settings to continue.';
-              } else if (err.name === 'NotFoundError') {
+              } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
                   message = 'No camera was found on your device. Please connect a camera to continue.';
-              } else if (err.name === 'NotReadableError') {
+              } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
                   message = 'The camera is currently in use by another application.';
               }
           }
@@ -53,8 +53,8 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 
     return () => {
       isMounted = false;
-      if (mediaStream) {
-        mediaStream.getTracks().forEach(track => track.stop());
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
       }
     };
   }, [onCameraError]);
@@ -80,6 +80,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
       canvas.height = videoRef.current.videoHeight;
       const context = canvas.getContext('2d');
       if (context) {
+        // Flip the image horizontally for a mirror effect
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
@@ -102,12 +103,14 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div className="relative w-full max-w-lg aspect-video bg-muted rounded-lg overflow-hidden border shadow-lg">
-        {stream ? (
-          <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover transform scale-x-[-1]" />
-        ) : (
+        <video ref={videoRef} autoPlay playsInline muted className={cn(
+            "w-full h-full object-cover transform scale-x-[-1]",
+            !isCameraReady && "hidden"
+        )} />
+        {!isCameraReady && (
           <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
-            <VideoOff className="w-16 h-16" />
-            <p className="mt-2">Requesting camera access...</p>
+            <Loader2 className="w-16 h-16 animate-spin" />
+            <p className="mt-4">Requesting camera access...</p>
           </div>
         )}
         {countdown !== null && (
@@ -116,7 +119,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
           </div>
         )}
       </div>
-      <Button onClick={startCountdown} disabled={!stream || countdown !== null} size="lg">
+      <Button onClick={startCountdown} disabled={!isCameraReady || countdown !== null} size="lg">
         <Camera className="mr-2 h-5 w-5" />
         {countdown !== null ? 'Taking...' : 'Take Selfie'}
       </Button>
