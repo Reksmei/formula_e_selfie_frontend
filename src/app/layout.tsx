@@ -24,6 +24,12 @@ export default function RootLayout({
                 font-weight: normal;
                 font-style: normal;
               }
+              @font-face {
+                font-family: 'GoogleSans-Bold';
+                src: url('https://storage.googleapis.com/gemini_cycle_tour_tech_logo_reks/GoogleSans-Bold.ttf') format('truetype');
+                font-weight: bold;
+                font-style: normal;
+              }
             `,
           }}
         />

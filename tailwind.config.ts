@@ -11,7 +11,7 @@ export default {
     extend: {
       fontFamily: {
         body: ['GoogleSans', 'sans-serif'],
-        headline: ['GoogleSans', 'sans-serif'],
+        headline: ['GoogleSans-Bold', 'sans-serif'],
         code: ['monospace'],
       },
       colors: {
