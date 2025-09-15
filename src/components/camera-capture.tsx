@@ -86,7 +86,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
         context.scale(-1, 1);
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL('image/jpeg');
-        onCapture(dataUrl);
+        setTimeout(() => onCapture(dataUrl), 0);
       }
     }
   };
