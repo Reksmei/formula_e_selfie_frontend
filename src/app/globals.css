@@ -39,7 +39,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 0 0% 13.3%;
+    --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 16%;
     --card-foreground: 0 0% 98%;
@@ -80,5 +80,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image: url('https://storage.googleapis.com/formula_e_case_studies_files/fe_gc_svg.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 }

@@ -145,7 +145,7 @@ export default function SelfiePage() {
       case 'capture':
         return (
           <div className="w-full max-w-lg text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl font-headline">E-Prix Imagery</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl font-headline">E-Prix Imagery</h1>
             <p className="mt-4 text-lg text-muted-foreground font-body">
               Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
             </p>
@@ -211,14 +211,14 @@ export default function SelfiePage() {
         return (
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <Loader2 className="h-16 w-16 animate-spin text-primary" />
-            <h2 className="text-3xl font-bold font-headline">Generating your E-Prix moment...</h2>
+            <h2 className="text-3xl font-bold font-headline text-primary-foreground">Generating your E-Prix moment...</h2>
             <p className="text-muted-foreground font-body">The AI is working its magic. This might take a moment.</p>
           </div>
         );
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-primary font-headline">Your E-Prix Image is Ready!</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your E-Prix Image is Ready!</h1>
             <p className="mt-4 text-lg text-muted-foreground font-body">
               You can now edit your image with a prompt, or generate a video.
             </p>
@@ -277,7 +277,7 @@ export default function SelfiePage() {
         return (
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <Loader2 className="h-16 w-16 animate-spin text-primary" />
-            <h2 className="text-3xl font-bold font-headline">Generating your video...</h2>
+            <h2 className="text-3xl font-bold font-headline text-primary-foreground">Generating your video...</h2>
             <p className="text-muted-foreground font-body">This can take a minute or two. Please be patient.</p>
             {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
           </div>
@@ -285,7 +285,7 @@ export default function SelfiePage() {
       case 'video-result':
         return (
           <div className="w-full max-w-2xl text-center">
-             <h1 className="text-4xl font-bold tracking-tight text-primary font-headline">Your Video is Ready!</h1>
+             <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your Video is Ready!</h1>
              <Card className="mt-8">
                 <CardContent className="p-4">
                     {generatedVideo && (
@@ -321,7 +321,7 @@ export default function SelfiePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-background transition-colors duration-500">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500">
        <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home

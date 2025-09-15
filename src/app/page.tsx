@@ -7,9 +7,9 @@ import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-background transition-colors duration-500">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500">
       <div className="w-full max-w-2xl text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-6xl font-headline">
+        <h1 className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-6xl font-headline">
           Welcome to E-Prix Imagery
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted-foreground font-body">
