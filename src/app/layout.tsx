@@ -21,13 +21,13 @@ export default function RootLayout({
             __html: `
               @font-face {
                 font-family: 'GoogleSans';
-                src: url('https://storage.googleapis.com/gemini_cycle_tour_tech_logo_reks/GoogleSans-Regular.ttf') format('truetype');
+                src: url('/fonts/GoogleSans-Regular.ttf') format('truetype');
                 font-weight: normal;
                 font-style: normal;
               }
               @font-face {
                 font-family: 'GoogleSans-Bold';
-                src: url('https://storage.googleapis.com/gemini_cycle_tour_tech_logo_reks/GoogleSans-Bold.ttf') format('truetype');
+                src: url('/fonts/GoogleSans-Bold.ttf') format('truetype');
                 font-weight: bold;
                 font-style: normal;
               }
