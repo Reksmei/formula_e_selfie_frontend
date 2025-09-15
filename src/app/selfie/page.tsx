@@ -145,7 +145,6 @@ export default function SelfiePage() {
       case 'capture':
         return (
           <div className="w-full max-w-lg text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-5xl font-headline">E-Prix Imagery</h1>
             <p className="mt-4 text-lg text-muted-foreground font-body">
               Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
             </p>
