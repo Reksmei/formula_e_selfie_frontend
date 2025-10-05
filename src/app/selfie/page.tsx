@@ -262,8 +262,8 @@ export default function SelfiePage() {
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
-            <div className="bg-black/50 backdrop-blur-sm rounded-xl p-6 inline-block">
-              <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your Image is Ready!</h1>
+            <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+              <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
                 You can now edit your image with a prompt, or generate a video.
               </p>
