@@ -19,16 +19,28 @@
       "imageHint": "london track"
     },
     {
-      "id": "prompt-4",
+      "id": "Mars Race",
       "description": "Driving a Formula E car on the surface of Mars.",
       "imageUrl": "https://images.unsplash.com/photo-1732285861430-be924933fc45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyJTIwbWFyc3xlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "car mars"
     },
     {
-      "id": "prompt-5",
+      "id": "Anime Drift",
       "description": "A dynamic, anime-style action shot of a Formula E car drifting.",
       "imageUrl": "https://images.unsplash.com/photo-1661770112213-84c1cd4e69a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhbmltZSUyMGNhcnxlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "anime car"
+    },
+    {
+      "id": "Podium Celebration",
+      "description": "Celebrating a win on the podium in Monaco, champagne spraying.",
+      "imageUrl": "https://images.unsplash.com/photo-1588615438843-a65261393673?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hhbXBhZ25lJTIwc3ByYXl8ZW58MHx8fHwxNzE3NTk4NDYxfDA%3D",
+      "imageHint": "celebration podium"
+    },
+    {
+      "id": "Futuristic Mechanic",
+      "description": "A pit stop scene with a futuristic female mechanic.",
+      "imageUrl": "https://images.unsplash.com/photo-1675276525193-21b04518b325?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZ1dHVyaXN0aWMlMjBtZWNoYW5pY3xlbnwwfHx8fDE3MTc1OTg1MDF8MA%3D%3D",
+      "imageHint": "mechanic future"
     }
   ]
 }

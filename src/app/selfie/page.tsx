@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye } from 'lucide-react';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -36,6 +36,7 @@ export default function SelfiePage() {
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoadingPrompts, setIsLoadingPrompts] = useState(true);
+  const [showAllPrompts, setShowAllPrompts] = useState(false);
   const [editPrompt, setEditPrompt] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
@@ -167,6 +168,7 @@ export default function SelfiePage() {
           </div>
         );
       case 'preview':
+        const displayedPrompts = showAllPrompts ? prompts : prompts.slice(0, 4);
         return (
           <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
@@ -202,8 +204,9 @@ export default function SelfiePage() {
                     ))}
                   </div>
                 ) : (
+                  <>
                   <div className="grid grid-cols-2 gap-4">
-                    {prompts.slice(0, 4).map((imageInfo) => (
+                    {displayedPrompts.map((imageInfo) => (
                         <div
                           key={imageInfo.id}
                           className={cn(
@@ -243,6 +246,16 @@ export default function SelfiePage() {
                       )
                     )}
                   </div>
+                  {!showAllPrompts && prompts.length > 4 && (
+                      <Button 
+                        onClick={() => setShowAllPrompts(true)} 
+                        variant="outline" 
+                        className="w-full mt-4"
+                      >
+                        <ChevronDown className="mr-2 h-4 w-4" /> See More
+                      </Button>
+                    )}
+                  </>
                 )}
                 <Button onClick={handleGenerate} disabled={!selectedPrompt} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
                   Generate Image
