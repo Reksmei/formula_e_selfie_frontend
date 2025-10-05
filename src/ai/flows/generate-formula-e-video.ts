@@ -75,8 +75,12 @@ const generateFormulaEVideoFlow = ai.defineFlow(
       throw new Error('Failed to find the generated video');
     }
     
-    // The video URL from Veo doesn't include the mime type, so we need to add it
-    const videoDataUri = `data:video/mp4;base64,${video.media.url.split(',')[1]}`;
+    // The video URL from Veo might be just base64 data, so we ensure it's a full data URI.
+    let videoDataUri = video.media.url;
+    if (!videoDataUri.startsWith('data:')) {
+      videoDataUri = `data:video/mp4;base64,${videoDataUri}`;
+    }
+
 
     return {videoDataUri};
   }
