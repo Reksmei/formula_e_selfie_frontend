@@ -1,17 +1,14 @@
 'use server';
 /**
- * @fileOverview Generates a video from a Formula E image.
+ * @fileOverview Defines the data contract for generating a video from a Formula E image.
  *
- * - generateFormulaEVideo - A function that generates the video.
  * - GenerateFormulaEVideoInput - The input type for the function.
  * - GenerateFormulaEVideoOutput - The return type for the function.
  */
 
-import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import {googleAI} from '@genkit-ai/googleai';
 
-const GenerateFormulaEVideoInputSchema = z.object({
+export const GenerateFormulaEVideoInputSchema = z.object({
   imageDataUri: z
     .string()
     .describe(
@@ -22,66 +19,9 @@ export type GenerateFormulaEVideoInput = z.infer<
   typeof GenerateFormulaEVideoInputSchema
 >;
 
-const GenerateFormulaEVideoOutputSchema = z.object({
+export const GenerateFormulaEVideoOutputSchema = z.object({
   videoDataUri: z.string().describe('The generated video as a data URI.'),
 });
 export type GenerateFormulaEVideoOutput = z.infer<
   typeof GenerateFormulaEVideoOutputSchema
 >;
-
-export async function generateFormulaEVideo(
-  input: GenerateFormulaEVideoInput
-): Promise<GenerateFormulaEVideoOutput> {
-  return generateFormulaEVideoFlow(input);
-}
-
-const generateFormulaEVideoFlow = ai.defineFlow(
-  {
-    name: 'generateFormulaEVideoFlow',
-    inputSchema: GenerateFormulaEVideoInputSchema,
-    outputSchema: GenerateFormulaEVideoOutputSchema,
-  },
-  async input => {
-    let {operation} = await ai.generate({
-      model: googleAI.model('veo-3.0-generate-preview'),
-      prompt: [
-        {
-          text: 'make the image come to life, make it cinematic and dramatic',
-        },
-        {
-          media: {
-            url: input.imageDataUri,
-          },
-        },
-      ],
-    });
-
-    if (!operation) {
-      throw new Error('Expected the model to return an operation');
-    }
-
-    while (!operation.done) {
-      // Sleep for 5 seconds before checking again.
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      operation = await ai.checkOperation(operation);
-    }
-
-    if (operation.error) {
-      throw new Error('failed to generate video: ' + operation.error.message);
-    }
-
-    const video = operation.output?.message?.content.find(p => !!p.media);
-    if (!video || !video.media?.url) {
-      throw new Error('Failed to find the generated video');
-    }
-    
-    // The video URL from Veo might be just base64 data, so we ensure it's a full data URI.
-    let videoDataUri = video.media.url;
-    if (!videoDataUri.startsWith('data:')) {
-      videoDataUri = `data:video/mp4;base64,${videoDataUri}`;
-    }
-
-
-    return {videoDataUri};
-  }
-);

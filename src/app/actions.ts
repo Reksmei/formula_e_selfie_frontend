@@ -1,5 +1,9 @@
 
 'use server';
+import type { GenerateFormulaEImageInput, GenerateFormulaEImageOutput } from '@/ai/flows/generate-formula-e-image';
+import type { EditFormulaEImageInput, EditFormulaEImageOutput } from '@/ai/flows/edit-formula-e-image';
+import type { GenerateFormulaEVideoInput, GenerateFormulaEVideoOutput } from '@/ai/flows/generate-formula-e-video';
+import type { SuggestFormulaEPromptsOutput } from '@/ai/flows/suggest-formula-e-prompts';
 
 // Helper to make backend requests
 async function makeBackendRequest(endpoint: string, method: string = 'POST', body: any, isFormData: boolean = false) {
@@ -53,7 +57,7 @@ function dataURItoBlob(dataURI: string) {
 
 export async function suggestFormulaEPromptsAction(): Promise<string[]> {
   try {
-    const result = await makeBackendRequest('/suggest-prompts', 'POST', {});
+    const result: SuggestFormulaEPromptsOutput = await makeBackendRequest('/suggest-prompts', 'POST', {});
     return result.prompts;
   } catch (error) {
     console.error('Error suggesting prompts:', error);
@@ -68,7 +72,7 @@ export async function suggestFormulaEPromptsAction(): Promise<string[]> {
   }
 }
 
-export async function generateFormulaEImageAction(input: {selfieDataUri: string, prompt: string}): Promise<string> {
+export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<string> {
     const formData = new FormData();
     const imageBlob = dataURItoBlob(input.selfieDataUri);
     formData.append('image', imageBlob, 'selfie.jpg');
@@ -82,7 +86,7 @@ export async function generateFormulaEImageAction(input: {selfieDataUri: string,
     return imageData;
 }
 
-export async function editFormulaEImageAction(input: {imageDataUri: string, prompt: string}): Promise<string> {
+export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<string> {
     const formData = new FormData();
     const imageBlob = dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
@@ -96,11 +100,11 @@ export async function editFormulaEImageAction(input: {imageDataUri: string, prom
     return imageData;
 }
 
-export async function generateFormulaEVideoAction(input: {imageDataUri: string}): Promise<string> {
+export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<string> {
     const formData = new FormData();
     const imageBlob = dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
 
-    const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
+    const result: GenerateFormulaEVideoOutput = await makeBackendRequest('/generate-video', 'POST', formData, true);
     return result.videoDataUri;
 }
