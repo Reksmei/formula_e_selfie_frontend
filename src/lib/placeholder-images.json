@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "prompt-1",
+      "description": "A Formula E car racing through ancient Roman ruins.",
+      "imageUrl": "https://images.unsplash.com/photo-1595558884516-0a2eb78964e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyYWNlJTIwY2FyfGVufDB8fHx8MTc1OTY4NTU3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "race car"
+    },
+    {
+      "id": "prompt-2",
+      "description": "Celebrating a win on the podium in Monaco, champagne spraying.",
+      "imageUrl": "https://images.unsplash.com/photo-1642242211503-e9ab6800498f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjZWxlYnJhdGlvbiUyMHBvZGl1bXxlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "celebration podium"
+    },
+    {
+      "id": "prompt-3",
+      "description": "A pit stop scene with a futuristic female mechanic.",
+      "imageUrl": "https://images.unsplash.com/photo-1718824331840-399943ff5c1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtZWNoYW5pYyUyMGZ1dHVyZXxlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mechanic future"
+    },
+    {
+      "id": "prompt-4",
+      "description": "Driving a Formula E car on the surface of Mars.",
+      "imageUrl": "https://images.unsplash.com/photo-1732285861430-be924933fc45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyJTIwbWFyc3xlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "car mars"
+    },
+    {
+      "id": "prompt-5",
+      "description": "A dynamic, anime-style action shot of a Formula E car drifting.",
+      "imageUrl": "https://images.unsplash.com/photo-1661770112213-84c1cd4e69a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhbmltZSUyMGNhcnxlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "anime car"
+    }
+  ]
 }

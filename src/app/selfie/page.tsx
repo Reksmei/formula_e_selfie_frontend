@@ -5,17 +5,26 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
 import CameraCapture from '@/components/camera-capture';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download } from 'lucide-react';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-
+import { cn } from '@/lib/utils';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
 
@@ -40,8 +49,9 @@ export default function SelfiePage() {
         toast({
           variant: 'destructive',
           title: 'Failed to load prompts',
-          description: 'Could not fetch AI suggestions. Please try again later.',
+          description: 'Using fallback prompts. Please try again later for AI suggestions.',
         });
+        setPrompts(PlaceHolderImages.map(p => p.description));
       } finally {
         setIsLoadingPrompts(false);
       }
@@ -145,7 +155,7 @@ export default function SelfiePage() {
       case 'capture':
         return (
           <div className="w-full max-w-lg text-center">
-            <p className="mt-12 text-lg text-muted-foreground font-body">
+            <p className="mt-20 text-lg text-muted-foreground font-body">
               Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
             </p>
             <div className="mt-8">
@@ -183,21 +193,54 @@ export default function SelfiePage() {
               </CardHeader>
               <CardContent>
                 {isLoadingPrompts ? (
-                  <div className="space-y-4">
-                    <Skeleton className="h-8 w-full" />
-                    <Skeleton className="h-8 w-full" />
-                    <Skeleton className="h-8 w-full" />
-                    <Skeleton className="h-8 w-full" />
+                  <div className="grid grid-cols-2 gap-4">
+                    {[...Array(4)].map((_, i) => (
+                      <Skeleton key={i} className="h-24 w-full" />
+                    ))}
                   </div>
                 ) : (
-                  <RadioGroup onValueChange={setSelectedPrompt} className="space-y-2">
-                    {prompts.map((prompt, index) => (
-                      <div key={index} className="flex items-center space-x-2 rounded-md border p-3 hover:bg-secondary/50 transition-colors">
-                        <RadioGroupItem value={prompt} id={`prompt-${index}`} />
-                        <Label htmlFor={`prompt-${index}`} className="flex-1 cursor-pointer font-body">{prompt}</Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
+                  <div className="grid grid-cols-2 gap-4">
+                    {prompts.slice(0, 4).map((prompt, index) => {
+                      const imageInfo = PlaceHolderImages[index] || { imageUrl: 'https://picsum.photos/seed/placeholder/600/400' };
+                      return (
+                        <div
+                          key={index}
+                          className={cn(
+                            "relative rounded-lg overflow-hidden cursor-pointer border-4",
+                            selectedPrompt === prompt ? 'border-accent' : 'border-transparent'
+                          )}
+                          onClick={() => setSelectedPrompt(prompt)}
+                        >
+                          <Image
+                            src={imageInfo.imageUrl}
+                            alt={prompt}
+                            width={300}
+                            height={200}
+                            className="object-cover w-full h-full aspect-[3/2]"
+                          />
+                          <div className="absolute inset-0 bg-black/40"></div>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Image Prompt</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  {prompt}
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogAction>Close</AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
+                      )
+                    })}
+                  </div>
                 )}
                 <Button onClick={handleGenerate} disabled={!selectedPrompt} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
                   Generate Image
@@ -217,7 +260,7 @@ export default function SelfiePage() {
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your E-Prix Image is Ready!</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your Image is Ready!</h1>
             <p className="mt-4 text-lg text-muted-foreground font-body">
               You can now edit your image with a prompt, or generate a video.
             </p>
