@@ -75,7 +75,11 @@ export async function generateFormulaEImageAction(input: {selfieDataUri: string,
     formData.append('prompt', input.prompt);
 
     const result = await makeBackendRequest('/generate', 'POST', formData, true);
-    return result.generatedImageDataUri;
+    const imageData = result.generatedImageDataUri || result.imageDataUri || result.image || result.url;
+    if (!imageData) {
+      throw new Error("Backend did not return image data.");
+    }
+    return imageData;
 }
 
 export async function editFormulaEImageAction(input: {imageDataUri: string, prompt: string}): Promise<string> {
@@ -85,7 +89,11 @@ export async function editFormulaEImageAction(input: {imageDataUri: string, prom
     formData.append('prompt', input.prompt);
 
     const result = await makeBackendRequest('/edit-image', 'POST', formData, true);
-    return result.editedImageDataUri;
+    const imageData = result.editedImageDataUri || result.generatedImageDataUri || result.imageDataUri || result.image || result.url;
+    if (!imageData) {
+      throw new Error("Backend did not return edited image data.");
+    }
+    return imageData;
 }
 
 export async function generateFormulaEVideoAction(input: {imageDataUri: string}): Promise<string> {
@@ -96,4 +104,3 @@ export async function generateFormulaEVideoAction(input: {imageDataUri: string})
     const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
     return result.videoDataUri;
 }
-
