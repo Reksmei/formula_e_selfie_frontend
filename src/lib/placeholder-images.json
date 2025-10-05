@@ -1,10 +1,10 @@
 {
   "placeholderImages": [
     {
-      "id": "Mexico E-Prix",
-      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
-      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/mexico.png",
-      "imageHint": "mexico track"
+      "id": "London E-Prix",
+      "description": "Edit the background to show the user posing confidently with a Formula E car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/london.png",
+      "imageHint": "london track"
     },
     {
       "id": "Figurine",
@@ -13,10 +13,10 @@
       "imageHint": "figurine driver"
     },
     {
-      "id": "London E-Prix",
-      "description": "Edit the background to show the user posing confidently with a Formula E car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
-      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/london.png",
-      "imageHint": "london track"
+      "id": "Mexico E-Prix",
+      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/mexico.png",
+      "imageHint": "mexico track"
     },
     {
       "id": "Mars Race",
