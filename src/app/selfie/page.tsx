@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,7 +32,7 @@ type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'gener
 export default function SelfiePage() {
   const [step, setStep] = useState<Step>('capture');
   const [selfie, setSelfie] = useState<string | null>(null);
-  const [prompts, setPrompts] = useState<string[]>([]);
+  const [prompts, setPrompts] = useState<ImagePlaceholder[]>([]);
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [isLoadingPrompts, setIsLoadingPrompts] = useState(true);
@@ -44,15 +44,17 @@ export default function SelfiePage() {
   useEffect(() => {
     async function fetchPrompts() {
       try {
-        const suggestedPrompts = await suggestFormulaEPromptsAction();
-        setPrompts(suggestedPrompts);
+        // This returns string[], but placeholder images has the full object.
+        // For now, we will just use the placeholder images directly.
+        // const suggestedPrompts = await suggestFormulaEPromptsAction();
+        setPrompts(PlaceHolderImages);
       } catch (error) {
         toast({
           variant: 'destructive',
           title: 'Failed to load prompts',
           description: 'Using fallback prompts. Please try again later for AI suggestions.',
         });
-        setPrompts(PlaceHolderImages.map(p => p.description));
+        setPrompts(PlaceHolderImages);
       } finally {
         setIsLoadingPrompts(false);
       }
@@ -203,28 +205,27 @@ export default function SelfiePage() {
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-4">
-                    {prompts.slice(0, 4).map((prompt, index) => {
-                      const imageInfo = PlaceHolderImages[index] || { imageUrl: 'https://picsum.photos/seed/placeholder/600/400' };
-                      return (
+                    {prompts.slice(0, 4).map((imageInfo) => (
                         <div
-                          key={index}
+                          key={imageInfo.id}
                           className={cn(
-                            "relative rounded-lg overflow-hidden cursor-pointer border-4",
-                            selectedPrompt === prompt ? 'border-accent' : 'border-transparent'
+                            "relative rounded-lg overflow-hidden cursor-pointer border-4 group",
+                            selectedPrompt === imageInfo.description ? 'border-accent' : 'border-transparent'
                           )}
-                          onClick={() => setSelectedPrompt(prompt)}
+                          onClick={() => setSelectedPrompt(imageInfo.description)}
                         >
                           <Image
                             src={imageInfo.imageUrl}
-                            alt={prompt}
+                            alt={imageInfo.description}
                             width={300}
                             height={200}
                             className="object-cover w-full h-full aspect-[3/2]"
                           />
-                          <div className="absolute inset-0 bg-black/40"></div>
+                          <div className="absolute inset-0 bg-black/50"></div>
+                           <div className="absolute top-2 left-2 text-white font-bold text-sm bg-black/40 px-2 py-1 rounded-md">{imageInfo.id}</div>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1">
+                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <Eye className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -232,7 +233,7 @@ export default function SelfiePage() {
                               <AlertDialogHeader>
                                 <AlertDialogTitle>Image Prompt</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  {prompt}
+                                  {imageInfo.description}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
@@ -242,7 +243,7 @@ export default function SelfiePage() {
                           </AlertDialog>
                         </div>
                       )
-                    })}
+                    )}
                   </div>
                 )}
                 <Button onClick={handleGenerate} disabled={!selectedPrompt} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">

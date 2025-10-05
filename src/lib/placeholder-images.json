@@ -1,22 +1,22 @@
 {
   "placeholderImages": [
     {
-      "id": "prompt-1",
-      "description": "A Formula E car racing through ancient Roman ruins.",
-      "imageUrl": "https://images.unsplash.com/photo-1595558884516-0a2eb78964e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxyYWNlJTIwY2FyfGVufDB8fHx8MTc1OTY4NTU3M3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "race car"
+      "id": "Mexico E-Prix",
+      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/mexico.png",
+      "imageHint": "mexico track"
     },
     {
-      "id": "prompt-2",
+      "id": "Figurine",
       "description": "Create a 1/6 scale commercialized figurine of a me as a Formula E driver in a full race suit (without the helmet), performing a celebratory pose (e.g., arms raised, fist pump) in a realistic style, in a Formula E pit garage environment. The figurine is placed on a computer desk. The figurine has a round transparent acrylic base, with no text on the base. The content on the computer screen is the ZBrush modeling process of this figurine. Next to the computer screen is a BANDAI-style toy packaging box printed with the original artwork. The packaging features two-dimensional flat illustrations of the driver and their car.",
-      "imageUrl": "https://storage.googleapis.com/stabl-media/6f1a3028-a643-424a-b50a-a579691929d2.png",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/figurine.png",
       "imageHint": "figurine driver"
     },
     {
-      "id": "prompt-3",
-      "description": "A pit stop scene with a futuristic female mechanic.",
-      "imageUrl": "https://images.unsplash.com/photo-1718824331840-399943ff5c1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxtZWNoYW5pYyUyMGZ1dHVyZXxlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "mechanic future"
+      "id": "London E-Prix",
+      "description": "Edit the background to show the user posing confidently with a Formula E car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/london.png",
+      "imageHint": "london track"
     },
     {
       "id": "prompt-4",
