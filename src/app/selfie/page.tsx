@@ -1,13 +1,12 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
-import CameraCapture from '@/components/camera-capture';
 import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
@@ -25,6 +24,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+
+const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
 
@@ -159,7 +160,9 @@ export default function SelfiePage() {
               Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
             </p>
             <div className="mt-8">
-              <CameraCapture onCapture={handleCapture} onCameraError={handleCameraError} />
+              <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
+                <CameraCapture onCapture={handleCapture} onCameraError={handleCameraError} />
+              </Suspense>
             </div>
           </div>
         );
@@ -372,3 +375,5 @@ export default function SelfiePage() {
     </main>
   );
 }
+
+    
