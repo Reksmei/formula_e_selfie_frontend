@@ -44,9 +44,7 @@ export default function SelfiePage() {
   useEffect(() => {
     async function fetchPrompts() {
       try {
-        // This returns string[], but placeholder images has the full object.
-        // For now, we will just use the placeholder images directly.
-        // const suggestedPrompts = await suggestFormulaEPromptsAction();
+        await suggestFormulaEPromptsAction();
         setPrompts(PlaceHolderImages);
       } catch (error) {
         toast({
