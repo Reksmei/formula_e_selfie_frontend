@@ -232,7 +232,7 @@ export default function SelfiePage() {
                             <AlertDialogContent>
                               <AlertDialogHeader>
                                 <AlertDialogTitle>Image Prompt</AlertDialogTitle>
-                                <AlertDialogDescription>
+                                <AlertDialogDescription className="break-words">
                                   {imageInfo.description}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
