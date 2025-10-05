@@ -57,7 +57,7 @@ export async function suggestFormulaEPromptsAction(): Promise<string[]> {
 }
 
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<string> {
-  const result = await makeBackendRequest('/generate-image', 'POST', input);
+  const result = await makeBackendRequest('/generate', 'POST', input);
   return result.generatedImageDataUri;
 }
 
