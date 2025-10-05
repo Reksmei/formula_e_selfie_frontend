@@ -262,10 +262,12 @@ export default function SelfiePage() {
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your Image is Ready!</h1>
-            <p className="mt-4 text-lg text-muted-foreground font-body">
-              You can now edit your image with a prompt, or generate a video.
-            </p>
+            <div className="bg-black/50 backdrop-blur-sm rounded-xl p-6 inline-block">
+              <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your Image is Ready!</h1>
+              <p className="mt-4 text-lg text-muted-foreground font-body">
+                You can now edit your image with a prompt, or generate a video.
+              </p>
+            </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                <Card>
                  <CardHeader>
@@ -374,5 +376,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    
