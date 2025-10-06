@@ -19,10 +19,10 @@
       "imageHint": "mexico track"
     },
     {
-      "id": "Mars Race",
-      "description": "Driving a Formula E car on the surface of Mars.",
-      "imageUrl": "https://images.unsplash.com/photo-1732285861430-be924933fc45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FyJTIwbWFyc3xlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "car mars"
+      "id": "Berlin E-Prix",
+      "description": "Place the user in the cockpit of a Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg), wearing a full race suit (no helmet), with a dynamic, blurred background of the Berlin E-Prix section during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/berlin.png",
+      "imageHint": "berlin track"
     },
     {
       "id": "Anime Drift",

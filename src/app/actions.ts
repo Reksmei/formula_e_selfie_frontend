@@ -79,7 +79,7 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
     formData.append('prompt', input.prompt);
 
     const result = await makeBackendRequest('/generate', 'POST', formData, true);
-    const imageData = result.generatedImageDataUri || result.imageDataUri || result.image || result.url;
+    const imageData = result.imageData;
     if (!imageData) {
       throw new Error("Backend did not return image data.");
     }
@@ -93,7 +93,7 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
     formData.append('prompt', input.prompt);
 
     const result = await makeBackendRequest('/edit-image', 'POST', formData, true);
-    const imageData = result.editedImageDataUri || result.generatedImageDataUri || result.imageDataUri || result.image || result.url;
+    const imageData = result.imageData;
     if (!imageData) {
       throw new Error("Backend did not return edited image data.");
     }
@@ -105,6 +105,6 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
     const imageBlob = dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
 
-    const result: GenerateFormulaEVideoOutput = await makeBackendRequest('/generate-video', 'POST', formData, true);
-    return result.videoDataUri;
+    const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
+    return result.videoData;
 }
