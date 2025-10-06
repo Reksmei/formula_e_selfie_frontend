@@ -1,13 +1,13 @@
 
 'use client';
 
-import { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown } from 'lucide-react';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown, QrCode } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -25,6 +25,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import QRCode from 'react-qr-code';
+
 
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
@@ -239,8 +249,8 @@ export default function SelfiePage() {
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction>Select</AlertDialogAction>
+                                <AlertDialogCancel>Close</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => setSelectedPrompt(imageInfo.description)}>Select</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -277,7 +287,7 @@ export default function SelfiePage() {
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
-            <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+             <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
                 You can now edit your image with a prompt, or generate a video.
@@ -328,6 +338,26 @@ export default function SelfiePage() {
                 <Button onClick={reset} size="lg" variant="outline" className="font-body">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                 </Button>
+                 {generatedImage && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                       <Button size="lg" variant="outline" className="font-body">
+                          <QrCode className="mr-2 h-4 w-4" /> QR Code
+                       </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Scan to Download Image</DialogTitle>
+                        <DialogDescription>
+                          Scan this QR code with your phone to download the generated image.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex items-center justify-center p-4 bg-white rounded-lg">
+                        <QRCode value={generatedImage} />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )}
                 <Button onClick={handleGenerateVideo} size="lg" className="font-body">
                     <Film className="mr-2 h-4 w-4" /> Generate Video
                 </Button>
@@ -358,6 +388,26 @@ export default function SelfiePage() {
                 <Button onClick={reset} size="lg" variant="outline" className="font-body">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                 </Button>
+                {generatedVideo && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                       <Button size="lg" variant="outline" className="font-body">
+                          <QrCode className="mr-2 h-4 w-4" /> QR Code
+                       </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Scan to Download Video</DialogTitle>
+                        <DialogDescription>
+                          Scan this QR code with your phone to download the generated video.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="flex items-center justify-center p-4 bg-white rounded-lg">
+                        <QRCode value={generatedVideo} />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )}
                 <a href={generatedVideo!} download="e-prix-video.mp4">
                     <Button size="lg" className="font-body">
                         <Download className="mr-2 h-4 w-4" /> Download
@@ -391,5 +441,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    
