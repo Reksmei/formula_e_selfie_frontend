@@ -17,6 +17,7 @@ import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-imag
 import {
   AlertDialog,
   AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -231,14 +232,15 @@ export default function SelfiePage() {
                               </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
-                              <AlertDialogHeader>
+                              <AlertDialogHeader className="max-h-[80vh] overflow-y-auto">
                                 <AlertDialogTitle>Image Prompt</AlertDialogTitle>
-                                <AlertDialogDescription className="break-words">
+                                <AlertDialogDescription className="break-words text-left">
                                   {imageInfo.description}
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
-                                <AlertDialogAction>Close</AlertDialogAction>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction>Select</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -389,3 +391,5 @@ export default function SelfiePage() {
     </main>
   );
 }
+
+    
