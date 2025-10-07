@@ -168,9 +168,11 @@ export default function SelfiePage() {
       case 'capture':
         return (
           <div className="w-full max-w-lg text-center">
-            <p className="mt-20 text-lg text-muted-foreground font-body">
-              Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
-            </p>
+            <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 md:p-8 mt-20">
+              <p className="text-lg text-card-foreground font-body">
+                Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
+              </p>
+            </div>
             <div className="mt-8">
               <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
                 <CameraCapture onCapture={handleCapture} onCameraError={handleCameraError} />
@@ -444,3 +446,5 @@ export default function SelfiePage() {
     </main>
   );
 }
+
+    
