@@ -80,7 +80,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .bg-home {
     background-image: url('https://storage.googleapis.com/formula_e_case_studies_files/fe_gc_svg.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .bg-selfie {
+    background-image: url('https://resources.formula-e.pulselive.com/photo-resources/2025/03/24/1e9ae2b5-75e4-45a8-b277-fbae8864cad5/Google-Cloud-1.jpeg?width=1440&height=810');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

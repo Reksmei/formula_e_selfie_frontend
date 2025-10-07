@@ -432,7 +432,10 @@ export default function SelfiePage() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500">
+    <main className={cn(
+      "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
+      "bg-selfie"
+      )}>
        <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
