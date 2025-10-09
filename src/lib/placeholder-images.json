@@ -7,16 +7,16 @@
       "imageHint": "london track"
     },
     {
-      "id": "Figurine",
-      "description": "Create a 1/6 scale commercialized figurine of a me as a Formula E driver in a full race suit (without the helmet), performing a celebratory pose (e.g., arms raised, fist pump) in a realistic style, in a Formula E pit garage environment. The figurine is placed on a computer desk. The figurine has a round transparent acrylic base, with no text on the base. The content on the computer screen is the ZBrush modeling process of this figurine. Next to the computer screen is a BANDAI-style toy packaging box printed with the original artwork. The packaging features two-dimensional flat illustrations of the driver and their car.",
-      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/figurine.png",
-      "imageHint": "figurine driver"
-    },
-    {
       "id": "Mexico E-Prix",
       "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/mexico.png",
       "imageHint": "mexico track"
+    },
+    {
+      "id": "Figurine",
+      "description": "Create a 1/6 scale commercialized figurine of a me as a Formula E driver in a full race suit (without the helmet), performing a celebratory pose (e.g., arms raised, fist pump) in a realistic style, in a Formula E pit garage environment. The figurine is placed on a computer desk. The figurine has a round transparent acrylic base, with no text on the base. The content on the computer screen is the ZBrush modeling process of this figurine. Next to the computer screen is a BANDAI-style toy packaging box printed with the original artwork. The packaging features two-dimensional flat illustrations of the driver and their car.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/figurine.png",
+      "imageHint": "figurine driver"
     },
     {
       "id": "Berlin E-Prix",
@@ -41,6 +41,12 @@
       "description": "A pit stop scene with a futuristic female mechanic.",
       "imageUrl": "https://images.unsplash.com/photo-1675276525193-21b04518b325?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZ1dHVyaXN0aWMlMjBtZWNoYW5pY3xlbnwwfHx8fDE3MTc1OTg1MDF8MA%3D%3D",
       "imageHint": "mechanic future"
+    },
+    {
+      "id": "Berlin Podium",
+      "description": "a winner's podium on the berlin templeholf track",
+      "imageUrl": "https://picsum.photos/seed/berlin-podium/600/400",
+      "imageHint": "berlin podium"
     }
   ]
 }
