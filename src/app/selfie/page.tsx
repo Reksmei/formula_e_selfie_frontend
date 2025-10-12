@@ -326,7 +326,7 @@ export default function SelfiePage() {
                  <CardContent>
                    {selfie && <Image src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
                    <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
-                       <Repeat className="mr-2 h-4 w-4" /> Start Over
+                      <Repeat className="mr-2 h-4 w-4" /> Start Over
                    </Button>
                  </CardContent>
                </Card>
@@ -393,10 +393,12 @@ export default function SelfiePage() {
         );
       case 'generating-video':
         return (
-          <div className="flex flex-col items-center justify-center gap-4 text-center">
+          <div className="flex flex-col items-center justify-center gap-8 text-center">
+            <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+                <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
+                <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
+            </div>
             <Loader2 className="h-16 w-16 animate-spin text-primary" />
-            <h2 className="text-3xl font-bold font-headline text-primary-foreground">Generating your video...</h2>
-            <p className="text-muted-foreground font-body">This can take a minute or two. Please be patient.</p>
             {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
           </div>
         );
@@ -428,7 +430,7 @@ export default function SelfiePage() {
                         <DialogDescription>
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
-                      </DialogHeader>
+                      </Header>
                        {generatedVideo && (
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
                           <QRCode value={generatedVideo} />
