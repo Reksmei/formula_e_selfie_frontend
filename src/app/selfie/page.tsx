@@ -40,6 +40,16 @@ const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
 
+const editSuggestions = [
+  "make the lighting more dramatic",
+  "change the background to a futuristic city",
+  "give it a vintage film look",
+  "add celebratory confetti",
+  "make me look like an anime character",
+  "put me in the cockpit of the car",
+  "make the image brighter",
+];
+
 export default function SelfiePage() {
   const [step, setStep] = useState<Step>('capture');
   const [selfie, setSelfie] = useState<string | null>(null);
@@ -51,6 +61,7 @@ export default function SelfiePage() {
   const [editPrompt, setEditPrompt] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
+  const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -71,6 +82,14 @@ export default function SelfiePage() {
     }
     fetchPrompts();
   }, [toast]);
+
+  useEffect(() => {
+    const suggestionInterval = setInterval(() => {
+      setCurrentSuggestionIndex((prevIndex) => (prevIndex + 1) % editSuggestions.length);
+    }, 2500);
+
+    return () => clearInterval(suggestionInterval);
+  }, []);
 
   const handleCapture = (imageDataUrl: string) => {
     setSelfie(imageDataUrl);
@@ -348,7 +367,7 @@ export default function SelfiePage() {
                     <CardContent>
                         <div className="flex gap-2">
                             <Input 
-                                placeholder="e.g. 'make the lighting more dramatic'"
+                                placeholder={`e.g. '${editSuggestions[currentSuggestionIndex]}'`}
                                 value={editPrompt}
                                 onChange={(e) => setEditPrompt(e.target.value)}
                                 disabled={isEditing}
@@ -454,5 +473,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    
