@@ -64,15 +64,14 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
     const url = `${BACKEND_URL}/generate`;
     console.log(`Making request to POST ${url}`);
 
-    // Convert data URI to Blob
-    const fetchResponse = await fetch(input.selfieDataUri);
-    const imageBlob = await fetchResponse.blob();
-
-    const formData = new FormData();
-    formData.append('file', imageBlob, 'selfie.jpg');
-    formData.append('prompt', input.prompt);
-    
     try {
+        const fetchResponse = await fetch(input.selfieDataUri);
+        const imageBlob = await fetchResponse.blob();
+
+        const formData = new FormData();
+        formData.append('file', imageBlob, 'selfie.jpg');
+        formData.append('prompt', input.prompt);
+    
         const response = await fetch(url, {
             method: 'POST',
             body: formData,
@@ -103,30 +102,30 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
     const url = `${BACKEND_URL}/edit-image`;
     console.log(`Making request to POST ${url}`);
 
-    const fetchResponse = await fetch(input.imageDataUri);
-    const imageBlob = await fetchResponse.blob();
-
-    const formData = new FormData();
-    formData.append('file', imageBlob, 'image.jpg');
-    formData.append('prompt', input.prompt);
-
     try {
-      const response = await fetch(url, {
-          method: 'POST',
-          body: formData,
-      });
+        const fetchResponse = await fetch(input.imageDataUri);
+        const imageBlob = await fetchResponse.blob();
 
-      if (!response.ok) {
-          const errorBody = await response.text();
-          console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
-          throw new Error(`Request failed: ${response.statusText}`);
-      }
-      const result = await response.json();
-      const imageUrl = result.url;
-      if (!imageUrl) {
-        throw new Error("Backend did not return an edited image URL.");
-      }
-      return imageUrl;
+        const formData = new FormData();
+        formData.append('file', imageBlob, 'image.jpg');
+        formData.append('prompt', input.prompt);
+
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
+            throw new Error(`Request failed: ${response.statusText}`);
+        }
+        const result = await response.json();
+        const imageUrl = result.url;
+        if (!imageUrl) {
+            throw new Error("Backend did not return an edited image URL.");
+        }
+        return imageUrl;
     } catch (error) {
         console.error(`Failed to fetch from backend endpoint /edit-image:`, error);
         throw error;
@@ -141,29 +140,29 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
     const url = `${BACKEND_URL}/generate-video`;
     console.log(`Making request to POST ${url}`);
 
-    const fetchResponse = await fetch(input.imageDataUri);
-    const imageBlob = await fetchResponse.blob();
-
-    const formData = new FormData();
-    formData.append('file', imageBlob, 'image.jpg');
-
     try {
-      const response = await fetch(url, {
-          method: 'POST',
-          body: formData,
-      });
+        const fetchResponse = await fetch(input.imageDataUri);
+        const imageBlob = await fetchResponse.blob();
 
-      if (!response.ok) {
-          const errorBody = await response.text();
-          console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
-          throw new Error(`Request failed: ${response.statusText}`);
-      }
-      const result = await response.json();
-      const videoUrl = result.url;
-      if (!videoUrl) {
-        throw new Error("Backend did not return a video URL.");
-      }
-      return videoUrl;
+        const formData = new FormData();
+        formData.append('file', imageBlob, 'image.jpg');
+
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
+            throw new Error(`Request failed: ${response.statusText}`);
+        }
+        const result = await response.json();
+        const videoUrl = result.url;
+        if (!videoUrl) {
+            throw new Error("Backend did not return a video URL.");
+        }
+        return videoUrl;
     } catch (error) {
         console.error(`Failed to fetch from backend endpoint /generate-video:`, error);
         throw error;
