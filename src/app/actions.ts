@@ -39,16 +39,6 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
   }
 }
 
-// Helper to convert data URI or URL to Blob
-async function dataURItoBlob(dataURI: string): Promise<Blob> {
-    const response = await fetch(dataURI);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch data from URI/URL: ${dataURI.substring(0, 100)}...`);
-    }
-    return await response.blob();
-}
-
-
 export async function suggestFormulaEPromptsAction(): Promise<string[]> {
   try {
     const result: SuggestFormulaEPromptsOutput = await makeBackendRequest('/suggest-prompts', 'POST', {});
@@ -74,8 +64,11 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
     const url = `${BACKEND_URL}/generate`;
     console.log(`Making request to POST ${url}`);
 
+    // Convert data URI to Blob
+    const fetchResponse = await fetch(input.selfieDataUri);
+    const imageBlob = await fetchResponse.blob();
+
     const formData = new FormData();
-    const imageBlob = await dataURItoBlob(input.selfieDataUri);
     formData.append('file', imageBlob, 'selfie.jpg');
     formData.append('prompt', input.prompt);
     
@@ -110,8 +103,10 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
     const url = `${BACKEND_URL}/edit-image`;
     console.log(`Making request to POST ${url}`);
 
+    const fetchResponse = await fetch(input.imageDataUri);
+    const imageBlob = await fetchResponse.blob();
+
     const formData = new FormData();
-    const imageBlob = await dataURItoBlob(input.imageDataUri);
     formData.append('file', imageBlob, 'image.jpg');
     formData.append('prompt', input.prompt);
 
@@ -146,8 +141,10 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
     const url = `${BACKEND_URL}/generate-video`;
     console.log(`Making request to POST ${url}`);
 
+    const fetchResponse = await fetch(input.imageDataUri);
+    const imageBlob = await fetchResponse.blob();
+
     const formData = new FormData();
-    const imageBlob = await dataURItoBlob(input.imageDataUri);
     formData.append('file', imageBlob, 'image.jpg');
 
     try {
