@@ -79,11 +79,11 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
     formData.append('prompt', input.prompt);
 
     const result = await makeBackendRequest('/generate', 'POST', formData, true);
-    const imageData = result.imageData;
-    if (!imageData) {
-      throw new Error("Backend did not return image data.");
+    const imageUrl = result.url;
+    if (!imageUrl) {
+      throw new Error("Backend did not return an image URL.");
     }
-    return imageData;
+    return imageUrl;
 }
 
 export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<string> {
@@ -93,11 +93,11 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
     formData.append('prompt', input.prompt);
 
     const result = await makeBackendRequest('/edit-image', 'POST', formData, true);
-    const imageData = result.imageData;
-    if (!imageData) {
-      throw new Error("Backend did not return edited image data.");
+    const imageUrl = result.url;
+    if (!imageUrl) {
+      throw new Error("Backend did not return an edited image URL.");
     }
-    return imageData;
+    return imageUrl;
 }
 
 export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<string> {
@@ -106,5 +106,9 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
     formData.append('image', imageBlob, 'image.jpg');
 
     const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
-    return result.videoData;
+    const videoUrl = result.url;
+     if (!videoUrl) {
+      throw new Error("Backend did not return a video URL.");
+    }
+    return videoUrl;
 }

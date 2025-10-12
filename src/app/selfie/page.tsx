@@ -129,8 +129,10 @@ export default function SelfiePage() {
     if (!generatedImage || !editPrompt) return;
     setIsEditing(true);
     try {
+      // Since edit action might return a data URI or a URL, we pass the current state
+      const imageToEdit = generatedImage;
       const editedImageUrl = await editFormulaEImageAction({
-        imageDataUri: generatedImage,
+        imageDataUri: imageToEdit,
         prompt: editPrompt,
       });
       setGeneratedImage(editedImageUrl);

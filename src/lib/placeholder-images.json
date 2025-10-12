@@ -39,13 +39,13 @@
     {
       "id": "Diriyah E-Prix",
       "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
-      "imageUrl": "https://images.unsplash.com/photo-1675276525193-21b04518b325?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZ1dHVyaXN0aWMlMjBtZWNoYW5pY3xlbnwwfHx8fDE3MTc1OTg1MDF8MA%3D%3D",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/diriyah.png",
       "imageHint": "diriyah track"
     },
     {
       "id": "Tokyo E-Prix",
-      "description": "Edit the user into a scene on the Tokyo E-Prix track at night. The user is standing near the start/finish line, and the background is filled with the bright neon lights and futuristic skyscrapers of the city. A Formula E Gen3 car(as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810), with its LED lights illuminated, is positioned on the grid nearby. The overall image should have a high-contrast, cyberpunk-inspired aesthetic.",
-      "imageUrl": "https://picsum.photos/seed/berlin-podium/600/400",
+      "description": "Seamlessly edit the user into a high-tech Formula E garage, positioned as a team principal looking intently at a data screen showing race telemetry. The user should be wearing team-style headphones around their neck. In the background, a Formula E Gen3 car (as provided in https://assets.bizclikmedia.net/1800/46886ff8e2d1fb509ba5edbda8ac713f:f574944fc5c13b312394da27b061e273/002-front34-v05-2048x2048.jpg) is being prepped by engineers in unbranded team gear. The lighting should be focused and professional.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/tokyo.png",
       "imageHint": "tokyo track"
     }
   ]

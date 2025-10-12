@@ -17,7 +17,7 @@ export default function Home() {
           Formula E AI Selfie
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted-foreground font-body">
-        Generate a new image based on your selfie and a Formula E-related prompt. <br/> With Gemini 2.5 Flash Image and Veo 2.
+        Generate a new image based on your selfie and a Formula E-related prompt. <br/> with Gemini 2.5 Flash Image and Veo 2.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href="/selfie">
