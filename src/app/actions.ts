@@ -41,24 +41,18 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
 
 // Helper to convert data URI or URL to Blob
 async function dataURItoBlob(dataURI: string): Promise<Blob> {
-    if (!dataURI.startsWith('data:')) {
-        // If it's a URL, fetch it and convert to a blob
+    if (dataURI.startsWith('data:')) {
+        // It's a data URI, convert it directly
         const response = await fetch(dataURI);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch image from URL: ${dataURI}`);
-        }
         return await response.blob();
     }
 
-    // It's a data URI, convert it
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
+    // It's a URL, fetch it and convert to a blob
+    const response = await fetch(dataURI);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch image from URL: ${dataURI}`);
     }
-    return new Blob([ab], { type: mimeString });
+    return await response.blob();
 }
 
 
