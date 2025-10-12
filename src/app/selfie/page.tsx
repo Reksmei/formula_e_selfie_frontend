@@ -168,7 +168,7 @@ export default function SelfiePage() {
       case 'capture':
         return (
           <div className="w-full max-w-lg text-center">
-            <div className="bg-card/80 backdrop-blur-sm rounded-xl p-6 md:p-8 mt-20">
+            <div className="bg-card rounded-xl p-6 md:p-8 mt-20">
               <p className="text-lg text-card-foreground font-body">
                 Take a selfie, pick a prompt, and let our AI place you in the heart of Formula E action.
               </p>
@@ -356,9 +356,11 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated image.
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                        <QRCode value={generatedImage} />
-                      </div>
+                      {generatedImage && (
+                        <div className="flex items-center justify-center p-4 bg-white rounded-lg">
+                          <QRCode value={generatedImage} />
+                        </div>
+                      )}
                     </DialogContent>
                   </Dialog>
                 )}
@@ -406,9 +408,11 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
                       </DialogHeader>
-                      <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                        <QRCode value={generatedVideo} />
-                      </div>
+                       {generatedVideo && (
+                        <div className="flex items-center justify-center p-4 bg-white rounded-lg">
+                          <QRCode value={generatedVideo} />
+                        </div>
+                      )}
                     </DialogContent>
                   </Dialog>
                 )}
@@ -448,5 +452,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    
