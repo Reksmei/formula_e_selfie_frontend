@@ -19,7 +19,7 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
   let requestBody: BodyInit;
 
   if (isFormData) {
-    // For FormData, let the browser set the Content-Type header automatically.
+    // Let the browser set the Content-Type header automatically for FormData.
     requestBody = body;
   } else {
     headers['Content-Type'] = 'application/json';
@@ -48,7 +48,7 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
   }
 }
 
-// Helper to convert data URI to Blob
+// Helper to convert data URI or URL to Blob
 async function dataURItoBlob(dataURI: string): Promise<Blob> {
     if (!dataURI.startsWith('data:')) {
         // If it's a URL, fetch it and convert to a blob
@@ -59,6 +59,7 @@ async function dataURItoBlob(dataURI: string): Promise<Blob> {
         return response.blob();
     }
 
+    // It's a data URI, convert it
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
