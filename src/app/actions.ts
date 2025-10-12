@@ -41,16 +41,9 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
 
 // Helper to convert data URI or URL to Blob
 async function dataURItoBlob(dataURI: string): Promise<Blob> {
-    if (dataURI.startsWith('data:')) {
-        // It's a data URI, convert it directly
-        const response = await fetch(dataURI);
-        return await response.blob();
-    }
-
-    // It's a URL, fetch it and convert to a blob
     const response = await fetch(dataURI);
     if (!response.ok) {
-        throw new Error(`Failed to fetch image from URL: ${dataURI}`);
+        throw new Error(`Failed to fetch data from URI/URL: ${dataURI.substring(0, 100)}...`);
     }
     return await response.blob();
 }
@@ -83,7 +76,7 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
 
     const formData = new FormData();
     const imageBlob = await dataURItoBlob(input.selfieDataUri);
-    formData.append('image', imageBlob, 'selfie.jpg');
+    formData.append('file', imageBlob, 'selfie.jpg');
     formData.append('prompt', input.prompt);
     
     try {
@@ -119,7 +112,7 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
 
     const formData = new FormData();
     const imageBlob = await dataURItoBlob(input.imageDataUri);
-    formData.append('image', imageBlob, 'image.jpg');
+    formData.append('file', imageBlob, 'image.jpg');
     formData.append('prompt', input.prompt);
 
     try {
@@ -155,7 +148,7 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
 
     const formData = new FormData();
     const imageBlob = await dataURItoBlob(input.imageDataUri);
-    formData.append('image', imageBlob, 'image.jpg');
+    formData.append('file', imageBlob, 'image.jpg');
 
     try {
       const response = await fetch(url, {
