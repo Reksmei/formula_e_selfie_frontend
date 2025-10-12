@@ -25,28 +25,28 @@
       "imageHint": "berlin track"
     },
     {
-      "id": "Anime Drift",
-      "description": "A dynamic, anime-style action shot of a Formula E car drifting.",
-      "imageUrl": "https://images.unsplash.com/photo-1661770112213-84c1cd4e69a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhbmltZSUyMGNhcnxlbnwwfHx8fDE3NTk2ODY3Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "anime car"
-    },
-    {
       "id": "Podium Celebration",
-      "description": "Celebrating a win on the podium in Monaco, champagne spraying.",
-      "imageUrl": "https://images.unsplash.com/photo-1588615438843-a65261393673?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2hhbXBhZ25lJTIwc3ByYXl8ZW58MHx8fHwxNzE3NTk4NDYxfDA%3D",
+      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding(e.g. https://miro.medium.com/v2/resize:fit:1400/0*Ruwxhg6BVX5P25rF). The user's expression should be one of pure joy and victory.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/podium.png",
       "imageHint": "celebration podium"
     },
     {
-      "id": "Futuristic Mechanic",
-      "description": "A pit stop scene with a futuristic female mechanic.",
-      "imageUrl": "https://images.unsplash.com/photo-1675276525193-21b04518b325?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZ1dHVyaXN0aWMlMjBtZWNoYW5pY3xlbnwwfHx8fDE3MTc1OTg1MDF8MA%3D%3D",
-      "imageHint": "mechanic future"
+      "id": "In the Garage",
+      "description": "Seamlessly edit the user into a high-tech Formula E garage, positioned as a team principal looking intently at a data screen showing race telemetry. The user should be wearing team-style headphones around their neck. In the background, a Formula E Gen3 car (as as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810)is being prepped by engineers in unbranded team gear. The lighting should be focused and professional.",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/garage.png",
+      "imageHint": "fix garage"
     },
     {
-      "id": "Berlin Podium",
-      "description": "a winner's podium on the berlin templeholf track",
+      "id": "Diriyah E-Prix",
+      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
+      "imageUrl": "https://images.unsplash.com/photo-1675276525193-21b04518b325?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZ1dHVyaXN0aWMlMjBtZWNoYW5pY3xlbnwwfHx8fDE3MTc1OTg1MDF8MA%3D%3D",
+      "imageHint": "diriyah track"
+    },
+    {
+      "id": "Tokyo E-Prix",
+      "description": "Edit the user into a scene on the Tokyo E-Prix track at night. The user is standing near the start/finish line, and the background is filled with the bright neon lights and futuristic skyscrapers of the city. A Formula E Gen3 car(as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810), with its LED lights illuminated, is positioned on the grid nearby. The overall image should have a high-contrast, cyberpunk-inspired aesthetic.",
       "imageUrl": "https://picsum.photos/seed/berlin-podium/600/400",
-      "imageHint": "berlin podium"
+      "imageHint": "tokyo track"
     }
   ]
 }

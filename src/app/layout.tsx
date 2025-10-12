@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: 'Formula E AI Selfie',
-  description: 'Generate a new image based on your selfie and a Formula E-related prompt with Gemini 2.5 Flash Image and Veo 3.',
+  description: 'Generate a new image based on your selfie and a Formula E-related prompt with Gemini 2.5 Flash Image and Veo 2.',
 };
 
 export default function RootLayout({
