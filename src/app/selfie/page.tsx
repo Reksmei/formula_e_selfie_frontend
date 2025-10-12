@@ -312,37 +312,37 @@ export default function SelfiePage() {
       case 'result':
         return (
           <div className="w-full max-w-5xl text-center">
-             <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+            <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
                 You can now edit your image with a prompt, or generate a video.
               </p>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-               <Card>
-                 <CardHeader>
-                   <CardTitle className="font-headline">Original Selfie</CardTitle>
-                 </CardHeader>
-                 <CardContent>
-                   {selfie && <Image src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
-                   <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
-                      <Repeat className="mr-2 h-4 w-4" /> Start Over
-                   </Button>
-                 </CardContent>
-               </Card>
-               <Card>
-                 <CardHeader>
-                    <CardTitle className="font-headline">Generated Image</CardTitle>
-                 </CardHeader>
-                 <CardContent>
-                   {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
-                   {generatedImage && (
-                      <div className="flex flex-col gap-2 mt-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-headline">Original Selfie</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {selfie && <Image src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
+                  <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
+                    <Repeat className="mr-2 h-4 w-4" /> Start Over
+                  </Button>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-headline">Generated Image</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
+                  {generatedImage && (
+                    <div className="flex flex-col gap-2 mt-4">
                       <Dialog>
                         <DialogTrigger asChild>
-                           <Button variant="outline" className="font-body w-full">
-                              <QrCode className="mr-2 h-4 w-4" /> Download Image
-                           </Button>
+                          <Button variant="outline" className="font-body w-full">
+                            <QrCode className="mr-2 h-4 w-4" /> Download Image
+                          </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
                           <DialogHeader>
@@ -359,48 +359,48 @@ export default function SelfiePage() {
                         </DialogContent>
                       </Dialog>
                       <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full">
-                          <Film className="mr-2 h-4 w-4" /> Generate Video
+                        <Film className="mr-2 h-4 w-4" /> Generate Video
                       </Button>
-                      </div>
-                    )}
-                 </CardContent>
-               </Card>
-             </div>
-             <div className="mt-8 w-full max-w-lg mx-auto">
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2 font-headline"><Pencil /> Edit Your Image</CardTitle>
-                        <CardDescription className="font-body">Describe the changes you'd like to make.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex gap-2">
-                            <Input 
-                                placeholder={`e.g. '${editSuggestions[currentSuggestionIndex]}'`}
-                                value={editPrompt}
-                                onChange={(e) => setEditPrompt(e.target.value)}
-                                disabled={isEditing}
-                                className="font-body"
-                            />
-                            <Button onClick={handleEdit} disabled={!editPrompt || isEditing} className="font-body">
-                                {isEditing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-                                <span className="ml-2">Apply</span>
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
-             </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+            <div className="mt-8 w-full max-w-lg mx-auto">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 font-headline"><Pencil /> Edit Your Image</CardTitle>
+                  <CardDescription className="font-body">Describe the changes you'd like to make.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder={`e.g. '${editSuggestions[currentSuggestionIndex]}'`}
+                      value={editPrompt}
+                      onChange={(e) => setEditPrompt(e.target.value)}
+                      disabled={isEditing}
+                      className="font-body"
+                    />
+                    <Button onClick={handleEdit} disabled={!editPrompt || isEditing} className="font-body">
+                      {isEditing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                      <span className="ml-2">Apply</span>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         );
       case 'generating-video':
         return (
-          <div className="flex flex-col items-center justify-center gap-8 text-center">
-            <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
-                <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
+            <div className="flex flex-col items-center justify-center gap-8 text-center">
+                <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+                    <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
+                    <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
+                </div>
+                <Loader2 className="h-16 w-16 animate-spin text-primary" />
+                {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
             </div>
-            <Loader2 className="h-16 w-16 animate-spin text-primary" />
-            {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
-          </div>
         );
       case 'video-result':
         return (
@@ -430,7 +430,7 @@ export default function SelfiePage() {
                         <DialogDescription>
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
-                      </Header>
+                      </DialogHeader>
                        {generatedVideo && (
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
                           <QRCode value={generatedVideo} />
