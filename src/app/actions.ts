@@ -16,15 +16,21 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
   console.log(`Making request to ${method} ${url}`);
   
   const headers: HeadersInit = {};
-  if (!isFormData) {
+  let requestBody: BodyInit;
+
+  if (isFormData) {
+    // For FormData, let the browser set the Content-Type header automatically.
+    requestBody = body;
+  } else {
     headers['Content-Type'] = 'application/json';
+    requestBody = JSON.stringify(body);
   }
 
   try {
     const response = await fetch(url, {
       method,
       headers,
-      body: isFormData ? body : JSON.stringify(body),
+      body: requestBody,
     });
 
     if (!response.ok) {
