@@ -280,11 +280,13 @@ export default function SelfiePage() {
         );
       case 'generating':
         return (
-          <div className="flex flex-col items-center justify-center gap-4 text-center">
-            <Loader2 className="h-16 w-16 animate-spin text-primary" />
-            <h2 className="text-3xl font-bold font-headline text-primary-foreground">Generating your E-Prix moment...</h2>
-            <p className="text-muted-foreground font-body">The AI is working its magic. This might take a moment.</p>
-          </div>
+            <div className="flex flex-col items-center justify-center gap-8 text-center">
+                <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+                    <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your E-Prix moment...</h2>
+                    <p className="text-muted-foreground font-body mt-4">The AI is working its magic. This might take a moment.</p>
+                </div>
+                <Loader2 className="h-16 w-16 animate-spin text-primary" />
+            </div>
         );
       case 'result':
         return (
