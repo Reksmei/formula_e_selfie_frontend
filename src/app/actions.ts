@@ -1,12 +1,12 @@
 
 'use server';
-import type { GenerateFormulaEImageInput, GenerateFormulaEImageOutput } from '@/ai/flows/generate-formula-e-image';
-import type { EditFormulaEImageInput, EditFormulaEImageOutput } from '@/ai/flows/edit-formula-e-image';
-import type { GenerateFormulaEVideoInput, GenerateFormulaEVideoOutput } from '@/ai/flows/generate-formula-e-video';
+import type { GenerateFormulaEImageInput } from '@/ai/flows/generate-formula-e-image';
+import type { EditFormulaEImageInput } from '@/ai/flows/edit-formula-e-image';
+import type { GenerateFormulaEVideoInput } from '@/ai/flows/generate-formula-e-video';
 import type { SuggestFormulaEPromptsOutput } from '@/ai/flows/suggest-formula-e-prompts';
 
-// Helper to make backend requests
-async function makeBackendRequest(endpoint: string, method: string = 'POST', body: any, isFormData: boolean = false) {
+// This helper will now only be used for simple JSON requests.
+async function makeBackendRequest(endpoint: string, method: string = 'POST', body: any) {
   const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
   if (!BACKEND_URL) {
     throw new Error('Backend URL is not configured.');
@@ -14,31 +14,15 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
 
   const url = `${BACKEND_URL}${endpoint}`;
   console.log(`Making request to ${method} ${url}`);
-  
-  const headers: HeadersInit = {};
-  let requestBody: BodyInit;
-  let fetchOptions: RequestInit;
-
-  if (isFormData) {
-    requestBody = body;
-    fetchOptions = {
-      method,
-      body: requestBody,
-      // When using FormData, let the browser set the Content-Type header
-      // by not providing a headers object or setting Content-Type.
-    };
-  } else {
-    headers['Content-Type'] = 'application/json';
-    requestBody = JSON.stringify(body);
-    fetchOptions = {
-      method,
-      headers,
-      body: requestBody,
-    };
-  }
 
   try {
-    const response = await fetch(url, fetchOptions);
+    const response = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
 
     if (!response.ok) {
       const errorBody = await response.text();
@@ -63,7 +47,7 @@ async function dataURItoBlob(dataURI: string): Promise<Blob> {
         if (!response.ok) {
             throw new Error(`Failed to fetch image from URL: ${dataURI}`);
         }
-        return response.blob();
+        return await response.blob();
     }
 
     // It's a data URI, convert it
@@ -96,42 +80,108 @@ export async function suggestFormulaEPromptsAction(): Promise<string[]> {
 }
 
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<string> {
+    const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
+    if (!BACKEND_URL) {
+      throw new Error('Backend URL is not configured.');
+    }
+    const url = `${BACKEND_URL}/generate`;
+    console.log(`Making request to POST ${url}`);
+
     const formData = new FormData();
     const imageBlob = await dataURItoBlob(input.selfieDataUri);
     formData.append('image', imageBlob, 'selfie.jpg');
     formData.append('prompt', input.prompt);
+    
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
 
-    const result = await makeBackendRequest('/generate', 'POST', formData, true);
-    const imageUrl = result.url;
-    if (!imageUrl) {
-      throw new Error("Backend did not return an image URL.");
+        if (!response.ok) {
+            const errorBody = await response.text();
+            console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
+            throw new Error(`Request failed: ${response.statusText}`);
+        }
+        const result = await response.json();
+        const imageUrl = result.url;
+        if (!imageUrl) {
+          throw new Error("Backend did not return an image URL.");
+        }
+        return imageUrl;
+    } catch (error) {
+        console.error(`Failed to fetch from backend endpoint /generate:`, error);
+        throw error;
     }
-    return imageUrl;
 }
 
 export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<string> {
+    const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
+    if (!BACKEND_URL) {
+      throw new Error('Backend URL is not configured.');
+    }
+    const url = `${BACKEND_URL}/edit-image`;
+    console.log(`Making request to POST ${url}`);
+
     const formData = new FormData();
     const imageBlob = await dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
     formData.append('prompt', input.prompt);
 
-    const result = await makeBackendRequest('/edit-image', 'POST', formData, true);
-    const imageUrl = result.url;
-    if (!imageUrl) {
-      throw new Error("Backend did not return an edited image URL.");
+    try {
+      const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+      });
+
+      if (!response.ok) {
+          const errorBody = await response.text();
+          console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
+          throw new Error(`Request failed: ${response.statusText}`);
+      }
+      const result = await response.json();
+      const imageUrl = result.url;
+      if (!imageUrl) {
+        throw new Error("Backend did not return an edited image URL.");
+      }
+      return imageUrl;
+    } catch (error) {
+        console.error(`Failed to fetch from backend endpoint /edit-image:`, error);
+        throw error;
     }
-    return imageUrl;
 }
 
 export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<string> {
+    const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
+    if (!BACKEND_URL) {
+      throw new Error('Backend URL is not configured.');
+    }
+    const url = `${BACKEND_URL}/generate-video`;
+    console.log(`Making request to POST ${url}`);
+
     const formData = new FormData();
     const imageBlob = await dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
 
-    const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
-    const videoUrl = result.url;
-     if (!videoUrl) {
-      throw new Error("Backend did not return a video URL.");
+    try {
+      const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+      });
+
+      if (!response.ok) {
+          const errorBody = await response.text();
+          console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
+          throw new Error(`Request failed: ${response.statusText}`);
+      }
+      const result = await response.json();
+      const videoUrl = result.url;
+      if (!videoUrl) {
+        throw new Error("Backend did not return a video URL.");
+      }
+      return videoUrl;
+    } catch (error) {
+        console.error(`Failed to fetch from backend endpoint /generate-video:`, error);
+        throw error;
     }
-    return videoUrl;
 }
