@@ -43,7 +43,16 @@ async function makeBackendRequest(endpoint: string, method: string = 'POST', bod
 }
 
 // Helper to convert data URI to Blob
-function dataURItoBlob(dataURI: string) {
+async function dataURItoBlob(dataURI: string): Promise<Blob> {
+    if (!dataURI.startsWith('data:')) {
+        // If it's a URL, fetch it and convert to a blob
+        const response = await fetch(dataURI);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch image from URL: ${dataURI}`);
+        }
+        return response.blob();
+    }
+
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
@@ -74,7 +83,7 @@ export async function suggestFormulaEPromptsAction(): Promise<string[]> {
 
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<string> {
     const formData = new FormData();
-    const imageBlob = dataURItoBlob(input.selfieDataUri);
+    const imageBlob = await dataURItoBlob(input.selfieDataUri);
     formData.append('image', imageBlob, 'selfie.jpg');
     formData.append('prompt', input.prompt);
 
@@ -88,7 +97,7 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
 
 export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<string> {
     const formData = new FormData();
-    const imageBlob = dataURItoBlob(input.imageDataUri);
+    const imageBlob = await dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
     formData.append('prompt', input.prompt);
 
@@ -102,7 +111,7 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
 
 export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<string> {
     const formData = new FormData();
-    const imageBlob = dataURItoBlob(input.imageDataUri);
+    const imageBlob = await dataURItoBlob(input.imageDataUri);
     formData.append('image', imageBlob, 'image.jpg');
 
     const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
