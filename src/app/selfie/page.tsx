@@ -325,9 +325,9 @@ export default function SelfiePage() {
                  </CardHeader>
                  <CardContent>
                    {selfie && <Image src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
-                    <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
-                        <Repeat className="mr-2 h-4 w-4" /> Start Over
-                    </Button>
+                   <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
+                       <Repeat className="mr-2 h-4 w-4" /> Start Over
+                   </Button>
                  </CardContent>
                </Card>
                <Card>
@@ -337,6 +337,7 @@ export default function SelfiePage() {
                  <CardContent>
                    {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
                    {generatedImage && (
+                      <>
                       <Dialog>
                         <DialogTrigger asChild>
                            <Button variant="outline" className="font-body mt-4 w-full">
@@ -357,10 +358,11 @@ export default function SelfiePage() {
                           )}
                         </DialogContent>
                       </Dialog>
+                      <Button onClick={handleGenerateVideo} size="lg" className="font-body mt-4 w-full">
+                          <Film className="mr-2 h-4 w-4" /> Generate Video
+                      </Button>
+                      </>
                     )}
-                    <Button onClick={handleGenerateVideo} size="lg" className="font-body mt-4 w-full">
-                        <Film className="mr-2 h-4 w-4" /> Generate Video
-                    </Button>
                  </CardContent>
                </Card>
              </div>

@@ -69,7 +69,7 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
         const imageBlob = await imageResponse.blob();
 
         const formData = new FormData();
-        formData.append('image', imageBlob, 'selfie.jpg');
+        formData.append('file', imageBlob, 'selfie.jpg');
         formData.append('prompt', input.prompt);
 
         const response = await fetch(url, {
@@ -107,7 +107,7 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
         const imageBlob = await imageResponse.blob();
 
         const formData = new FormData();
-        formData.append('image', imageBlob, 'image.jpg');
+        formData.append('file', imageBlob, 'image.jpg');
         formData.append('prompt', input.prompt);
         
         const response = await fetch(url, {
@@ -145,7 +145,7 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
         const imageBlob = await imageResponse.blob();
 
         const formData = new FormData();
-        formData.append('image', imageBlob, 'image.jpg');
+        formData.append('file', imageBlob, 'image.jpg');
 
         const response = await fetch(url, {
             method: 'POST',
