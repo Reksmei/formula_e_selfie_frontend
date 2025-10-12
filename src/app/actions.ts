@@ -69,7 +69,6 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
         const imageBlob = await imageResponse.blob();
 
         const formData = new FormData();
-        // FIX: The backend expects the image file to be named 'image'.
         formData.append('image', imageBlob, 'selfie.jpg');
         formData.append('prompt', input.prompt);
 
@@ -85,7 +84,6 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
         }
 
         const result = await response.json();
-        // FIX: The backend returns 'imageData', not 'url'.
         const imageUrl = result.imageData;
         if (!imageUrl) {
             throw new Error("Backend did not return an image URL.");
@@ -101,17 +99,15 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
-    // NOTE: The /edit-image endpoint does not exist on the backend.
-    // This will result in a 404 error.
-    const url = `${BACKEND_URL}/edit-image`;
-    console.log(`Making FormData request to POST ${url}`);
+    const url = `${BACKEND_URL}/generate`;
+    console.log(`Making FormData request to POST ${url} for editing`);
 
     try {
         const imageResponse = await fetch(input.imageDataUri);
         const imageBlob = await imageResponse.blob();
 
         const formData = new FormData();
-        formData.append('file', imageBlob, 'image.jpg');
+        formData.append('image', imageBlob, 'image.jpg');
         formData.append('prompt', input.prompt);
         
         const response = await fetch(url, {
@@ -126,13 +122,13 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
         }
 
         const result = await response.json();
-        const imageUrl = result.url;
+        const imageUrl = result.imageData;
         if (!imageUrl) {
             throw new Error("Backend did not return an edited image URL.");
         }
         return imageUrl;
     } catch (error) {
-        console.error(`Failed to fetch from backend endpoint /edit-image:`, error);
+        console.error(`Failed to fetch from backend endpoint /generate for editing:`, error);
         throw error;
     }
 }
@@ -149,7 +145,6 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
         const imageBlob = await imageResponse.blob();
 
         const formData = new FormData();
-        // FIX: The backend expects the image file to be named 'image'.
         formData.append('image', imageBlob, 'image.jpg');
 
         const response = await fetch(url, {
@@ -164,7 +159,6 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
         }
 
         const result = await response.json();
-        // FIX: The backend returns 'videoData', not 'url'.
         const videoUrl = result.videoData;
         if (!videoUrl) {
             throw new Error("Backend did not return a video URL.");

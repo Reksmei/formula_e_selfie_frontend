@@ -329,12 +329,14 @@ export default function SelfiePage() {
                </Card>
                <Card>
                  <CardHeader>
-                  <div className="flex justify-between items-center">
                     <CardTitle className="font-headline">Generated Image</CardTitle>
-                     {generatedImage && (
+                 </CardHeader>
+                 <CardContent>
+                   {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
+                   {generatedImage && (
                       <Dialog>
                         <DialogTrigger asChild>
-                           <Button variant="outline" className="font-body">
+                           <Button variant="outline" className="font-body mt-4 w-full">
                               <QrCode className="mr-2 h-4 w-4" /> Download Image
                            </Button>
                         </DialogTrigger>
@@ -353,10 +355,6 @@ export default function SelfiePage() {
                         </DialogContent>
                       </Dialog>
                     )}
-                  </div>
-                 </CardHeader>
-                 <CardContent>
-                   {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
                  </CardContent>
                </Card>
              </div>
