@@ -108,5 +108,3 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
     const result = await makeBackendRequest('/generate-video', 'POST', formData, true);
     return result.videoData;
 }
-
-    
