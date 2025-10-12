@@ -337,10 +337,10 @@ export default function SelfiePage() {
                  <CardContent>
                    {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
                    {generatedImage && (
-                      <>
+                      <div className="flex flex-col gap-2 mt-4">
                       <Dialog>
                         <DialogTrigger asChild>
-                           <Button variant="outline" className="font-body mt-4 w-full">
+                           <Button variant="outline" className="font-body w-full">
                               <QrCode className="mr-2 h-4 w-4" /> Download Image
                            </Button>
                         </DialogTrigger>
@@ -358,10 +358,10 @@ export default function SelfiePage() {
                           )}
                         </DialogContent>
                       </Dialog>
-                      <Button onClick={handleGenerateVideo} size="lg" className="font-body mt-4 w-full">
+                      <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full">
                           <Film className="mr-2 h-4 w-4" /> Generate Video
                       </Button>
-                      </>
+                      </div>
                     )}
                  </CardContent>
                </Card>
