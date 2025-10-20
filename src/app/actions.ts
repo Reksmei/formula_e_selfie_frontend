@@ -40,21 +40,12 @@ async function makeJsonRequest(endpoint: string, method: string = 'POST', body: 
 }
 
 export async function suggestFormulaEPromptsAction(): Promise<string[]> {
-  try {
-    // NOTE: The /suggest-prompts endpoint does not exist on the backend.
-    // This will result in a 404 error.
-    const result: SuggestFormulaEPromptsOutput = await makeJsonRequest('/suggest-prompts', 'POST', {});
-    return result.prompts;
-  } catch (error) {
-    console.error('Error suggesting prompts:', error);
+    // This function returns a hardcoded list of prompts as a fallback.
     return [
-      "A Formula E car racing through ancient Roman ruins.",
-      "Celebrating a win on the podium in Monaco, champagne spraying.",
-      "A pit stop scene with a futuristic female mechanic.",
-      "Driving a Formula E car on the surface of Mars.",
-      "A dynamic, anime-style action shot of a Formula E car drifting."
+        "A Formula E car racing through ancient Roman ruins.",
+        "Celebrating a win on the podium in Monaco, champagne spraying.",
+        "A dynamic, anime-style action shot of a Formula E car drifting."
     ];
-  }
 }
 
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<{imageUrl: string, qrCode: string}> {
