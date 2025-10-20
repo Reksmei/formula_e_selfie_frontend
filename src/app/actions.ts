@@ -57,7 +57,7 @@ export async function suggestFormulaEPromptsAction(): Promise<string[]> {
   }
 }
 
-export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<string> {
+export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<{imageUrl: string, qrCode: string}> {
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
@@ -85,17 +85,18 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
 
         const result = await response.json();
         const imageUrl = result.imageData;
+        const qrCode = result.qrCode;
         if (!imageUrl) {
             throw new Error("Backend did not return an image URL.");
         }
-        return imageUrl;
+        return {imageUrl, qrCode};
     } catch (error) {
         console.error(`Failed to fetch from backend endpoint /generate:`, error);
         throw error;
     }
 }
 
-export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<string> {
+export async function editFormulaEImageAction(input: EditFormulaEImageInput): Promise<{imageUrl: string, qrCode: string}> {
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
@@ -109,7 +110,7 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
         const formData = new FormData();
         formData.append('image', imageBlob, 'image.jpg');
         formData.append('prompt', input.prompt);
-        
+
         const response = await fetch(url, {
             method: 'POST',
             body: formData,
@@ -123,23 +124,24 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
 
         const result = await response.json();
         const imageUrl = result.imageData;
+        const qrCode = result.qrCode;
         if (!imageUrl) {
             throw new Error("Backend did not return an edited image URL.");
         }
-        return imageUrl;
+        return {imageUrl, qrCode};
     } catch (error) {
         console.error(`Failed to fetch from backend endpoint /generate for editing:`, error);
         throw error;
     }
 }
 
-export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<string> {
+export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<{videoUrl: string, qrCode: string}> {
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
     const url = `${BACKEND_URL}/generate-video`;
     console.log(`Making FormData request to POST ${url}`);
-    
+
     try {
         const imageResponse = await fetch(input.imageDataUri);
         const imageBlob = await imageResponse.blob();
@@ -160,10 +162,11 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
 
         const result = await response.json();
         const videoUrl = result.videoData;
+        const qrCode = result.qrCode;
         if (!videoUrl) {
             throw new Error("Backend did not return a video URL.");
         }
-        return videoUrl;
+        return {videoUrl, qrCode};
     } catch (error) {
         console.error(`Failed to fetch from backend endpoint /generate-video:`, error);
         throw error;
