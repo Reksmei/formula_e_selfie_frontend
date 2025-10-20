@@ -56,11 +56,13 @@ export default function SelfiePage() {
   const [prompts, setPrompts] = useState<ImagePlaceholder[]>([]);
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [imageQrCode, setImageQrCode] = useState<string | null>(null);
   const [isLoadingPrompts, setIsLoadingPrompts] = useState(true);
   const [showAllPrompts, setShowAllPrompts] = useState(false);
   const [editPrompt, setEditPrompt] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
+  const [videoQrCode, setVideoQrCode] = useState<string | null>(null);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const { toast } = useToast();
 
@@ -109,11 +111,12 @@ export default function SelfiePage() {
     if (!selfie || !selectedPrompt) return;
     setStep('generating');
     try {
-      const generatedImageUrl = await generateFormulaEImageAction({
+      const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
         prompt: selectedPrompt,
       });
-      setGeneratedImage(generatedImageUrl);
+      setGeneratedImage(imageUrl);
+      setImageQrCode(qrCode);
       setStep('result');
     } catch (error) {
       setStep('preview');
@@ -129,13 +132,13 @@ export default function SelfiePage() {
     if (!generatedImage || !editPrompt) return;
     setIsEditing(true);
     try {
-      // Since edit action might return a data URI or a URL, we pass the current state
       const imageToEdit = generatedImage;
-      const editedImageUrl = await editFormulaEImageAction({
+      const { imageUrl, qrCode } = await editFormulaEImageAction({
         imageDataUri: imageToEdit,
         prompt: editPrompt,
       });
-      setGeneratedImage(editedImageUrl);
+      setGeneratedImage(imageUrl);
+      setImageQrCode(qrCode);
       setEditPrompt('');
     } catch (error) {
       toast({
@@ -152,10 +155,11 @@ export default function SelfiePage() {
     if (!generatedImage) return;
     setStep('generating-video');
     try {
-      const videoUrl = await generateFormulaEVideoAction({
+      const { videoUrl, qrCode } = await generateFormulaEVideoAction({
         imageDataUri: generatedImage
       });
       setGeneratedVideo(videoUrl);
+      setVideoQrCode(qrCode);
       setStep('video-result');
     } catch (error) {
       setStep('result');
@@ -172,7 +176,9 @@ export default function SelfiePage() {
     setSelfie(null);
     setSelectedPrompt(null);
     setGeneratedImage(null);
+    setImageQrCode(null);
     setGeneratedVideo(null);
+    setVideoQrCode(null);
     setStep('capture');
   };
 
@@ -180,7 +186,9 @@ export default function SelfiePage() {
     setSelfie(null);
     setSelectedPrompt(null);
     setGeneratedImage(null);
+    setImageQrCode(null);
     setGeneratedVideo(null);
+    setVideoQrCode(null);
     setStep('capture');
   }
 
@@ -351,9 +359,9 @@ export default function SelfiePage() {
                               Scan this QR code with your phone to download the generated image.
                             </DialogDescription>
                           </DialogHeader>
-                          {generatedImage && (
+                          {imageQrCode && (
                             <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                              <QRCode value={generatedImage} />
+                              <QRCode value={imageQrCode} />
                             </div>
                           )}
                         </DialogContent>
@@ -393,14 +401,14 @@ export default function SelfiePage() {
         );
       case 'generating-video':
         return (
-            <div className="flex flex-col items-center justify-center gap-8 text-center">
-                <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                    <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
-                    <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
-                </div>
-                <Loader2 className="h-16 w-16 animate-spin text-primary" />
-                {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
+          <div className="flex flex-col items-center justify-center gap-8 text-center">
+            <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+                <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
+                <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
             </div>
+            <Loader2 className="h-16 w-16 animate-spin text-primary" />
+            {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
+          </div>
         );
       case 'video-result':
         return (
@@ -431,9 +439,9 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
                       </DialogHeader>
-                       {generatedVideo && (
+                       {videoQrCode && (
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                          <QRCode value={generatedVideo} />
+                          <QRCode value={videoQrCode} />
                         </div>
                       )}
                     </DialogContent>
@@ -475,3 +483,5 @@ export default function SelfiePage() {
     </main>
   );
 }
+
+    
