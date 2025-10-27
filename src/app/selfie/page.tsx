@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -98,14 +98,14 @@ export default function SelfiePage() {
     setStep('preview');
   };
 
-  const handleCameraError = (error: string) => {
+  const handleCameraError = useCallback((error: string) => {
     setStep('error');
     toast({
       variant: 'destructive',
       title: 'Camera Error',
       description: error,
     });
-  };
+  }, [toast]);
 
   const handleGenerate = async () => {
     if (!selfie || !selectedPrompt) return;
