@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown, QrCode } from 'lucide-react';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -169,13 +169,17 @@ export default function SelfiePage() {
       setGeneratedVideo(videoUrl);
       setVideoQrCode(`data:image/png;base64,${qrCode}`);
       setStep('video-result');
-    } catch (error) {
+    } catch (error: any) {
       setStep('result');
       console.error(error);
+      let description = 'The AI could not generate a video. Please try again.';
+      if (typeof error.message === 'string' && error.message.includes('Quota exceeded')) {
+        description = 'The video generation service is currently busy due to high demand. Please try again in a minute.';
+      }
       toast({
         variant: 'destructive',
         title: 'Video Generation Failed',
-        description: 'The AI could not generate a video. Please try again.',
+        description,
       });
     }
   };
@@ -371,7 +375,7 @@ export default function SelfiePage() {
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button variant="outline" className="font-body w-full">
-                            <QrCode className="mr-2 h-4 w-4" /> Download Image
+                            <img src="/qr-code.svg" className="mr-2 h-4 w-4" alt="qr code icon"/> Download Image
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
@@ -451,7 +455,7 @@ export default function SelfiePage() {
                   <Dialog>
                     <DialogTrigger asChild>
                        <Button size="lg" variant="outline" className="font-body">
-                          <QrCode className="mr-2 h-4 w-4" /> QR Code
+                          <img src="/qr-code.svg" className="mr-2 h-4 w-4" alt="qr code icon"/> QR Code
                        </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md">
