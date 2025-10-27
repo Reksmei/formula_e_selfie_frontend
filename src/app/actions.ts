@@ -142,6 +142,7 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
 
         const formData = new FormData();
         formData.append('image', imageBlob, 'image.jpg');
+        formData.append('prompt', 'make the subject in the photo move');
 
         const response = await fetch(url, {
             method: 'POST',
