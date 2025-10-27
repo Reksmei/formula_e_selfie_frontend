@@ -4,7 +4,7 @@ import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
+import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction, checkVideoStatusAction } from '../actions';
 import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
@@ -36,6 +36,7 @@ import {
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
+type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'error' | 'success';
 
 const editSuggestions = [
   "make the lighting more dramatic",
@@ -60,6 +61,7 @@ export default function SelfiePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
   const [videoQrCode, setVideoQrCode] = useState<string | null>(null);
+  const [videoGenStatus, setVideoGenStatus] = useState<VideoGenerationStatus>('idle');
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const { toast } = useToast();
 
@@ -159,30 +161,72 @@ export default function SelfiePage() {
     }
   };
   
-  const handleGenerateVideo = async () => {
-    if (!generatedImage) return;
-    setStep('generating-video');
+  const pollVideoStatus = useCallback(async (operationName: string) => {
     try {
-      const { videoUrl, qrCode } = await generateFormulaEVideoAction({
-        imageDataUri: generatedImage
-      });
-      setGeneratedVideo(videoUrl);
-      setVideoQrCode(`data:image/png;base64,${qrCode}`);
-      setStep('video-result');
-    } catch (error: any) {
-      setStep('result');
-      console.error(error);
-      let description = 'The AI could not generate a video. Please try again.';
-      if (typeof error.message === 'string' && error.message.includes('Quota exceeded')) {
-        description = 'The video generation service is currently busy due to high demand. Please try again in a minute.';
-      }
-      toast({
-        variant: 'destructive',
-        title: 'Video Generation Failed',
-        description,
-      });
+        const status = await checkVideoStatusAction(operationName);
+
+        if (status.done) {
+            if (status.error) {
+                setVideoGenStatus('error');
+                console.error("Video generation failed:", status.error);
+                toast({
+                    variant: 'destructive',
+                    title: 'Video Generation Failed',
+                    description: 'The AI could not generate a video. Please try again.',
+                });
+                setStep('result');
+            } else if (status.videoUrl) {
+                setGeneratedVideo(status.videoUrl);
+                setVideoQrCode(`data:image/png;base64,${status.qrCode}`);
+                setVideoGenStatus('success');
+                setStep('video-result');
+            }
+        } else {
+            if (status.error === 'rate-limited') {
+                setVideoGenStatus('rate-limited');
+            } else {
+                setVideoGenStatus('polling');
+            }
+            setTimeout(() => pollVideoStatus(operationName), 5000); // Poll every 5 seconds
+        }
+    } catch (error) {
+        setVideoGenStatus('error');
+        console.error("Error polling video status:", error);
+        toast({
+            variant: 'destructive',
+            title: 'Video Status Check Failed',
+            description: 'Could not check the status of the video generation. Please try again.',
+        });
+        setStep('result');
     }
-  };
+  }, [toast]);
+
+  const handleGenerateVideo = useCallback(async () => {
+    if (!generatedImage) return;
+
+    setStep('generating-video');
+    setVideoGenStatus('generating');
+
+    try {
+        const { operationName } = await generateFormulaEVideoAction({
+            imageDataUri: generatedImage
+        });
+        pollVideoStatus(operationName);
+    } catch (error: any) {
+        console.error("Failed to start video generation:", error);
+        let description = 'Could not start the video generation process. Please try again.';
+        if (typeof error.message === 'string' && error.message.includes('Quota exceeded')) {
+            description = 'The video generation service is currently busy due to high demand. Please try again in a minute.';
+        }
+        toast({
+            variant: 'destructive',
+            title: 'Video Generation Failed',
+            description,
+        });
+        setVideoGenStatus('error');
+        setStep('result');
+    }
+  }, [generatedImage, pollVideoStatus, toast]);
 
   const reset = () => {
     setSelfie(null);
@@ -191,6 +235,7 @@ export default function SelfiePage() {
     setImageQrCode(null);
     setGeneratedVideo(null);
     setVideoQrCode(null);
+    setVideoGenStatus('idle');
     setStep('capture');
   };
 
@@ -201,6 +246,7 @@ export default function SelfiePage() {
     setImageQrCode(null);
     setGeneratedVideo(null);
     setVideoQrCode(null);
+    setVideoGenStatus('idle');
     setStep('capture');
   }
 
@@ -210,6 +256,7 @@ export default function SelfiePage() {
     setGeneratedVideo(null);
     setVideoQrCode(null);
     setSelectedPromptId(null);
+    setVideoGenStatus('idle');
     setStep('preview');
   }
 
@@ -390,7 +437,7 @@ export default function SelfiePage() {
                             </div>
                         </DialogContent>
                       </Dialog>
-                      <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full">
+                      <Button onClick={() => handleGenerateVideo()} size="lg" className="font-body w-full" disabled={videoGenStatus === 'generating' || videoGenStatus === 'polling'}>
                         <Film className="mr-2 h-4 w-4" /> Generate Video
                       </Button>
                     </div>
@@ -424,13 +471,19 @@ export default function SelfiePage() {
           </div>
         );
     case 'generating-video':
+        let statusMessage = "Generating your video...";
+        if (videoGenStatus === 'polling') {
+            statusMessage = "Processing your video, checking for updates...";
+        } else if (videoGenStatus === 'rate-limited') {
+            statusMessage = "The service is busy. Still trying...";
+        }
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
                  <div className="mb-4">
                     {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
                 </div>
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                    <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
+                    <h2 className="text-3xl font-bold font-headline text-card-foreground">{statusMessage}</h2>
                     <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please be patient.</p>
                 </div>
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />

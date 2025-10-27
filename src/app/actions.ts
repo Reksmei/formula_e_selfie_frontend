@@ -6,38 +6,6 @@ import type { GenerateFormulaEVideoInput } from '@/ai/flows/generate-formula-e-v
 
 const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
 
-async function makeJsonRequest(endpoint: string, method: string = 'POST', body: any) {
-  if (!BACKEND_URL) {
-    throw new Error('Backend URL is not configured.');
-  }
-
-  const url = `${BACKEND_URL}${endpoint}`;
-  console.log(`Making JSON request to ${method} ${url}`);
-
-  try {
-    const response = await fetch(url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      const errorBody = await response.text();
-      console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
-      throw new Error(`Request failed: ${response.statusText} - ${errorBody}`);
-    }
-
-    const responseData = await response.json();
-    console.log(`Received response from ${url}`);
-    return responseData;
-  } catch (error) {
-    console.error(`Failed to fetch from backend endpoint ${endpoint}:`, error);
-    throw error;
-  }
-}
-
 export async function suggestFormulaEPromptsAction(): Promise<string[]> {
     // NOTE: The /suggest-prompts endpoint does not exist on the backend.
     // This function returns a hardcoded list of prompts as a fallback.
@@ -128,7 +96,7 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
     }
 }
 
-export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<{videoUrl: string, qrCode: string}> {
+export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoInput): Promise<{ operationName: string }> {
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
@@ -155,14 +123,57 @@ export async function generateFormulaEVideoAction(input: GenerateFormulaEVideoIn
         }
 
         const result = await response.json();
-        const videoUrl = result.videoData;
-        const qrCode = result.qrCode;
-        if (!videoUrl) {
-            throw new Error("Backend did not return a video URL.");
+        const operationName = result.operationName;
+        if (!operationName) {
+            throw new Error("Backend did not return an operation name.");
         }
-        return {videoUrl, qrCode};
+        return { operationName };
     } catch (error) {
         console.error(`Failed to fetch from backend endpoint /generate-video:`, error);
+        throw error;
+    }
+}
+
+export async function checkVideoStatusAction(operationName: string): Promise<{ done: boolean; videoUrl?: string; qrCode?: string; error?: string }> {
+    if (!BACKEND_URL) {
+        throw new Error('Backend URL is not configured.');
+    }
+    const url = `${BACKEND_URL}/check-video?operationName=${operationName}`;
+    console.log(`Making GET request to ${url}`);
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+             const errorBody = await response.text();
+             console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
+             // Don't throw for 429, as we want to keep polling
+             if (response.status === 429) {
+                return { done: false, error: 'rate-limited' };
+             }
+             throw new Error(`Request failed: ${response.statusText} - ${errorBody}`);
+        }
+
+        const result = await response.json();
+        
+        if (result.done) {
+            if (result.error) {
+                return { done: true, error: result.error.message };
+            }
+            const videoUrl = result.response.videoData;
+            const qrCode = result.response.qrCode;
+            if (!videoUrl) {
+                return { done: true, error: "Backend did not return a video URL." };
+            }
+            return { done: true, videoUrl, qrCode };
+        }
+
+        return { done: false };
+
+    } catch (error) {
+        console.error(`Failed to fetch from backend endpoint /check-video:`, error);
         throw error;
     }
 }
