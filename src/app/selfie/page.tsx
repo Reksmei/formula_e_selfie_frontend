@@ -108,11 +108,21 @@ export default function SelfiePage() {
   const handleGenerate = async () => {
     if (!selfie || !selectedPromptId) return;
 
+    const selectedPrompt = prompts.find(p => p.id === selectedPromptId);
+    if (!selectedPrompt) {
+        toast({
+            variant: 'destructive',
+            title: 'Prompt not found',
+            description: 'Could not find the selected prompt details.',
+        });
+        return;
+    }
+
     setStep('generating');
     try {
       const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
-        prompt: selectedPromptId,
+        prompt: selectedPrompt.description,
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(qrCode);
@@ -347,7 +357,7 @@ export default function SelfiePage() {
                 <CardContent>
                   {generatedImage && <img src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover 
        aspect-video" />}
-                  {generatedImage && (
+                  {imageQrCode && (
                     <div className="flex flex-col gap-2 mt-4">
                       <Dialog>
                         <DialogTrigger asChild>
@@ -362,11 +372,9 @@ export default function SelfiePage() {
                               Scan this QR code with your phone to download the generated image.
                             </DialogDescription>
                           </DialogHeader>
-                          {generatedImage && (
                             <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                              <QRCode value={generatedImage} />
+                              <QRCode value={imageQrCode} />
                             </div>
-                          )}
                         </DialogContent>
                       </Dialog>
                       <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full">
@@ -429,7 +437,7 @@ export default function SelfiePage() {
                 <Button onClick={reset} size="lg" variant="outline" className="font-body">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                 </Button>
-                {generatedVideo && (
+                {videoQrCode && (
                   <Dialog>
                     <DialogTrigger asChild>
                        <Button size="lg" variant="outline" className="font-body">
@@ -443,11 +451,11 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
                       </DialogHeader>
-                       {generatedVideo && (
+                       
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                          <QRCode value={generatedVideo} />
+                          <QRCode value={videoQrCode} />
                         </div>
-                      )}
+                      
                     </DialogContent>
                   </Dialog>
                 )}
