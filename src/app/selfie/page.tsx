@@ -56,11 +56,13 @@ export default function SelfiePage() {
   const [prompts, setPrompts] = useState<ImagePlaceholder[]>([]);
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [imageQrCode, setImageQrCode] = useState<string | null>(null);
   const [isLoadingPrompts, setIsLoadingPrompts] = useState(true);
   const [showAllPrompts, setShowAllPrompts] = useState(false);
   const [editPrompt, setEditPrompt] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
+  const [videoQrCode, setVideoQrCode] = useState<string | null>(null);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const { toast } = useToast();
 
@@ -109,11 +111,12 @@ export default function SelfiePage() {
     if (!selfie || !selectedPrompt) return;
     setStep('generating');
     try {
-      const { imageUrl } = await generateFormulaEImageAction({
+      const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
         prompt: selectedPrompt,
       });
       setGeneratedImage(imageUrl);
+      setImageQrCode(qrCode);
       setStep('result');
     } catch (error) {
       setStep('preview');
@@ -130,11 +133,12 @@ export default function SelfiePage() {
     setIsEditing(true);
     try {
       const imageToEdit = generatedImage;
-      const { imageUrl } = await editFormulaEImageAction({
+      const { imageUrl, qrCode } = await editFormulaEImageAction({
         imageDataUri: imageToEdit,
         prompt: editPrompt,
       });
       setGeneratedImage(imageUrl);
+      setImageQrCode(qrCode);
       setEditPrompt('');
     } catch (error) {
       toast({
@@ -151,10 +155,11 @@ export default function SelfiePage() {
     if (!generatedImage) return;
     setStep('generating-video');
     try {
-      const { videoUrl } = await generateFormulaEVideoAction({
+      const { videoUrl, qrCode } = await generateFormulaEVideoAction({
         imageDataUri: generatedImage
       });
       setGeneratedVideo(videoUrl);
+      setVideoQrCode(qrCode);
       setStep('video-result');
     } catch (error) {
       setStep('result');
@@ -171,7 +176,9 @@ export default function SelfiePage() {
     setSelfie(null);
     setSelectedPrompt(null);
     setGeneratedImage(null);
+    setImageQrCode(null);
     setGeneratedVideo(null);
+    setVideoQrCode(null);
     setStep('capture');
   };
 
@@ -179,7 +186,9 @@ export default function SelfiePage() {
     setSelfie(null);
     setSelectedPrompt(null);
     setGeneratedImage(null);
+    setImageQrCode(null);
     setGeneratedVideo(null);
+    setVideoQrCode(null);
     setStep('capture');
   }
 
@@ -350,9 +359,9 @@ export default function SelfiePage() {
                               Scan this QR code with your phone to download the generated image.
                             </DialogDescription>
                           </DialogHeader>
-                          {generatedImage && (
+                          {imageQrCode && (
                             <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                              <QRCode value={generatedImage} />
+                              <QRCode value={imageQrCode} />
                             </div>
                           )}
                         </DialogContent>
@@ -430,9 +439,9 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
                       </DialogHeader>
-                       {generatedVideo && (
+                       {videoQrCode && (
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                          <QRCode value={generatedVideo} />
+                          <QRCode value={videoQrCode} />
                         </div>
                       )}
                     </DialogContent>
