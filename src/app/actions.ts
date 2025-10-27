@@ -1,4 +1,3 @@
-
 'use server';
 import type { SuggestFormulaEPromptsOutput } from '@/ai/flows/suggest-formula-e-prompts';
 import type { GenerateFormulaEImageInput } from '@/ai/flows/generate-formula-e-image';
@@ -40,11 +39,14 @@ async function makeJsonRequest(endpoint: string, method: string = 'POST', body: 
 }
 
 export async function suggestFormulaEPromptsAction(): Promise<string[]> {
+    // NOTE: The /suggest-prompts endpoint does not exist on the backend.
     // This function returns a hardcoded list of prompts as a fallback.
     return [
-        "A Formula E car racing through ancient Roman ruins.",
-        "Celebrating a win on the podium in Monaco, champagne spraying.",
-        "A dynamic, anime-style action shot of a Formula E car drifting."
+      "A Formula E car racing through ancient Roman ruins.",
+      "Celebrating a win on the podium in Monaco, champagne spraying.",
+      "A pit stop scene with a futuristic female mechanic.",
+      "Driving a Formula E car on the surface of Mars.",
+      "A dynamic, anime-style action shot of a Formula E car drifting."
     ];
 }
 

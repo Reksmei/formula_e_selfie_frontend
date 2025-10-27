@@ -333,7 +333,7 @@ export default function SelfiePage() {
                 </CardHeader>
                 <CardContent>
                   {selfie && <Image src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
-                  <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
+                   <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                   </Button>
                 </CardContent>
@@ -361,7 +361,7 @@ export default function SelfiePage() {
                           </DialogHeader>
                           {imageQrCode && (
                             <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                              <QRCode value={imageQrCode} />
+                              <QRCode value={`https://storage.googleapis.com/formula_e_case_studies_files/${imageQrCode}`} />
                             </div>
                           )}
                         </DialogContent>
@@ -399,7 +399,7 @@ export default function SelfiePage() {
             </div>
           </div>
         );
-      case 'generating-video':
+    case 'generating-video':
         return (
           <div className="flex flex-col items-center justify-center gap-8 text-center">
             <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
@@ -441,7 +441,7 @@ export default function SelfiePage() {
                       </DialogHeader>
                        {videoQrCode && (
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                          <QRCode value={videoQrCode} />
+                          <QRCode value={`https://storage.googleapis.com/formula_e_case_studies_files/${videoQrCode}`} />
                         </div>
                       )}
                     </DialogContent>
