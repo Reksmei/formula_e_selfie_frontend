@@ -220,8 +220,7 @@ export default function SelfiePage() {
               </p>
             </div>
             <div className="mt-8">
-              <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 
-       animate-spin" /></div>}>
+              <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
                 <CameraCapture onCapture={handleCapture} onCameraError={handleCameraError} />
               </Suspense>
             </div>
@@ -286,8 +285,7 @@ export default function SelfiePage() {
                            <div className="absolute top-2 left-2 text-white font-bold text-sm bg-black/40 px-2 py-1 rounded-md">{imageInfo.id}</div>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1 opacity-0 group-hover:opacity-100 
-       transition-opacity">
+                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <Eye className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -319,8 +317,7 @@ export default function SelfiePage() {
                     )}
                   </>
                 )}
-                <Button onClick={handleGenerate} disabled={!selectedPromptId} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 
-       font-body">
+                <Button onClick={handleGenerate} disabled={!selectedPromptId} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
                   Generate Image
                 </Button>
               </CardContent>
@@ -346,16 +343,21 @@ export default function SelfiePage() {
                 You can now edit your image with a prompt, generate a video, or try a different prompt.
               </p>
             </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
               <Card>
                 <CardHeader>
                   <CardTitle className="font-headline">Original Selfie</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {selfie && <img src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
-                   <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
-                    <Repeat className="mr-2 h-4 w-4" /> Start Over
-                  </Button>
+                  <div className="flex flex-col gap-2 mt-4">
+                    <Button onClick={chooseNewPrompt} size="lg" variant="outline" className="font-body w-full">
+                        <Sparkles className="mr-2 h-4 w-4" /> Try Another Style
+                    </Button>
+                    <Button onClick={reset} size="lg" variant="outline" className="font-body w-full">
+                      <Repeat className="mr-2 h-4 w-4" /> Start Over
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
               <Card>
@@ -363,8 +365,7 @@ export default function SelfiePage() {
                   <CardTitle className="font-headline">Generated Image</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {generatedImage && <img src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover 
-       aspect-video" />}
+                  {generatedImage && <img src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
                   {imageQrCode && (
                     <div className="flex flex-col gap-2 mt-4">
                       <Dialog>
@@ -393,7 +394,7 @@ export default function SelfiePage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            <div className="mt-8 grid grid-cols-1">
               <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 font-headline"><Pencil /> Edit Your Image</CardTitle>
@@ -413,17 +414,6 @@ export default function SelfiePage() {
                         <span className="ml-2">Apply</span>
                       </Button>
                     </div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 font-headline"><Sparkles /> Try Another Style</CardTitle>
-                    <CardDescription className="font-body">Not quite right? Go back and select a different prompt.</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button onClick={chooseNewPrompt} className="font-body w-full">
-                      Choose New Prompt
-                    </Button>
                   </CardContent>
                 </Card>
             </div>
@@ -505,8 +495,7 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground 
-       backdrop-blur-sm hover:text-foreground transition-colors font-body">
+       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground backdrop-blur-sm hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
       </Link>      {renderContent()}
