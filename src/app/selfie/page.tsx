@@ -31,7 +31,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import QRCode from 'react-qr-code';
 
 
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
@@ -373,7 +372,7 @@ export default function SelfiePage() {
                             </DialogDescription>
                           </DialogHeader>
                             <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                              <QRCode value={imageQrCode} />
+                              <img src={imageQrCode} alt="Download QR Code" />
                             </div>
                         </DialogContent>
                       </Dialog>
@@ -412,10 +411,10 @@ export default function SelfiePage() {
         );
     case 'generating-video':
         return (
-            <div className="flex flex-col items-center justify-center gap-8 text-center">
+            <div className="flex flex-col items-center justify-center gap-4 text-center">
                  {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover 
        aspect-video" />}
-                <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto -mt-4">
+                <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
                     <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please be patient.</p>
                 </div>
@@ -453,7 +452,7 @@ export default function SelfiePage() {
                       </DialogHeader>
                        
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                          <QRCode value={videoQrCode} />
+                           <img src={videoQrCode} alt="Download QR Code" />
                         </div>
                       
                     </DialogContent>
@@ -487,7 +486,8 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground backdrop-blur-sm hover:text-foreground transition-colors font-body">
+       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground 
+       backdrop-blur-sm hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
       </Link>
