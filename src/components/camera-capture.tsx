@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Camera, VideoOff, AlertCircle, Loader2 } from 'lucide-react';
+import { Camera, AlertCircle, Loader2 } from 'lucide-react';
 import type { FC } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -15,34 +15,47 @@ interface CameraCaptureProps {
 
 const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
 
   useEffect(() => {
-    let stream: MediaStream | null = null;
     let isMounted = true;
 
     const enableCamera = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720, facingMode: 'user' } });
-        if (isMounted && videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.onloadedmetadata = () => {
+        if (streamRef.current) {
+          return;
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 1280, height: 720, facingMode: 'user' },
+        });
+
+        if (isMounted) {
+          streamRef.current = stream;
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.onloadedmetadata = () => {
               setIsCameraReady(true);
-          };
+            };
+          }
+        } else {
+          // If component unmounted while we were getting permission, stop tracks
+          stream.getTracks().forEach((track) => track.stop());
         }
       } catch (err) {
         if (isMounted) {
           let message = 'An unknown camera error occurred.';
           if (err instanceof DOMException) {
-              if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-                  message = 'Camera access was denied. Please allow camera access in your browser settings to continue.';
-              } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
-                  message = 'No camera was found on your device. Please connect a camera to continue.';
-              } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
-                  message = 'The camera is currently in use by another application.';
-              }
+            if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+              message = 'Camera access was denied. Please allow camera access in your browser settings to continue.';
+            } else if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+              message = 'No camera was found on your device. Please connect a camera to continue.';
+            } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+              message = 'The camera is currently in use by another application.';
+            }
           }
           setError(message);
           onCameraError(message);
@@ -54,8 +67,9 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 
     return () => {
       isMounted = false;
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
       }
     };
   }, [onCameraError]);
@@ -63,7 +77,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
   const startCountdown = () => {
     setCountdown(3);
     const timer = setInterval(() => {
-      setCountdown(prev => {
+      setCountdown((prev) => {
         if (prev === null || prev <= 1) {
           clearInterval(timer);
           captureImage();
@@ -86,6 +100,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
         context.scale(-1, 1);
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL('image/jpeg');
+        // Use a timeout to ensure the state update doesn't block the UI thread
         setTimeout(() => onCapture(dataUrl), 0);
       }
     }
@@ -104,10 +119,13 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
       <div className="relative w-full max-w-lg aspect-video bg-muted rounded-lg overflow-hidden border shadow-lg">
-        <video ref={videoRef} autoPlay playsInline muted className={cn(
-            "w-full h-full object-cover transform scale-x-[-1]",
-            !isCameraReady && "hidden"
-        )} />
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          className={cn('w-full h-full object-cover transform scale-x-[-1]', !isCameraReady && 'hidden')}
+        />
         {!isCameraReady && (
           <div className="w-full h-full flex flex-col items-center justify-center text-muted-foreground">
             <Loader2 className="w-16 h-16 animate-spin" />
