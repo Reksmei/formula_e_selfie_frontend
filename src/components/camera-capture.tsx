@@ -20,12 +20,13 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
   const [error, setError] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
 
-  const stableOnCameraError = useCallback(onCameraError, []);
+  const stableOnCameraError = useCallback(onCameraError, [onCameraError]);
 
   useEffect(() => {
     let isMounted = true;
 
     const enableCamera = async () => {
+      // If the stream is already running, don't do anything.
       if (streamRef.current) {
         return;
       }
@@ -39,11 +40,13 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
           streamRef.current = stream;
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
+            // Use an event listener to know when the video is ready to play.
             videoRef.current.onloadedmetadata = () => {
               setIsCameraReady(true);
             };
           }
         } else {
+          // If the component unmounted before the stream was ready, stop the tracks.
           stream.getTracks().forEach((track) => track.stop());
         }
       } catch (err) {
@@ -66,6 +69,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 
     enableCamera();
 
+    // The cleanup function is critical for stopping the camera when the component unmounts.
     return () => {
       isMounted = false;
       if (streamRef.current) {
@@ -73,7 +77,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
         streamRef.current = null;
       }
     };
-  }, [stableOnCameraError]);
+  }, [stableOnCameraError]); // Dependency array ensures this runs only when the onCameraError callback changes.
 
   const startCountdown = () => {
     setCountdown(3);
@@ -148,3 +152,5 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 };
 
 export default CameraCapture;
+
+    

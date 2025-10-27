@@ -109,22 +109,12 @@ export default function SelfiePage() {
 
   const handleGenerate = async () => {
     if (!selfie || !selectedPromptId) return;
-
-    const selectedPromptObject = prompts.find(p => p.id === selectedPromptId);
-    if (!selectedPromptObject) {
-        toast({
-            variant: 'destructive',
-            title: 'Prompt not found',
-            description: 'Could not find the selected prompt details.',
-        });
-        return;
-    }
     
     setStep('generating');
     try {
       const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
-        prompt: selectedPromptObject.description,
+        prompt: selectedPromptId,
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(qrCode);
@@ -412,7 +402,7 @@ export default function SelfiePage() {
         );
     case 'generating-video':
         return (
-            <div className="flex flex-col items-center justify-center gap-8 text-center">
+            <div className="flex flex-col items-center justify-center gap-4 text-center">
                  {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
@@ -494,3 +484,5 @@ export default function SelfiePage() {
     </main>
   );
 }
+
+    
