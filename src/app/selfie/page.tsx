@@ -124,7 +124,7 @@ export default function SelfiePage() {
         prompt: selectedPrompt.description,
       });
       setGeneratedImage(imageUrl);
-      setImageQrCode(qrCode);
+      setImageQrCode(`data:image/png;base64,${qrCode}`);
       setStep('result');
     } catch (error) {
       setStep('preview');
@@ -146,7 +146,7 @@ export default function SelfiePage() {
         prompt: editPrompt,
       });
       setGeneratedImage(imageUrl);
-      setImageQrCode(qrCode);
+      setImageQrCode(`data:image/png;base64,${qrCode}`);
       setEditPrompt('');
     } catch (error) {
       toast({
@@ -167,7 +167,7 @@ export default function SelfiePage() {
         imageDataUri: generatedImage
       });
       setGeneratedVideo(videoUrl);
-      setVideoQrCode(qrCode);
+      setVideoQrCode(`data:image/png;base64,${qrCode}`);
       setStep('video-result');
     } catch (error) {
       setStep('result');
@@ -412,8 +412,9 @@ export default function SelfiePage() {
     case 'generating-video':
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
-                 {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover 
-       aspect-video" />}
+                 <div className="-mt-8 mb-4">
+                    {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video opacity-100" />}
+                </div>
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
                     <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please be patient.</p>
@@ -450,11 +451,9 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
                       </DialogHeader>
-                       
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
                            <img src={videoQrCode} alt="Download QR Code" />
                         </div>
-                      
                     </DialogContent>
                   </Dialog>
                 )}
