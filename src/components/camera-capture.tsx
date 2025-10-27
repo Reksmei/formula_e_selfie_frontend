@@ -26,8 +26,11 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
     let isMounted = true;
 
     const enableCamera = async () => {
-      // If the stream is already running, don't do anything.
       if (streamRef.current) {
+        // If stream already exists, no need to re-initialize.
+        if (videoRef.current && !videoRef.current.srcObject) {
+           videoRef.current.srcObject = streamRef.current;
+        }
         return;
       }
 
@@ -40,13 +43,11 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
           streamRef.current = stream;
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
-            // Use an event listener to know when the video is ready to play.
             videoRef.current.onloadedmetadata = () => {
               setIsCameraReady(true);
             };
           }
         } else {
-          // If the component unmounted before the stream was ready, stop the tracks.
           stream.getTracks().forEach((track) => track.stop());
         }
       } catch (err) {
@@ -69,7 +70,6 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 
     enableCamera();
 
-    // The cleanup function is critical for stopping the camera when the component unmounts.
     return () => {
       isMounted = false;
       if (streamRef.current) {
@@ -77,7 +77,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
         streamRef.current = null;
       }
     };
-  }, [stableOnCameraError]); // Dependency array ensures this runs only when the onCameraError callback changes.
+  }, [stableOnCameraError]);
 
   const startCountdown = () => {
     setCountdown(3);
@@ -100,12 +100,10 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
       canvas.height = videoRef.current.videoHeight;
       const context = canvas.getContext('2d');
       if (context) {
-        // Flip the image horizontally for a mirror effect
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
         context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
         const dataUrl = canvas.toDataURL('image/jpeg');
-        // Use a timeout to ensure the state update doesn't block the UI thread
         setTimeout(() => onCapture(dataUrl), 0);
       }
     }
