@@ -343,7 +343,7 @@ export default function SelfiePage() {
             <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
-                You can now generate a video or try a different prompt.
+                You can now edit your image with a prompt, generate a video, or try a different prompt.
               </p>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -393,15 +393,35 @@ export default function SelfiePage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="mt-8 w-full max-w-lg mx-auto">
-               <Card>
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+              <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 font-headline"><Pencil /> Try Another Style</CardTitle>
+                    <CardTitle className="flex items-center gap-2 font-headline"><Pencil /> Edit Your Image</CardTitle>
+                    <CardDescription className="font-body">Describe the changes you'd like to make.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder={`e.g. '${editSuggestions[currentSuggestionIndex]}'`}
+                        value={editPrompt}
+                        onChange={(e) => setEditPrompt(e.target.value)}
+                        disabled={isEditing}
+                        className="font-body"
+                      />
+                      <Button onClick={handleEdit} disabled={!editPrompt || isEditing} className="font-body">
+                        {isEditing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+                        <span className="ml-2">Apply</span>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 font-headline"><Sparkles /> Try Another Style</CardTitle>
                     <CardDescription className="font-body">Not quite right? Go back and select a different prompt.</CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Button onClick={chooseNewPrompt} className="font-body w-full">
-                      <Sparkles className="h-4 w-4 mr-2" />
                       Choose New Prompt
                     </Button>
                   </CardContent>
@@ -412,8 +432,8 @@ export default function SelfiePage() {
     case 'generating-video':
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
-                 <div className="-mt-8 mb-4">
-                    {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video opacity-100" />}
+                 <div className="mb-4">
+                    {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
                 </div>
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
