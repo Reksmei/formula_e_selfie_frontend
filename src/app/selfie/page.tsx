@@ -1,8 +1,6 @@
-
 'use client';
 
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
@@ -109,7 +107,7 @@ export default function SelfiePage() {
 
   const handleGenerate = async () => {
     if (!selfie || !selectedPromptId) return;
-    
+
     setStep('generating');
     try {
       const { imageUrl, qrCode } = await generateFormulaEImageAction({
@@ -204,7 +202,8 @@ export default function SelfiePage() {
               </p>
             </div>
             <div className="mt-8">
-              <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
+              <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 
+       animate-spin" /></div>}>
                 <CameraCapture onCapture={handleCapture} onCameraError={handleCameraError} />
               </Suspense>
             </div>
@@ -221,7 +220,7 @@ export default function SelfiePage() {
               </CardHeader>
               <CardContent>
                 {selfie && (
-                  <Image
+                  <img
                     src={selfie}
                     alt="User's selfie"
                     width={500}
@@ -258,7 +257,7 @@ export default function SelfiePage() {
                           )}
                           onClick={() => setSelectedPromptId(imageInfo.id)}
                         >
-                          <Image
+                          <img
                             src={imageInfo.imageUrl}
                             alt={imageInfo.description}
                             width={300}
@@ -269,7 +268,8 @@ export default function SelfiePage() {
                            <div className="absolute top-2 left-2 text-white font-bold text-sm bg-black/40 px-2 py-1 rounded-md">{imageInfo.id}</div>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button variant="ghost" size="sm" className="absolute bottom-2 right-2 text-white h-8 w-8 p-1 opacity-0 group-hover:opacity-100 
+       transition-opacity">
                                 <Eye className="h-4 w-4" />
                               </Button>
                             </AlertDialogTrigger>
@@ -301,7 +301,8 @@ export default function SelfiePage() {
                     )}
                   </>
                 )}
-                <Button onClick={handleGenerate} disabled={!selectedPromptId} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
+                <Button onClick={handleGenerate} disabled={!selectedPromptId} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 
+       font-body">
                   Generate Image
                 </Button>
               </CardContent>
@@ -333,7 +334,7 @@ export default function SelfiePage() {
                   <CardTitle className="font-headline">Original Selfie</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {selfie && <Image src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
+                  {selfie && <img src={selfie} alt="Original selfie" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
                    <Button onClick={reset} size="lg" variant="outline" className="font-body mt-4 w-full">
                     <Repeat className="mr-2 h-4 w-4" /> Start Over
                   </Button>
@@ -344,7 +345,8 @@ export default function SelfiePage() {
                   <CardTitle className="font-headline">Generated Image</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {generatedImage && <Image src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover aspect-video" />}
+                  {generatedImage && <img src={generatedImage} alt="Generated Formula E image" width={500} height={300} className="rounded-lg object-cover 
+       aspect-video" />}
                   {generatedImage && (
                     <div className="flex flex-col gap-2 mt-4">
                       <Dialog>
@@ -360,9 +362,9 @@ export default function SelfiePage() {
                               Scan this QR code with your phone to download the generated image.
                             </DialogDescription>
                           </DialogHeader>
-                          {imageQrCode && (
+                          {generatedImage && (
                             <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                              <QRCode value={imageQrCode} />
+                              <QRCode value={generatedImage} />
                             </div>
                           )}
                         </DialogContent>
@@ -403,7 +405,8 @@ export default function SelfiePage() {
     case 'generating-video':
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
-                 {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
+                 {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover 
+       aspect-video" />}
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
                     <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please be patient.</p>
@@ -440,9 +443,9 @@ export default function SelfiePage() {
                           Scan this QR code with your phone to download the generated video.
                         </DialogDescription>
                       </DialogHeader>
-                       {videoQrCode && (
+                       {generatedVideo && (
                         <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                          <QRCode value={videoQrCode} />
+                          <QRCode value={generatedVideo} />
                         </div>
                       )}
                     </DialogContent>
@@ -476,13 +479,11 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground backdrop-blur-sm hover:text-foreground transition-colors font-body">
+       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground 
+       backdrop-blur-sm hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
-      </Link>
-      {renderContent()}
+      </Link>      {renderContent()}
     </main>
   );
 }
-
-    
