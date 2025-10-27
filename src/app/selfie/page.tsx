@@ -401,14 +401,14 @@ export default function SelfiePage() {
         );
     case 'generating-video':
         return (
-            <div className="flex flex-col items-center justify-center gap-8 text-center">
-              <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                  <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
-                  <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
-              </div>
-              <Loader2 className="h-16 w-16 animate-spin text-primary" />
-              {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
+          <div className="flex flex-col items-center justify-center gap-8 text-center">
+            <div className="bg-black/70 rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+                <h2 className="text-3xl font-bold font-headline text-white">Generating your video...</h2>
+                <p className="text-gray-300 font-body mt-4">This can take a minute or two. Please be patient.</p>
             </div>
+            <Loader2 className="h-16 w-16 animate-spin text-primary" />
+            {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={200} height={112} className="rounded-lg object-cover aspect-video mt-4 opacity-50" />}
+          </div>
         );
       case 'video-result':
         return (
