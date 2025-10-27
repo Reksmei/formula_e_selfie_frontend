@@ -54,7 +54,7 @@ export default function SelfiePage() {
   const [step, setStep] = useState<Step>('capture');
   const [selfie, setSelfie] = useState<string | null>(null);
   const [prompts, setPrompts] = useState<ImagePlaceholder[]>([]);
-  const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
+  const [selectedPromptId, setSelectedPromptId] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [imageQrCode, setImageQrCode] = useState<string | null>(null);
   const [isLoadingPrompts, setIsLoadingPrompts] = useState(true);
@@ -108,12 +108,23 @@ export default function SelfiePage() {
   }, [toast]);
 
   const handleGenerate = async () => {
-    if (!selfie || !selectedPrompt) return;
+    if (!selfie || !selectedPromptId) return;
+
+    const selectedPromptObject = prompts.find(p => p.id === selectedPromptId);
+    if (!selectedPromptObject) {
+        toast({
+            variant: 'destructive',
+            title: 'Prompt not found',
+            description: 'Could not find the selected prompt details.',
+        });
+        return;
+    }
+    
     setStep('generating');
     try {
       const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
-        prompt: selectedPrompt,
+        prompt: selectedPromptObject.description,
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(qrCode);
@@ -174,7 +185,7 @@ export default function SelfiePage() {
 
   const reset = () => {
     setSelfie(null);
-    setSelectedPrompt(null);
+    setSelectedPromptId(null);
     setGeneratedImage(null);
     setImageQrCode(null);
     setGeneratedVideo(null);
@@ -184,7 +195,7 @@ export default function SelfiePage() {
 
   const retake = () => {
     setSelfie(null);
-    setSelectedPrompt(null);
+    setSelectedPromptId(null);
     setGeneratedImage(null);
     setImageQrCode(null);
     setGeneratedVideo(null);
@@ -253,9 +264,9 @@ export default function SelfiePage() {
                           key={imageInfo.id}
                           className={cn(
                             "relative rounded-lg overflow-hidden cursor-pointer border-4 group",
-                            selectedPrompt === imageInfo.description ? 'border-accent' : 'border-transparent'
+                            selectedPromptId === imageInfo.id ? 'border-accent' : 'border-transparent'
                           )}
-                          onClick={() => setSelectedPrompt(imageInfo.description)}
+                          onClick={() => setSelectedPromptId(imageInfo.id)}
                         >
                           <Image
                             src={imageInfo.imageUrl}
@@ -281,7 +292,7 @@ export default function SelfiePage() {
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Close</AlertDialogCancel>
-                                <AlertDialogAction onClick={() => setSelectedPrompt(imageInfo.description)}>Select</AlertDialogAction>
+                                <AlertDialogAction onClick={() => setSelectedPromptId(imageInfo.id)}>Select</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -300,7 +311,7 @@ export default function SelfiePage() {
                     )}
                   </>
                 )}
-                <Button onClick={handleGenerate} disabled={!selectedPrompt} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
+                <Button onClick={handleGenerate} disabled={!selectedPromptId} className="w-full mt-4 bg-accent text-accent-foreground hover:bg-accent/90 font-body">
                   Generate Image
                 </Button>
               </CardContent>
@@ -401,7 +412,7 @@ export default function SelfiePage() {
         );
     case 'generating-video':
         return (
-            <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <div className="flex flex-col items-center justify-center gap-8 text-center">
                  {generatedImage && <Image src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
@@ -483,5 +494,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    

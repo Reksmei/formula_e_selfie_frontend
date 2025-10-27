@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Camera, AlertCircle, Loader2 } from 'lucide-react';
@@ -15,27 +15,35 @@ interface CameraCaptureProps {
 
 const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [countdown, setCountdown] = useState<number | null>(null);
 
+  const stableOnCameraError = useCallback(onCameraError, []);
+
   useEffect(() => {
-    let stream: MediaStream | null = null;
     let isMounted = true;
 
     const enableCamera = async () => {
+      if (streamRef.current) {
+        return;
+      }
+
       try {
-        stream = await navigator.mediaDevices.getUserMedia({
+        const stream = await navigator.mediaDevices.getUserMedia({
           video: { width: 1280, height: 720, facingMode: 'user' },
         });
 
-        if (isMounted && videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.onloadedmetadata = () => {
-            setIsCameraReady(true);
-          };
+        if (isMounted) {
+          streamRef.current = stream;
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.onloadedmetadata = () => {
+              setIsCameraReady(true);
+            };
+          }
         } else {
-          // If component unmounted while we were getting permission, stop tracks
           stream.getTracks().forEach((track) => track.stop());
         }
       } catch (err) {
@@ -51,7 +59,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
             }
           }
           setError(message);
-          onCameraError(message);
+          stableOnCameraError(message);
         }
       }
     };
@@ -60,11 +68,12 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 
     return () => {
       isMounted = false;
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
       }
     };
-  }, [onCameraError]);
+  }, [stableOnCameraError]);
 
   const startCountdown = () => {
     setCountdown(3);
