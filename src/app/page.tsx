@@ -13,8 +13,8 @@ export default function Home() {
       "bg-home"
       )}>
       <div className="w-full max-w-2xl text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-primary-foreground sm:text-6xl font-headline">
-          Formula E AI Selfie
+        <h1 className="whitespace-nowrap text-4xl font-bold tracking-tight text-primary-foreground sm:text-6xl font-headline">
+          Formula E AI Selfie🏎️🤳
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted-foreground font-body">
         Generate a new image based on your selfie and a Formula E-related prompt. <br/> with Gemini 2.5 Flash Image and Veo 2.
