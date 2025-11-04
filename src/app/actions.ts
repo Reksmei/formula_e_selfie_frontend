@@ -138,7 +138,7 @@ export async function checkVideoStatusAction(operationName: string): Promise<{ d
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
-    const url = `${BACKEND_URL}/check-video?operationName=${operationName}`;
+    const url = `${BACKEND_URL}/video-status/${operationName}`;
     console.log(`Making GET request to ${url}`);
 
     try {
@@ -149,21 +149,24 @@ export async function checkVideoStatusAction(operationName: string): Promise<{ d
         if (!response.ok) {
              const errorBody = await response.text();
              console.error(`Error from backend: ${response.status} ${response.statusText}`, errorBody);
-             // Don't throw for 429, as we want to keep polling
+             // Don't throw for certain errors, as we want to keep polling
              if (response.status === 429) {
                 return { done: false, error: 'rate-limited' };
+             }
+             if (response.status === 404) {
+                return { done: false, error: 'not-found' };
              }
              throw new Error(`Request failed: ${response.statusText} - ${errorBody}`);
         }
 
         const result = await response.json();
         
-        if (result.done) {
+        if (result.status === 'done') {
             if (result.error) {
                 return { done: true, error: result.error.message };
             }
-            const videoUrl = result.response.videoData;
-            const qrCode = result.response.qrCode;
+            const videoUrl = result.videoData;
+            const qrCode = result.qrCode;
             if (!videoUrl) {
                 return { done: true, error: "Backend did not return a video URL." };
             }
@@ -173,7 +176,7 @@ export async function checkVideoStatusAction(operationName: string): Promise<{ d
         return { done: false };
 
     } catch (error) {
-        console.error(`Failed to fetch from backend endpoint /check-video:`, error);
+        console.error(`Failed to fetch from backend endpoint /video-status:`, error);
         throw error;
     }
 }

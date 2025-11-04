@@ -2,13 +2,13 @@
   "placeholderImages": [
     {
       "id": "London E-Prix",
-      "description": "Edit the background to show the user posing confidently with a Formula E car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
+      "description": "Edit the background to show the user posing confidently with a Formula E car (as provided at https://goo.gle/fe-car-1) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/london.png",
       "imageHint": "london track"
     },
     {
       "id": "Podium Celebration",
-      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding(e.g. https://miro.medium.com/v2/resize:fit:1400/0*Ruwxhg6BVX5P25rF). The user's expression should be one of pure joy and victory.",
+      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding(e.g. https://goo.gle/fe-gc-branding). The user's expression should be one of pure joy and victory.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/podium.png",
       "imageHint": "celebration podium"
     },
@@ -20,25 +20,25 @@
     },
     {
       "id": "Berlin E-Prix",
-      "description": "Place the user in the cockpit of a Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg), wearing a full race suit (no helmet), with a dynamic, blurred background of the Berlin E-Prix section during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
+      "description": "Place the user in the cockpit of a Formula E GenBeta car (as provided at https://goo.gle/fe-car-1), wearing a full race suit (no helmet), with a dynamic, blurred background of the Berlin E-Prix section during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/berlin.png",
       "imageHint": "berlin track"
     },
     {
       "id": "Mexico E-Prix",
-      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://p.turbosquid.com/ts-thumb/5t/vBs1Ff/bp/screenshot/jpg/1718371194/1920x1080/fit_q87/cc94c9797f2224013b9ca9450512c15bc5458157/screenshot.jpg) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
+      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://goo.gle/fe-car-1) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/mexico.png",
       "imageHint": "mexico track"
     },
     {
       "id": "In the Garage",
-      "description": "Seamlessly edit the user into a high-tech Formula E garage, positioned as a team principal looking intently at a data screen showing race telemetry. The user should be wearing team-style headphones around their neck. In the background, a Formula E Gen3 car (as as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810)is being prepped by engineers in unbranded team gear. The lighting should be focused and professional.",
+      "description": "Seamlessly edit the user into a high-tech Formula E garage, positioned as a team principal looking intently at a data screen showing race telemetry. The user should be wearing team-style headphones around their neck. In the background, a Formula E Gen3 car (as as provided at https://goo.gle/fe-car-1)is being prepped by engineers in unbranded team gear. The lighting should be focused and professional.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/garage.png",
       "imageHint": "fix garage"
     },
     {
       "id": "Diriyah E-Prix",
-      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(as provided at https://resources.formula-e.pulselive.com/photo-resources/2024/04/25/73b3fedf-6c60-4dd0-9fd6-a995ff8e1af6/skIeg4Dz.jpg?width=1440&height=810), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
+      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(as provided at https://goo.gle/fe-car-1), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/diriyah.png",
       "imageHint": "diriyah track"
     },

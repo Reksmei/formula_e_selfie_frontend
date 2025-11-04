@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
@@ -36,7 +37,7 @@ import {
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
-type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'error' | 'success';
+type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'not-found' | 'error' | 'success';
 
 const editSuggestions = [
   "make the lighting more dramatic",
@@ -165,7 +166,7 @@ export default function SelfiePage() {
     try {
         const status = await checkVideoStatusAction(operationName);
 
-        if (status.done) {
+        if (status.done === true) {
             if (status.error) {
                 setVideoGenStatus('error');
                 console.error("Video generation failed:", status.error);
@@ -184,7 +185,10 @@ export default function SelfiePage() {
         } else {
             if (status.error === 'rate-limited') {
                 setVideoGenStatus('rate-limited');
-            } else {
+            } else if (status.error === 'not-found') {
+                setVideoGenStatus('not-found');
+            }
+            else {
                 setVideoGenStatus('polling');
             }
             setTimeout(() => pollVideoStatus(operationName), 5000); // Poll every 5 seconds
@@ -476,6 +480,8 @@ export default function SelfiePage() {
             statusMessage = "Processing your video, checking for updates...";
         } else if (videoGenStatus === 'rate-limited') {
             statusMessage = "The service is busy. Still trying...";
+        } else if (videoGenStatus === 'not-found') {
+            statusMessage = "Starting video generation job...";
         }
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
