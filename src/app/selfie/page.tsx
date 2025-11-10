@@ -592,6 +592,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    
-    
