@@ -22,22 +22,19 @@ export default function Home() {
         <div className="absolute inset-0 bg-background/50"></div>
       </div>
       
-      <div className="absolute top-8 z-10">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-2xl text-center">
         <Image 
           src="https://storage.googleapis.com/selfie-sample-images/formula_e_gc_logo_black.svg"
           alt="Formula E Google Cloud Logo"
           width={300}
           height={75}
-          className="w-auto h-auto"
+          className="w-auto h-auto mb-8"
         />
-      </div>
-
-      <div className="relative z-10 w-full max-w-2xl text-center">
         <h1 className="whitespace-nowrap text-4xl font-bold tracking-tight text-primary-foreground sm:text-6xl font-headline">
-          Formula E AI Selfie
+          AI Selfie
         </h1>
         <p className="mt-6 text-lg leading-8 text-muted-foreground font-body">
-        Generate a new image based on your selfie and a Formula E-related prompt. <br/> with Gemini 2.5 Flash Image and Veo 3.1.
+        Generate a new image based on your selfie and a Formula E-related prompt with Gemini 2.5 Flash Image and Veo 3.1.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href="/selfie">
