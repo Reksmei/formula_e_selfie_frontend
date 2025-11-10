@@ -562,9 +562,11 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-      <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground backdrop-blur-sm hover:text-foreground transition-colors font-body">
-        <ArrowLeft className="w-4 h-4" />
-        Back to Home
+      <Link href="/" passHref>
+        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
+          <ArrowLeft className="w-4 h-4" />
+          Back to Home
+        </Button>
       </Link>
       <Dialog>
         <DialogTrigger asChild>
@@ -579,13 +581,13 @@ export default function SelfiePage() {
               <DialogHeader>
                 <DialogTitle>How it Works</DialogTitle>
                 <DialogDescription>
-                    Formula E AI Selfie is an AI demo that leverages Generative media on Google Cloud to reimagine your selfie into a realistic, immersive Formula E scenario.
-                    <br /><br />
-                    Frontend Web application is hosted with Firebase, where you take a selfie and select your prompt. After you select your prompt, the Cloud Run backend sends the the selfie and a text prompt to Gemini 2.5 Flash Image via the Vertex AI API. After receiving a response from Vertex AI, the backend uploads the image to Cloud Storage and shares the URL with the frontend.
-                    <br /><br />
-                    Gemini 2.5 Flash Image's image editing capabilities also allow us to make changes to our generated image with natural language prompts, such as "put my into the car". After sending your change prompt, the backend sends another request to Gemini 2.5 Flash Image with the generated image and editing prompt, before sending the Cloud Storage URL to the frontend with the updated image.
-                    <br /><br />
-                    Lastly, Veo 3.1's text and image-to-video functionality allows us to animate our video, as after we are happy with our image, the Cloud Run service sends the image and a simple text prompt to Veo 3.1 via the Vertex API, and uploads the output to Cloud Storage.
+                  Formula E AI Selfie is an AI demo that leverages Generative media on Google Cloud to reimagine your selfie into a realistic, immersive Formula E scenario.
+                  <br /><br />
+                  Frontend Web application is hosted with Firebase, where you take a selfie and select your prompt. After you select your prompt, the Cloud Run backend sends the the selfie and a text prompt to Gemini 2.5 Flash Image via the Vertex AI API. After receiving a response from Vertex AI, the backend uploads the image to Cloud Storage and shares the URL with the frontend.
+                  <br /><br />
+                  Gemini 2.5 Flash Image's image editing capabilities also allow us to make changes to our generated image with natural language prompts, such as "put my into the car". After sending your change prompt, the backend sends another request to Gemini 2.5 Flash Image with the generated image and editing prompt, before sending the Cloud Storage URL to the frontend with the updated image.
+                  <br /><br />
+                  Lastly, Veo 3.1's text and image-to-video functionality allows us to animate our video, as after we are happy with our image, the Cloud Run service sends the image and a simple text prompt to Veo 3.1 via the Vertex API, and uploads the output to Cloud Storage.
                 </DialogDescription>
               </DialogHeader>
             </div>
@@ -607,3 +609,4 @@ export default function SelfiePage() {
     
 
     
+
