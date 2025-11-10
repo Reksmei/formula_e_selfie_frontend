@@ -44,7 +44,7 @@
     },
     {
       "id": "Tokyo E-Prix",
-      "description": "Place the user on the bustling streets of Tokyo, with a Formula E car racing past in a blur of motion. The iconic neon lights and skyscrapers of the city should form a vibrant, futuristic backdrop. The user is looking towards the camera with a slight smile, capturing a moment of excitement during the inaugural Tokyo E-Prix.",
+      "description": "Place the user on the bustling streets of Tokyo, with a Formula E car (as provided at https://goo.gle/fe-car-1) racing past in a blur of motion. The iconic neon lights and skyscrapers of the city should form a vibrant, futuristic backdrop. The user is looking towards the camera with a slight smile, capturing a moment of excitement during the inaugural Tokyo E-Prix.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/tokyo.png",
       "imageHint": "tokyo track"
     }

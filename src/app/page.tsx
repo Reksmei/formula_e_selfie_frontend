@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -8,11 +7,19 @@ import { cn } from '@/lib/utils';
 
 export default function Home() {
   return (
-    <main className={cn(
-      "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
-      "bg-home"
-      )}>
-      <div className="w-full max-w-2xl text-center">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-background">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover opacity-30"
+          src="https://storage.googleapis.com/created-videos/4855420956219534839/sample_3.mp4"
+        />
+        <div className="absolute inset-0 bg-background/50"></div>
+      </div>
+      <div className="relative z-10 w-full max-w-2xl text-center">
         <h1 className="whitespace-nowrap text-4xl font-bold tracking-tight text-primary-foreground sm:text-6xl font-headline">
           Formula E AI Selfie🏎️🤳
         </h1>
