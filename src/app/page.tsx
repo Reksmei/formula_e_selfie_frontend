@@ -24,7 +24,7 @@ export default function Home() {
       
       <div className="absolute top-8 z-10">
         <Image 
-          src="https://storage.googleapis.com/studioprompt-asset-storage/95b03517-1557-4ea3-9610-a4a40698c6ec.png"
+          src="https://storage.googleapis.com/selfie-sample-images/formula_e_gc_logo_black.svg"
           alt="Formula E Google Cloud Logo"
           width={300}
           height={75}
