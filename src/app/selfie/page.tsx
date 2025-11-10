@@ -569,7 +569,7 @@ export default function SelfiePage() {
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-xl">
           <DialogHeader>
             <DialogTitle>How it Works</DialogTitle>
             <DialogDescription>
