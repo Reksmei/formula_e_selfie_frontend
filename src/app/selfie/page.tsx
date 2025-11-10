@@ -581,6 +581,10 @@ export default function SelfiePage() {
                 <p className="mt-2">
                 Frontend Web application is hosted with Firebase, where you take a selfie and select your prompt. After you select your prompt, the Cloud Run backend sends the the selfie and a text prompt to Gemini 2.5 Flash Image via the Vertex AI API. After receiving a response from Vertex AI, the backend uploads the image to Cloud Storage and shares the URL with the frontend.
                 </p>
+                <p className="mt-2">
+                Gemini 2.5 Flash Image's image editing capabilities also allow us to make changes to our generated image with natural language prompts, such as "put my into the car". After sending your change prompt, the backend sends another request to Gemini 2.5 Flash Image with the generated image and editing prompt, before sending the Cloud Storage URL to the frontend with the updated image. </p>
+                <p className="mt-2">
+                Lastly, Veo 3.1's text and image-to-video functionality allows us to animate our video, as after we are happy with our image, the Cloud Run service sends the image and a simple text prompt to Veo 3.1 via the Vertex API, and uploads the output to Cloud Storage. </p>
             </DialogDescription>
           </DialogHeader>
           <div className="mt-4">
