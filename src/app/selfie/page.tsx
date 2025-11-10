@@ -569,13 +569,13 @@ export default function SelfiePage() {
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-xl">
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>How it Works</DialogTitle>
             <DialogDescription>
                 Formula E AI Selfie is an AI demo that leverages Generative media on Google Cloud to reimagine your selfie into a realistic, immersive Formula E scenario.
                 <p className="mt-2">
-                The Frontend Web application is hosted with Firebase, where you take a selfie and select your prompt. After you select your prompt, the Cloud Run backend sends the the selfie and a text prompt to Gemini 2.5 Flash Image via the Vertex AI API. After receiving a response from Vertex AI, the backend uploads the image to Cloud Storage and shares the URL with the frontend.
+                Frontend Web application is hosted with Firebase, where you take a selfie and select your prompt. After you select your prompt, the Cloud Run backend sends the the selfie and a text prompt to Gemini 2.5 Flash Image via the Vertex AI API. After receiving a response from Vertex AI, the backend uploads the image to Cloud Storage and shares the URL with the frontend.
                 </p>
             </DialogDescription>
           </DialogHeader>
@@ -593,4 +593,5 @@ export default function SelfiePage() {
   );
 }
 
+    
     
