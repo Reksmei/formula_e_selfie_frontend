@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction, checkVideoStatusAction } from '../actions';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown } from 'lucide-react';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown, Info } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -558,10 +558,36 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-       <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground backdrop-blur-sm hover:text-foreground transition-colors font-body">
+      <Link href="/" className="absolute top-4 left-4 flex items-center gap-2 rounded-md border bg-background/50 p-2 text-sm text-muted-foreground backdrop-blur-sm hover:text-foreground transition-colors font-body">
         <ArrowLeft className="w-4 h-4" />
         Back to Home
-      </Link>      {renderContent()}
+      </Link>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
+            <Info className="w-4 h-4" />
+            How it Works
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>How it Works</DialogTitle>
+            <DialogDescription>
+              Formula E AI Selfie is a AI demo that leverages Generative media on Google Cloud to reimagine your selfie into a realistic, immersive Formula E scenario
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4">
+            <img 
+              src="https://storage.googleapis.com/selfie-sample-images/formula_e_selfie_demo_architecture.svg" 
+              alt="Architecture Diagram" 
+              className="w-full h-auto rounded-lg"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
+      {renderContent()}
     </main>
   );
 }
+
+    
