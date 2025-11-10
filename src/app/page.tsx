@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -14,7 +15,7 @@ export default function Home() {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover opacity-50"
           src="https://storage.googleapis.com/created-videos/4855420956219534839/sample_3.mp4"
         />
         <div className="absolute inset-0 bg-background/50"></div>
