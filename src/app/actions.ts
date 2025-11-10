@@ -156,6 +156,9 @@ export async function checkVideoStatusAction(operationName: string): Promise<{ d
              if (response.status === 404) {
                 return { done: false, error: 'not-found' };
              }
+             if (response.status === 500) {
+                return { done: false, error: 'internal-server-error' };
+             }
              throw new Error(`Request failed: ${response.statusText} - ${errorBody}`);
         }
 

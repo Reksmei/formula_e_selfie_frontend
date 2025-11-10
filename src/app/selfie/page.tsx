@@ -37,7 +37,7 @@ import {
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
-type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'not-found' | 'error' | 'success';
+type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'not-found' | 'error' | 'success' | 'internal-server-error';
 
 const editSuggestions = [
   "make the lighting more dramatic",
@@ -187,6 +187,8 @@ export default function SelfiePage() {
                 setVideoGenStatus('rate-limited');
             } else if (status.error === 'not-found') {
                 setVideoGenStatus('not-found');
+            } else if (status.error === 'internal-server-error') {
+                setVideoGenStatus('internal-server-error');
             }
             else {
                 setVideoGenStatus('polling');
@@ -482,6 +484,8 @@ export default function SelfiePage() {
             statusMessage = "The service is busy. Still trying...";
         } else if (videoGenStatus === 'not-found') {
             statusMessage = "Starting video generation job...";
+        } else if (videoGenStatus === 'internal-server-error') {
+            statusMessage = "There was a temporary issue. Retrying...";
         }
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
