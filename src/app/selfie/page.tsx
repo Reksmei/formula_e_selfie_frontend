@@ -37,7 +37,7 @@ import {
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
-type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'not-found' | 'error' | 'success' | 'internal-server-error';
+type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'not-found' | 'error' | 'success' | 'internal-server-error' | 'service-unavailable';
 
 const editSuggestions = [
   "make the lighting more dramatic",
@@ -189,6 +189,8 @@ export default function SelfiePage() {
                 setVideoGenStatus('not-found');
             } else if (status.error === 'internal-server-error') {
                 setVideoGenStatus('internal-server-error');
+            } else if (status.error === 'service-unavailable') {
+                setVideoGenStatus('service-unavailable');
             }
             else {
                 setVideoGenStatus('polling');
@@ -484,7 +486,7 @@ export default function SelfiePage() {
             statusMessage = "The service is busy. Still trying...";
         } else if (videoGenStatus === 'not-found') {
             statusMessage = "Starting video generation job...";
-        } else if (videoGenStatus === 'internal-server-error') {
+        } else if (videoGenStatus === 'internal-server-error' || videoGenStatus === 'service-unavailable') {
             statusMessage = "There was a temporary issue. Retrying...";
         }
         return (
@@ -562,7 +564,7 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-      <Link href="/" passHref>
+       <Link href="/" passHref>
         <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
           <ArrowLeft className="w-4 h-4" />
           Back to Home
@@ -609,4 +611,5 @@ export default function SelfiePage() {
     
 
     
+
 
