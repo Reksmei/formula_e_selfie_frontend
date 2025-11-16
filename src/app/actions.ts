@@ -138,7 +138,8 @@ export async function checkVideoStatusAction(operationName: string): Promise<{ d
     if (!BACKEND_URL) {
         throw new Error('Backend URL is not configured.');
     }
-    const url = `${BACKEND_URL}/video-status/${operationName}`;
+    const encodedOperationName = encodeURIComponent(operationName);
+    const url = `${BACKEND_URL}/video-status/${encodedOperationName}`;
     console.log(`Making GET request to ${url}`);
 
     try {
