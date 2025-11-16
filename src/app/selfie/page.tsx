@@ -5,7 +5,7 @@ import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { suggestFormulaEPromptsAction, generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction, checkVideoStatusAction } from '../actions';
+import { generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
 import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown, Info } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
@@ -37,7 +37,8 @@ import {
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
-type VideoGenerationStatus = 'idle' | 'generating' | 'polling' | 'rate-limited' | 'not-found' | 'error' | 'success' | 'internal-server-error' | 'service-unavailable';
+type VideoGenerationStatus = 'idle' | 'generating' | 'error' | 'success';
+
 
 const editSuggestions = [
   "make the lighting more dramatic",
@@ -67,23 +68,9 @@ export default function SelfiePage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    async function fetchPrompts() {
-      try {
-        await suggestFormulaEPromptsAction();
-        setPrompts(PlaceHolderImages);
-      } catch (error) {
-        toast({
-          variant: 'destructive',
-          title: 'Failed to load prompts',
-          description: 'Using fallback prompts. Please try again later for AI suggestions.',
-        });
-        setPrompts(PlaceHolderImages);
-      } finally {
-        setIsLoadingPrompts(false);
-      }
-    }
-    fetchPrompts();
-  }, [toast]);
+    setPrompts(PlaceHolderImages);
+    setIsLoadingPrompts(false);
+  }, []);
 
   useEffect(() => {
     const suggestionInterval = setInterval(() => {
@@ -162,53 +149,6 @@ export default function SelfiePage() {
     }
   };
   
-  const pollVideoStatus = useCallback(async (operationName: string) => {
-    try {
-        const status = await checkVideoStatusAction(operationName);
-
-        if (status.done === true) {
-            if (status.error) {
-                setVideoGenStatus('error');
-                console.error("Video generation failed:", status.error);
-                toast({
-                    variant: 'destructive',
-                    title: 'Video Generation Failed',
-                    description: 'The AI could not generate a video. Please try again.',
-                });
-                setStep('result');
-            } else if (status.videoUrl) {
-                setGeneratedVideo(status.videoUrl);
-                setVideoQrCode(`data:image/png;base64,${status.qrCode}`);
-                setVideoGenStatus('success');
-                setStep('video-result');
-            }
-        } else {
-            if (status.error === 'rate-limited') {
-                setVideoGenStatus('rate-limited');
-            } else if (status.error === 'not-found') {
-                setVideoGenStatus('not-found');
-            } else if (status.error === 'internal-server-error') {
-                setVideoGenStatus('internal-server-error');
-            } else if (status.error === 'service-unavailable') {
-                setVideoGenStatus('service-unavailable');
-            }
-            else {
-                setVideoGenStatus('polling');
-            }
-            setTimeout(() => pollVideoStatus(operationName), 5000); // Poll every 5 seconds
-        }
-    } catch (error) {
-        setVideoGenStatus('error');
-        console.error("Error polling video status:", error);
-        toast({
-            variant: 'destructive',
-            title: 'Video Status Check Failed',
-            description: 'Could not check the status of the video generation. Please try again.',
-        });
-        setStep('result');
-    }
-  }, [toast]);
-
   const handleGenerateVideo = useCallback(async () => {
     if (!generatedImage) return;
 
@@ -216,10 +156,13 @@ export default function SelfiePage() {
     setVideoGenStatus('generating');
 
     try {
-        const { operationName } = await generateFormulaEVideoAction({
+        const { videoUrl, qrCode } = await generateFormulaEVideoAction({
             imageDataUri: generatedImage
         });
-        pollVideoStatus(operationName);
+        setGeneratedVideo(videoUrl);
+        setVideoQrCode(`data:image/png;base64,${qrCode}`);
+        setVideoGenStatus('success');
+        setStep('video-result');
     } catch (error: any) {
         console.error("Failed to start video generation:", error);
         let description = 'Could not start the video generation process. Please try again.';
@@ -234,7 +177,7 @@ export default function SelfiePage() {
         setVideoGenStatus('error');
         setStep('result');
     }
-  }, [generatedImage, pollVideoStatus, toast]);
+  }, [generatedImage, toast]);
 
   const reset = () => {
     setSelfie(null);
@@ -445,8 +388,9 @@ export default function SelfiePage() {
                             </div>
                         </DialogContent>
                       </Dialog>
-                      <Button onClick={() => handleGenerateVideo()} size="lg" className="font-body w-full" disabled={videoGenStatus === 'generating' || videoGenStatus === 'polling'}>
-                        <Film className="mr-2 h-4 w-4" /> Generate Video
+                      <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full" disabled={videoGenStatus === 'generating'}>
+                        {videoGenStatus === 'generating' ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Film className="mr-2 h-4 w-4" />}
+                        Generate Video
                       </Button>
                     </div>
                   )}
@@ -479,23 +423,13 @@ export default function SelfiePage() {
           </div>
         );
     case 'generating-video':
-        let statusMessage = "Generating your video...";
-        if (videoGenStatus === 'polling') {
-            statusMessage = "Processing your video, checking for updates...";
-        } else if (videoGenStatus === 'rate-limited') {
-            statusMessage = "The service is busy. Still trying...";
-        } else if (videoGenStatus === 'not-found') {
-            statusMessage = "Starting video generation job...";
-        } else if (videoGenStatus === 'internal-server-error' || videoGenStatus === 'service-unavailable') {
-            statusMessage = "There was a temporary issue. Retrying...";
-        }
         return (
             <div className="flex flex-col items-center justify-center gap-4 text-center">
                  <div className="mb-4">
                     {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
                 </div>
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                    <h2 className="text-3xl font-bold font-headline text-card-foreground">{statusMessage}</h2>
+                    <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
                     <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please be patient.</p>
                 </div>
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
@@ -564,12 +498,14 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-       <Link href="/" passHref>
-        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Home
+       <Link href="/" passHref legacyBehavior>
+        <Button asChild variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
+          <a>
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </a>
         </Button>
-      </Link>
+       </Link>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
@@ -577,7 +513,7 @@ export default function SelfiePage() {
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-2xl">
           <div className="flex flex-col md:flex-row md:items-start gap-6">
             <div className="md:w-1/2">
               <DialogHeader>
@@ -607,9 +543,3 @@ export default function SelfiePage() {
     </main>
   );
 }
-
-    
-
-    
-
-
