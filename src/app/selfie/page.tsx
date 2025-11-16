@@ -37,7 +37,6 @@ import {
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
 type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
-type VideoGenerationStatus = 'idle' | 'generating' | 'error' | 'success';
 
 
 const editSuggestions = [
@@ -63,7 +62,7 @@ export default function SelfiePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
   const [videoQrCode, setVideoQrCode] = useState<string | null>(null);
-  const [videoGenStatus, setVideoGenStatus] = useState<VideoGenerationStatus>('idle');
+  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const { toast } = useToast();
 
@@ -153,7 +152,7 @@ export default function SelfiePage() {
     if (!generatedImage) return;
 
     setStep('generating-video');
-    setVideoGenStatus('generating');
+    setIsGeneratingVideo(true);
 
     try {
         const { videoUrl, qrCode } = await generateFormulaEVideoAction({
@@ -161,21 +160,21 @@ export default function SelfiePage() {
         });
         setGeneratedVideo(videoUrl);
         setVideoQrCode(`data:image/png;base64,${qrCode}`);
-        setVideoGenStatus('success');
         setStep('video-result');
     } catch (error: any) {
         console.error("Failed to start video generation:", error);
-        let description = 'Could not start the video generation process. Please try again.';
-        if (typeof error.message === 'string' && error.message.includes('Quota exceeded')) {
-            description = 'The video generation service is currently busy due to high demand. Please try again in a minute.';
+        let description = 'Could not complete the video generation. Please try again.';
+        if (typeof error.message === 'string' && error.message.includes('Quota')) {
+            description = 'The video generation service is currently busy. Please try again later.';
         }
         toast({
             variant: 'destructive',
             title: 'Video Generation Failed',
             description,
         });
-        setVideoGenStatus('error');
         setStep('result');
+    } finally {
+        setIsGeneratingVideo(false);
     }
   }, [generatedImage, toast]);
 
@@ -186,7 +185,7 @@ export default function SelfiePage() {
     setImageQrCode(null);
     setGeneratedVideo(null);
     setVideoQrCode(null);
-    setVideoGenStatus('idle');
+    setIsGeneratingVideo(false);
     setStep('capture');
   };
 
@@ -197,7 +196,7 @@ export default function SelfiePage() {
     setImageQrCode(null);
     setGeneratedVideo(null);
     setVideoQrCode(null);
-    setVideoGenStatus('idle');
+    setIsGeneratingVideo(false);
     setStep('capture');
   }
 
@@ -207,7 +206,7 @@ export default function SelfiePage() {
     setGeneratedVideo(null);
     setVideoQrCode(null);
     setSelectedPromptId(null);
-    setVideoGenStatus('idle');
+    setIsGeneratingVideo(false);
     setStep('preview');
   }
 
@@ -388,9 +387,9 @@ export default function SelfiePage() {
                             </div>
                         </DialogContent>
                       </Dialog>
-                      <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full" disabled={videoGenStatus === 'generating'}>
-                        {videoGenStatus === 'generating' ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Film className="mr-2 h-4 w-4" />}
-                        Generate Video
+                      <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full" disabled={isGeneratingVideo}>
+                        {isGeneratingVideo ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Film className="mr-2 h-4 w-4" />}
+                        {isGeneratingVideo ? "Generating..." : "Generate Video"}
                       </Button>
                     </div>
                   )}
@@ -430,7 +429,7 @@ export default function SelfiePage() {
                 </div>
                 <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
                     <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
-                    <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please be patient.</p>
+                    <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please hold on.</p>
                 </div>
                 <Loader2 className="h-12 w-12 animate-spin text-primary" />
             </div>
@@ -498,14 +497,12 @@ export default function SelfiePage() {
       "flex min-h-screen flex-col items-center justify-center p-4 sm:p-8 md:p-12 bg-transparent transition-colors duration-500",
       "bg-selfie"
       )}>
-       <Link href="/" passHref legacyBehavior>
-        <Button asChild variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
-          <a>
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </a>
+       <Link href="/" passHref>
+        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
+          <ArrowLeft className="w-4 h-4" />
+          Back to Home
         </Button>
-       </Link>
+      </Link>
       <Dialog>
         <DialogTrigger asChild>
           <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
@@ -513,7 +510,7 @@ export default function SelfiePage() {
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-4xl">
           <div className="flex flex-col md:flex-row md:items-start gap-6">
             <div className="md:w-1/2">
               <DialogHeader>

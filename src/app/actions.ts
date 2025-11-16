@@ -1,7 +1,7 @@
 'use server';
 import type { GenerateFormulaEImageInput } from '@/ai/flows/generate-formula-e-image';
 import type { EditFormulaEImageInput } from '@/ai/flows/edit-formula-e-image';
-import type { GenerateFormulaEVideoInput } from '@/aiflows/generate-formula-e-video';
+import type { GenerateFormulaEVideoInput } from '@/ai/flows/generate-formula-e-video';
 
 const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
 
