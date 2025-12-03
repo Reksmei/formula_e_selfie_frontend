@@ -41,8 +41,6 @@ const nextConfig: NextConfig = {
   experimental: {
       serverActions: {
           bodySizeLimit: '4.5mb',
-          // timeout for 2 mins for Veo
-          timeout: 120,
       },
       allowedDevOrigins: ["https://9000-firebase-studio-1757854873189.cluster-cbeiita7rbe7iuwhvjs5zww2i4.cloudworkstations.dev"],
   }

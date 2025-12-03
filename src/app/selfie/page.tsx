@@ -5,8 +5,8 @@ import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { generateFormulaEImageAction, editFormulaEImageAction, generateFormulaEVideoAction } from '../actions';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown, Info } from 'lucide-react';
+import { generateFormulaEImageAction, editFormulaEImageAction } from '../actions';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Download, Eye, ChevronDown, Info } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -36,7 +36,7 @@ import {
 
 const CameraCapture = lazy(() => import('@/components/camera-capture'));
 
-type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'generating-video' | 'video-result' | 'error';
+type Step = 'capture' | 'preview' | 'generating' | 'result' | 'editing' | 'error';
 
 
 const editSuggestions = [
@@ -60,9 +60,6 @@ export default function SelfiePage() {
   const [showAllPrompts, setShowAllPrompts] = useState(false);
   const [editPrompt, setEditPrompt] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
-  const [videoQrCode, setVideoQrCode] = useState<string | null>(null);
-  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
   const [currentSuggestionIndex, setCurrentSuggestionIndex] = useState(0);
   const { toast } = useToast();
 
@@ -147,45 +144,12 @@ export default function SelfiePage() {
       setIsEditing(false);
     }
   };
-  
-  const handleGenerateVideo = useCallback(async () => {
-    if (!generatedImage) return;
-
-    setStep('generating-video');
-    setIsGeneratingVideo(true);
-
-    try {
-        const { videoUrl, qrCode } = await generateFormulaEVideoAction({
-            imageDataUri: generatedImage
-        });
-        setGeneratedVideo(videoUrl);
-        setVideoQrCode(`data:image/png;base64,${qrCode}`);
-        setStep('video-result');
-    } catch (error: any) {
-        console.error("Failed to start video generation:", error);
-        let description = 'Could not complete the video generation. Please try again.';
-        if (typeof error.message === 'string' && error.message.includes('Quota')) {
-            description = 'The video generation service is currently busy. Please try again later.';
-        }
-        toast({
-            variant: 'destructive',
-            title: 'Video Generation Failed',
-            description,
-        });
-        setStep('result');
-    } finally {
-        setIsGeneratingVideo(false);
-    }
-  }, [generatedImage, toast]);
 
   const reset = () => {
     setSelfie(null);
     setSelectedPromptId(null);
     setGeneratedImage(null);
     setImageQrCode(null);
-    setGeneratedVideo(null);
-    setVideoQrCode(null);
-    setIsGeneratingVideo(false);
     setStep('capture');
   };
 
@@ -194,19 +158,13 @@ export default function SelfiePage() {
     setSelectedPromptId(null);
     setGeneratedImage(null);
     setImageQrCode(null);
-    setGeneratedVideo(null);
-    setVideoQrCode(null);
-    setIsGeneratingVideo(false);
     setStep('capture');
   }
 
   const chooseNewPrompt = () => {
     setGeneratedImage(null);
     setImageQrCode(null);
-    setGeneratedVideo(null);
-    setVideoQrCode(null);
     setSelectedPromptId(null);
-    setIsGeneratingVideo(false);
     setStep('preview');
   }
 
@@ -341,7 +299,7 @@ export default function SelfiePage() {
             <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
-                You can now edit your image with a prompt, generate a video, or try a different prompt.
+                You can now edit your image with a prompt, download it, or try a different prompt.
               </p>
             </div>
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
@@ -387,10 +345,6 @@ export default function SelfiePage() {
                             </div>
                         </DialogContent>
                       </Dialog>
-                      <Button onClick={handleGenerateVideo} size="lg" className="font-body w-full" disabled={isGeneratingVideo}>
-                        {isGeneratingVideo ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Film className="mr-2 h-4 w-4" />}
-                        {isGeneratingVideo ? "Generating..." : "Generate Video"}
-                      </Button>
                     </div>
                   )}
                 </CardContent>
@@ -418,62 +372,6 @@ export default function SelfiePage() {
                     </div>
                   </CardContent>
                 </Card>
-            </div>
-          </div>
-        );
-    case 'generating-video':
-        return (
-            <div className="flex flex-col items-center justify-center gap-4 text-center">
-                 <div className="mb-4">
-                    {generatedImage && <img src={generatedImage} alt="Generating video from this image" width={300} height={168} className="rounded-lg object-cover aspect-video" />}
-                </div>
-                <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                    <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your video...</h2>
-                    <p className="text-muted-foreground font-body mt-2">This can take a minute or two. Please hold on.</p>
-                </div>
-                <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            </div>
-        );
-      case 'video-result':
-        return (
-          <div className="w-full max-w-2xl text-center">
-             <h1 className="text-4xl font-bold tracking-tight text-primary-foreground font-headline">Your Video is Ready!</h1>
-             <Card className="mt-8">
-                <CardContent className="p-4">
-                    {generatedVideo && (
-                        <video src={generatedVideo} controls autoPlay loop className="w-full rounded-lg" />
-                    )}
-                </CardContent>
-             </Card>
-             <div className="mt-8 flex justify-center gap-4">
-                <Button onClick={reset} size="lg" variant="outline" className="font-body">
-                    <Repeat className="mr-2 h-4 w-4" /> Start Over
-                </Button>
-                {videoQrCode && (
-                  <Dialog>
-                    <DialogTrigger asChild>
-                       <Button size="lg" variant="outline" className="font-body">
-                          <img src="/qr-code.svg" className="mr-2 h-4 w-4" alt="qr code icon"/> QR Code
-                       </Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-md">
-                      <DialogHeader>
-                        <DialogTitle>Scan to Download Video</DialogTitle>
-                        <DialogDescription>
-                          Scan this QR code with your phone to download the generated video.
-                        </DialogDescription>
-                      </DialogHeader>
-                        <div className="flex items-center justify-center p-4 bg-white rounded-lg">
-                           <img src={videoQrCode} alt="Download QR Code" />
-                        </div>
-                    </DialogContent>
-                  </Dialog>
-                )}
-                <a href={generatedVideo!} download="e-prix-video.mp4">
-                    <Button size="lg" className="font-body">
-                        <Download className="mr-2 h-4 w-4" /> Download
-                    </Button>
-                </a>
             </div>
           </div>
         );
