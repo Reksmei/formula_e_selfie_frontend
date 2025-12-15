@@ -2,44 +2,49 @@
   "placeholderImages": [
     {
       "id": "London E-Prix",
-      "description": "Edit the background to show the user posing confidently with a Formula E car (as provided at https://goo.gle/fe-car-1) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
+      "description": "Edit the background to show the user posing confidently with a Formula E car (example reference image of a GenBeta car has been attached) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/london.png",
       "imageHint": "london track"
     },
     {
       "id": "Podium Celebration",
-      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding(e.g. https://goo.gle/fe-gc-branding). The user's expression should be one of pure joy and victory.",
+      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding(an example of the branding has been attached). The user's expression should be one of pure joy and victory.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/podium.png",
+      "referenceImageUrl": "/formulae_hackathon.jpg",
       "imageHint": "celebration podium"
     },
     {
       "id": "Figurine",
-      "description": "Create a 1/6 scale commercialized figurine of a me as a Formula E driver in a full race suit (without the helmet), performing a celebratory pose (e.g., arms raised, fist pump) in a realistic style, in a Formula E pit garage environment. The figurine is placed on a computer desk. The figurine has a round transparent acrylic base, with no text on the base. The content on the computer screen is the ZBrush modeling process of this figurine. Next to the computer screen is a BANDAI-style toy packaging box printed with the original artwork. The packaging features two-dimensional flat illustrations of the driver and their car.",
+      "description": "Create a 1/6 scale commercialized figurine of the user as a Formula E driver in a full race suit (without the helmet), performing a celebratory pose (e.g., arms raised, fist pump) in a realistic style, in a Formula E pit garage environment. The figurine is placed on a computer desk. The figurine has a round transparent acrylic base, with no text on the base. The content on the computer screen is the ZBrush modeling process of this figurine. Next to the computer screen is a BANDAI-style toy packaging box printed with the original artwork. The packaging features two-dimensional flat illustrations of the driver and their car.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/figurine.png",
       "imageHint": "figurine driver"
     },
     {
       "id": "Berlin E-Prix",
-      "description": "Place the user in the cockpit of a Formula E GenBeta car (as provided at https://goo.gle/fe-car-1), wearing a full race suit (no helmet), with a dynamic, blurred background of the Berlin E-Prix section during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
+      "description": "Place the user in the cockpit of a Formula E GenBeta car (the example reference image of a Gen3 car has also been attached), wearing a full race suit (no helmet), with a dynamic, blurred background of the Berlin E-Prix section during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/berlin.png",
+      "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "berlin track"
     },
     {
       "id": "Mexico E-Prix",
-      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (as provided at https://goo.gle/fe-car-1) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
+      "description": "Integrate the user standing naturally and clearly visible in front of a pristine Formula E GenBeta car (the example reference image of a Gen3 car has been attached) on the grid of the Mexico City E-Prix, with the vibrant track markings and grandstands visible behind them. The car's details should be in sharp focus, and there should only be one car.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/mexico.png",
+      "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "mexico track"
     },
     {
       "id": "In the Garage",
-      "description": "Seamlessly edit the user into a high-tech Formula E garage, positioned as a team principal looking intently at a data screen showing race telemetry. The user should be wearing team-style headphones around their neck. In the background, a Formula E Gen3 car (as as provided at https://goo.gle/fe-car-1)is being prepped by engineers in unbranded team gear. The lighting should be focused and professional.",
+      "description": "Seamlessly edit the user into a high-tech Formula E garage, positioned as a team principal looking intently at a data screen showing race telemetry. The user should be wearing team-style headphones around their neck. In the background, a Formula E Gen3 car (the Gen3 car reference image has been attached)is being prepped by engineers in unbranded team gear. The lighting should be focused and professional.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/garage.png",
+      "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "fix garage"
     },
     {
       "id": "Diriyah E-Prix",
-      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(as provided at https://goo.gle/fe-car-1), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
+      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(the example reference image of a Gen3 has been attached), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/diriyah.png",
+      "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "diriyah track"
     },
     {

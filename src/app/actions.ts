@@ -58,6 +58,12 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
         formData.append('image', imageBlob, 'image.jpg');
         formData.append('prompt', input.prompt);
 
+        if (input.referenceImageUrl) {
+            const referenceImageResponse = await fetch(input.referenceImageUrl);
+            const referenceImageBlob = await referenceImageResponse.blob();
+            formData.append('referenceImage', referenceImageBlob, 'reference.jpg');
+        }
+
         const response = await fetch(url, {
             method: 'POST',
             body: formData,

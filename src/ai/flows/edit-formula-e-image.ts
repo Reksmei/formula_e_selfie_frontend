@@ -15,6 +15,10 @@ export const EditFormulaEImageInputSchema = z.object({
       "The image to edit, as a data URI. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
   prompt: z.string().describe('The editing instruction from the user.'),
+  referenceImageUrl: z
+    .string()
+    .optional()
+    .describe('An optional reference image.'),
 });
 export type EditFormulaEImageInput = z.infer<
   typeof EditFormulaEImageInputSchema
