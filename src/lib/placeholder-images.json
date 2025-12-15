@@ -8,7 +8,7 @@
     },
     {
       "id": "Podium Celebration",
-      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding(an example of the branding has been attached). The user's expression should be one of pure joy and victory.",
+      "description": "Create a celebratory image of the user standing on the top step of a Formula E podium. They are holding a winner's trophy high in the air as sustainable, branded confetti rains down around them. The background should show a cheering, blurred crowd and Formula E and Google Cloud branding in the background(an example of the branding has been attached). The user should be clearly visible and their expression should be one of pure joy and victory.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/podium.png",
       "referenceImageUrl": "/formulae_hackathon.jpg",
       "imageHint": "celebration podium"
@@ -41,16 +41,24 @@
       "imageHint": "fix garage"
     },
     {
+      "id": "São Paulo",
+      "description": "Place the user in the cockpit of a Formula E GenBeta car (the example reference image of a Gen3 car has also been attached), wearing a full race suit (no helmet), with a dynamic background of the vibrant Sao Paulo race track during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
+      "imageUrl": "/sao_paulo_ref.png",
+      "referenceImageUrl": "/formulae_gen3_car.jpg",
+      "imageHint": "sao paulo track"
+    },
+    {
       "id": "Diriyah E-Prix",
-      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(the example reference image of a Gen3 has been attached), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology.",
+      "description": "Integrate the user into the unique atmosphere of the Diriyah E-Prix night race. The user is standing beside a Formula E Gen3 car(the example reference image of a Gen3 has been attached), which is parked under the vibrant trackside floodlights. In the background, the historic and beautifully illuminated At-Turaif district is visible. The scene should be dramatic and full of contrast between the ancient architecture and the futuristic technology. The user should also be clearly visible",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/diriyah.png",
       "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "diriyah track"
     },
     {
       "id": "Tokyo E-Prix",
-      "description": "Place the user on the bustling streets of Tokyo, with a Formula E car (as provided at https://goo.gle/fe-car-1) racing past in a blur of motion. The iconic neon lights and skyscrapers of the city should form a vibrant, futuristic backdrop. The user is looking towards the camera with a slight smile, capturing a moment of excitement during the inaugural Tokyo E-Prix.",
+      "description": "Place the user on the bustling streets of Tokyo, with a Formula E car (as provided with the attached image of a Gen3 car) racing past in a blur of motion. The iconic neon lights and skyscrapers of the city should form a vibrant, futuristic backdrop. The user is looking towards the camera with a slight smile, capturing a moment of excitement during the inaugural Tokyo E-Prix. The user should also be clearly visible",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/tokyo.png",
+      "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "tokyo track"
     }
   ]
