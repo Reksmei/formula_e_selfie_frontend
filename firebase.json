@@ -1,21 +1,11 @@
 {
   "apphosting": {
     "backendId": "formula-e-selfie-v1",
-    "rootDir": "./src",
     "ignore": [
       "node_modules",
       ".git",
       "firebase-debug.log",
-      "firebase-debug.*.log",
-      "functions"
-    ]
-  },
-  "hosting": {
-    "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+      "firebase-debug.*.log"
     ]
   }
 }
