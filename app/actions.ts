@@ -2,11 +2,40 @@
 'use server';
 import type { GenerateFormulaEImageInput } from '@/ai/flows/generate-formula-e-image';
 import type { EditFormulaEImageInput } from '@/ai/flows/edit-formula-e-image';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
-// This will be available on Vercel/Firebase App Hosting deployments
-const NEXT_PUBLIC_VERCEL_URL = process.env.VERCEL_URL || process.env.FIREBASE_APP_HOSTING_URL;
-const BASE_URL = NEXT_PUBLIC_VERCEL_URL ? `https://${NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000';
+
+async function getReferenceImageBlob(referenceImageUrl: string): Promise<[Blob, string] | [null, null]> {
+    if (!referenceImageUrl) {
+        return [null, null];
+    }
+
+    if (referenceImageUrl.startsWith('http')) {
+        console.log(`Fetching remote reference image from: ${referenceImageUrl}`);
+        const response = await fetch(referenceImageUrl);
+        if (!response.ok) {
+            console.error(`Failed to fetch remote reference image: ${response.statusText}`);
+            return [null, null];
+        }
+        const blob = await response.blob();
+        return [blob, 'reference.jpg'];
+    } else if (referenceImageUrl.startsWith('/')) {
+        try {
+            const filePath = path.join(process.cwd(), 'public', referenceImageUrl);
+            console.log(`Reading local reference image from: ${filePath}`);
+            const fileBuffer = await fs.readFile(filePath);
+            const blob = new Blob([fileBuffer], { type: 'image/jpeg' }); // Adjust MIME type if needed
+            return [blob, path.basename(filePath)];
+        } catch (error) {
+            console.error(`Failed to read local reference image:`, error);
+            return [null, null];
+        }
+    }
+    
+    return [null, null];
+}
 
 
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<{imageUrl: string, qrCode: string}> {
@@ -25,12 +54,10 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
         formData.append('prompt', input.prompt);
 
         if (input.referenceImageUrl) {
-            const isLocal = input.referenceImageUrl.startsWith('/');
-            const fullReferenceUrl = isLocal ? `${BASE_URL}${input.referenceImageUrl}` : input.referenceImageUrl;
-            console.log(`Fetching reference image from: ${fullReferenceUrl}`);
-            const referenceImageResponse = await fetch(fullReferenceUrl);
-            const referenceImageBlob = await referenceImageResponse.blob();
-            formData.append('referenceImage', referenceImageBlob, 'reference.jpg');
+            const [referenceImageBlob, fileName] = await getReferenceImageBlob(input.referenceImageUrl);
+            if (referenceImageBlob && fileName) {
+                formData.append('referenceImage', referenceImageBlob, fileName);
+            }
         }
 
         const response = await fetch(url, {
@@ -73,12 +100,10 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
         formData.append('prompt', input.prompt);
 
         if (input.referenceImageUrl) {
-            const isLocal = input.referenceImageUrl.startsWith('/');
-            const fullReferenceUrl = isLocal ? `${BASE_URL}${input.referenceImageUrl}` : input.referenceImageUrl;
-            console.log(`Fetching reference image from: ${fullReferenceUrl}`);
-            const referenceImageResponse = await fetch(fullReferenceUrl);
-            const referenceImageBlob = await referenceImageResponse.blob();
-            formData.append('referenceImage', referenceImageBlob, 'reference.jpg');
+            const [referenceImageBlob, fileName] = await getReferenceImageBlob(input.referenceImageUrl);
+            if (referenceImageBlob && fileName) {
+                formData.append('referenceImage', referenceImageBlob, fileName);
+            }
         }
 
         const response = await fetch(url, {
