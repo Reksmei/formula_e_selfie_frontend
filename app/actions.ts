@@ -1,8 +1,13 @@
+
 'use server';
 import type { GenerateFormulaEImageInput } from '@/ai/flows/generate-formula-e-image';
 import type { EditFormulaEImageInput } from '@/ai/flows/edit-formula-e-image';
 
 const BACKEND_URL = process.env.FORMULA_E_BACKEND_URL;
+// This will be available on Vercel/Firebase App Hosting deployments
+const NEXT_PUBLIC_VERCEL_URL = process.env.VERCEL_URL || process.env.FIREBASE_APP_HOSTING_URL;
+const BASE_URL = NEXT_PUBLIC_VERCEL_URL ? `https://${NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000';
+
 
 export async function generateFormulaEImageAction(input: GenerateFormulaEImageInput): Promise<{imageUrl: string, qrCode: string}> {
     if (!BACKEND_URL) {
@@ -20,10 +25,10 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
         formData.append('prompt', input.prompt);
 
         if (input.referenceImageUrl) {
-            console.log(`Fetching reference image from: ${input.referenceImageUrl}`);
-            // Note: If referenceImageUrl is a local path like /image.jpg, fetch needs the full server URL.
-            // For external URLs, it works as is. Assuming external URLs for now.
-            const referenceImageResponse = await fetch(input.referenceImageUrl);
+            const isLocal = input.referenceImageUrl.startsWith('/');
+            const fullReferenceUrl = isLocal ? `${BASE_URL}${input.referenceImageUrl}` : input.referenceImageUrl;
+            console.log(`Fetching reference image from: ${fullReferenceUrl}`);
+            const referenceImageResponse = await fetch(fullReferenceUrl);
             const referenceImageBlob = await referenceImageResponse.blob();
             formData.append('referenceImage', referenceImageBlob, 'reference.jpg');
         }
@@ -68,7 +73,10 @@ export async function editFormulaEImageAction(input: EditFormulaEImageInput): Pr
         formData.append('prompt', input.prompt);
 
         if (input.referenceImageUrl) {
-            const referenceImageResponse = await fetch(input.referenceImageUrl);
+            const isLocal = input.referenceImageUrl.startsWith('/');
+            const fullReferenceUrl = isLocal ? `${BASE_URL}${input.referenceImageUrl}` : input.referenceImageUrl;
+            console.log(`Fetching reference image from: ${fullReferenceUrl}`);
+            const referenceImageResponse = await fetch(fullReferenceUrl);
             const referenceImageBlob = await referenceImageResponse.blob();
             formData.append('referenceImage', referenceImageBlob, 'reference.jpg');
         }
