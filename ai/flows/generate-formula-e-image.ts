@@ -15,10 +15,10 @@ export const GenerateFormulaEImageInputSchema = z.object({
       "A selfie image as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
     ),
   prompt: z.string().describe('The Formula E-related prompt selected by the user.'),
-  referenceImageUrl: z
+  referenceImageId: z
     .string()
     .optional()
-    .describe('An optional reference image URL to guide the generation.'),
+    .describe('An optional ID for a reference image to guide the generation.'),
 });
 export type GenerateFormulaEImageInput = z.infer<
   typeof GenerateFormulaEImageInputSchema

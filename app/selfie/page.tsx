@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
@@ -108,7 +107,7 @@ export default function SelfiePage() {
       const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
         prompt: selectedPrompt.description,
-        referenceImageUrl: selectedPrompt.referenceImageUrl
+        referenceImageId: selectedPrompt.referenceImageId
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(`data:image/png;base64,${qrCode}`);
@@ -131,7 +130,7 @@ export default function SelfiePage() {
       const { imageUrl, qrCode } = await editFormulaEImageAction({
         imageDataUri: imageToEdit,
         prompt: editPrompt,
-        referenceImageUrl: prompts.find(p => p.id === selectedPromptId)?.referenceImageUrl
+        referenceImageId: prompts.find(p => p.id === selectedPromptId)?.referenceImageId
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(`data:image/png;base64,${qrCode}`);
