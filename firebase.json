@@ -1,7 +1,7 @@
 {
   "apphosting": {
     "backendId": "formula-e-selfie-v1",
-    "rootDir": ".",
+    "rootDir": "./src",
     "ignore": [
       "node_modules",
       ".git",
