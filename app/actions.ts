@@ -19,6 +19,15 @@ export async function generateFormulaEImageAction(input: GenerateFormulaEImageIn
         formData.append('image', imageBlob, 'selfie.jpg');
         formData.append('prompt', input.prompt);
 
+        if (input.referenceImageUrl) {
+            console.log(`Fetching reference image from: ${input.referenceImageUrl}`);
+            // Note: If referenceImageUrl is a local path like /image.jpg, fetch needs the full server URL.
+            // For external URLs, it works as is. Assuming external URLs for now.
+            const referenceImageResponse = await fetch(input.referenceImageUrl);
+            const referenceImageBlob = await referenceImageResponse.blob();
+            formData.append('referenceImage', referenceImageBlob, 'reference.jpg');
+        }
+
         const response = await fetch(url, {
             method: 'POST',
             body: formData,

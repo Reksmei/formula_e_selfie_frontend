@@ -108,6 +108,7 @@ export default function SelfiePage() {
       const { imageUrl, qrCode } = await generateFormulaEImageAction({
         selfieDataUri: selfie,
         prompt: selectedPrompt.description,
+        referenceImageUrl: selectedPrompt.referenceImageUrl
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(`data:image/png;base64,${qrCode}`);
