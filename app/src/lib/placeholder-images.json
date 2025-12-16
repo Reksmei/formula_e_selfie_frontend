@@ -4,6 +4,7 @@
       "id": "London E-Prix",
       "description": "Edit the background to show the user posing confidently with a Formula E car (example reference image of a GenBeta car has been attached) in the unique indoor section of the London E-Prix at ExCeL, with the car's sleek lines and electric glow highlighted against the track.",
       "imageUrl": "https://storage.googleapis.com/selfie-sample-images/london.png",
+      "referenceImageUrl": "/formulae_hackathon.jpg",
       "imageHint": "london track"
     },
     {
