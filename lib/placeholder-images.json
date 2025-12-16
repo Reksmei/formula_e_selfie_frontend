@@ -43,7 +43,7 @@
     {
       "id": "São Paulo",
       "description": "Place the user in the cockpit of a Formula E GenBeta car (the example reference image of a Gen3 car has also been attached), wearing a full race suit (no helmet), with a dynamic background of the vibrant Sao Paulo race track during a race lap. The car's details should be clearly visible. The person's entire face (including eyes and mouth) must be completely uncovered and visible, specifically not blocked by the car's steering wheel or any part of the vehicle, by adjusting the camera angle to show the face clearly from above the steering wheel.",
-      "imageUrl": "/sao_paulo_ref.png",
+      "imageUrl": "https://storage.googleapis.com/selfie-sample-images/sao_paulo.png",
       "referenceImageUrl": "/formulae_gen3_car.jpg",
       "imageHint": "sao paulo track"
     },

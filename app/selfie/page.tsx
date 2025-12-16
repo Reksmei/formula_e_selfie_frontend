@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { generateFormulaEImageAction, editFormulaEImageAction } from '../actions';
-import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Download, Eye, ChevronDown, Info } from 'lucide-react';
+import { Loader2, Sparkles, User, Repeat, RotateCcw, Pencil, Film, Download, Eye, ChevronDown, Info } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -130,6 +130,7 @@ export default function SelfiePage() {
       const { imageUrl, qrCode } = await editFormulaEImageAction({
         imageDataUri: imageToEdit,
         prompt: editPrompt,
+        referenceImageUrl: prompts.find(p => p.id === selectedPromptId)?.referenceImageUrl
       });
       setGeneratedImage(imageUrl);
       setImageQrCode(`data:image/png;base64,${qrCode}`);

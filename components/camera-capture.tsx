@@ -150,5 +150,3 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 };
 
 export default CameraCapture;
-
-    
