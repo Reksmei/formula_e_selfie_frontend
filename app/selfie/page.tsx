@@ -367,7 +367,7 @@ export default function SelfiePage() {
                         disabled={isEditing}
                         className="font-body"
                       />
-                      <Button onClick={handleEdit} disabled={!editPrompt || isEditing} className="font-body">
+                      <Button onClick={handleEdit} disabled={!editPrompt || isEditing} variant="default" className="font-body">
                         {isEditing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
                         <span className="ml-2">Apply</span>
                       </Button>

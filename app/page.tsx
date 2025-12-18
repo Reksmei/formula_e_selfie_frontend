@@ -33,7 +33,7 @@ export default function Home() {
         <h1 className="whitespace-nowrap text-7xl font-bold tracking-tight text-primary-foreground sm:text-8xl font-headline">
           AI Selfie
         </h1>
-        <p className="mt-6 text-3xl leading-8 text-muted-foreground font-body md:text-4xl">
+        <p className="mt-6 text-2xl leading-8 text-muted-foreground font-body md:text-3xl">
         Generate a new image based on your selfie and a Formula E-related prompt <br /> with Gemini 2.5 Flash Image on Vertex AI.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
