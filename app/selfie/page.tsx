@@ -117,7 +117,7 @@ export default function SelfiePage() {
       toast({
         variant: 'destructive',
         title: 'Image Generation Failed',
-        description: 'The AI could not generate your image. Please try again.',
+        description: 'Sorry, we were unable to generate your image. Please try again.',
       });
     }
   };
@@ -139,7 +139,7 @@ export default function SelfiePage() {
       toast({
         variant: 'destructive',
         title: 'Image Editing Failed',
-        description: 'The AI could not edit your image. Please try again.',
+        description: 'Sorry, we were unable to edit your image. Please try again.',
       });
     } finally {
       setIsEditing(false);
