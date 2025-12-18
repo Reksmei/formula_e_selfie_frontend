@@ -30,7 +30,7 @@ export default function Home() {
           height={75}
           className="w-auto h-auto mb-8"
         />
-        <h1 className="whitespace-nowrap text-8xl font-bold tracking-tight text-primary-foreground sm:text-9xl font-headline">
+        <h1 className="whitespace-nowrap text-7xl font-bold tracking-tight text-primary-foreground sm:text-8xl font-headline">
           AI Selfie
         </h1>
         <p className="mt-6 text-3xl leading-8 text-muted-foreground font-body md:text-4xl">
@@ -38,7 +38,7 @@ export default function Home() {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href="/selfie">
-            <Button size="lg" variant="default" className="font-body text-2xl px-16 py-10">
+            <Button size="lg" variant="primary" className="font-body text-2xl px-16 py-10">
               Get Started <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </Link>
