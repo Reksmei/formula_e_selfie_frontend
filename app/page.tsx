@@ -22,7 +22,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-background/50"></div>
       </div>
       
-      <div className="relative z-10 flex flex-col items-center w-full max-w-2xl text-center">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-4xl text-center">
         <Image 
           src="https://storage.googleapis.com/selfie-sample-images/formula_e_gc_logo_black.svg"
           alt="Formula E Google Cloud Logo"
@@ -30,15 +30,15 @@ export default function Home() {
           height={75}
           className="w-auto h-auto mb-8"
         />
-        <h1 className="whitespace-nowrap text-5xl font-bold tracking-tight text-primary-foreground sm:text-7xl font-headline">
+        <h1 className="whitespace-nowrap text-6xl font-bold tracking-tight text-primary-foreground sm:text-8xl font-headline">
           AI Selfie
         </h1>
-        <p className="mt-6 text-xl leading-8 text-muted-foreground font-body md:text-2xl">
+        <p className="mt-6 text-2xl leading-8 text-muted-foreground font-body md:text-3xl">
         Generate a new image based on your selfie and a Formula E-related prompt with Gemini 2.5 Flash Image on Vertex AI.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href="/selfie">
-            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 font-body text-lg px-10 py-6">
+            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-body text-xl px-12 py-8">
               Get Started <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
