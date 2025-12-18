@@ -176,7 +176,7 @@ export default function SelfiePage() {
         return (
           <div className="w-full max-w-xl text-center">
             <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
-              <p className="text-xl text-card-foreground font-body">
+              <p className="text-xl md:text-2xl text-card-foreground font-body">
                 Take a selfie, pick a prompt, and let our Nano Banana place you in the heart of Formula E action.
               </p>
             </div>
@@ -398,14 +398,14 @@ export default function SelfiePage() {
       "bg-selfie"
       )}>
        <Link href="/" passHref>
-        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
+        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body text-base md:text-lg">
           <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Button>
       </Link>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body">
+          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body text-base md:text-lg">
             <Info className="w-4 h-4" />
             How it Works
           </Button>
