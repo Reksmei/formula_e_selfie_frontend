@@ -34,11 +34,11 @@ export default function Home() {
           AI Selfie
         </h1>
         <p className="mt-6 text-3xl leading-8 text-muted-foreground font-body md:text-4xl">
-        Generate a new image based on your selfie and a Formula E-related prompt with Gemini 2.5 Flash Image on Vertex AI.
+        Generate a new image based on your selfie and a Formula E-related prompt <br /> with Gemini 2.5 Flash Image on Vertex AI.
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href="/selfie">
-            <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-body text-2xl px-16 py-10">
+            <Button size="lg" variant="default" className="font-body text-2xl px-16 py-10">
               Get Started <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </Link>
