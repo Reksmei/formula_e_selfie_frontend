@@ -38,7 +38,7 @@ export default function Home() {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link href="/selfie">
-            <Button size="lg" variant="primary" className="font-body text-2xl px-16 py-10">
+            <Button size="lg" variant="default" className="font-body text-2xl px-16 py-10">
               Get Started <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </Link>
