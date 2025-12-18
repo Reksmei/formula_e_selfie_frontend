@@ -177,8 +177,8 @@ export default function SelfiePage() {
           <>
             <div className="w-full max-w-xl text-center">
               <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
-                <p className="text-xl md:text-2xl text-card-foreground font-body">
-                  Take a selfie and pick a prompt to let Nano Banana place you in the heart of Formula E action.<br/><br/>*Please step back to ensure the camera fully sees you.
+                <p className="text-lg md:text-xl text-card-foreground font-body">
+                  Take a selfie and pick a prompt. Nano Banana will<br/>place you in the heart of the Formula E action.<br/><br/>*Step back to ensure the camera sees you.
                 </p>
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function SelfiePage() {
       case 'preview':
         const displayedPrompts = showAllPrompts ? prompts : prompts.slice(0, 4);
         return (
-          <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline"><User /> Your Selfie</CardTitle>
@@ -300,7 +300,7 @@ export default function SelfiePage() {
       case 'result':
         return (
           <div className="w-full max-w-7xl text-center">
-            <div className="bg-card rounded-xl p-6 md:p-8 max-w-4xl mx-auto">
+            <div className="bg-card rounded-xl p-6 md:p-8 max-w-5xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
                 You can now edit your image with a prompt, download it, or try a different prompt.
@@ -412,7 +412,7 @@ export default function SelfiePage() {
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-5xl">
+        <DialogContent className="max-w-6xl">
           <div className="flex flex-col md:flex-row md:items-start gap-6">
             <div className="md:w-1/2">
               <DialogHeader>
@@ -441,4 +441,5 @@ export default function SelfiePage() {
   );
 }
 
+    
     
