@@ -400,19 +400,19 @@ export default function SelfiePage() {
       "bg-selfie"
       )}>
        <Link href="/" passHref>
-        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body px-4 py-5 text-base md:text-lg">
+        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body px-4 py-5">
           <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Button>
       </Link>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body px-4 py-5 text-base md:text-lg">
+          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body px-4 py-5">
             <Info className="w-4 h-4" />
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-5xl">
           <div className="flex flex-col md:flex-row md:items-start gap-6">
             <div className="md:w-1/2">
               <DialogHeader>

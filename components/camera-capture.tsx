@@ -141,7 +141,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
           </div>
         )}
       </div>
-      <Button onClick={startCountdown} disabled={!isCameraReady || countdown !== null} size="lg" className="text-xl p-8" variant="primary">
+      <Button onClick={startCountdown} disabled={!isCameraReady || countdown !== null} size="lg" className="text-xl p-8" variant="default">
         <Camera className="mr-2 h-6 w-6" />
         {countdown !== null ? 'Taking...' : 'Take Selfie'}
       </Button>
