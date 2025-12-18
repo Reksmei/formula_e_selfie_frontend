@@ -178,7 +178,7 @@ export default function SelfiePage() {
             <div className="w-full max-w-xl text-center">
               <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
                 <p className="text-lg md:text-xl text-card-foreground font-body">
-                  Take a selfie and pick a prompt. Nano Banana will<br/>place you in the heart of the Formula E action.<br/><br/>*Step back to ensure the camera sees you.
+                  Take a selfie and pick a prompt.<br/>The AI will place you in the heart of the action.
                 </p>
               </div>
             </div>
@@ -192,7 +192,7 @@ export default function SelfiePage() {
       case 'preview':
         const displayedPrompts = showAllPrompts ? prompts : prompts.slice(0, 4);
         return (
-          <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="w-full max-w-[90rem] grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline"><User /> Your Selfie</CardTitle>
@@ -290,16 +290,16 @@ export default function SelfiePage() {
       case 'generating':
         return (
             <div className="flex flex-col items-center justify-center gap-8 text-center">
-                <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
-                    <h2 className="text-3xl font-bold font-headline text-card-foreground">Generating your E-Prix moment...</h2>
-                    <p className="text-muted-foreground font-body mt-4">The AI is working its magic. This might take a moment.</p>
+                <div className="bg-card rounded-xl p-8 md:p-10 max-w-3xl mx-auto">
+                    <h2 className="text-4xl font-bold font-headline text-card-foreground">Generating your E-Prix moment...</h2>
+                    <p className="text-lg text-muted-foreground font-body mt-4">The AI is working its magic. This might take a moment.</p>
                 </div>
                 <Loader2 className="h-16 w-16 animate-spin text-primary" />
             </div>
         );
       case 'result':
         return (
-          <div className="w-full max-w-7xl text-center">
+          <div className="w-full max-w-[90rem] text-center">
             <div className="bg-card rounded-xl p-6 md:p-8 max-w-5xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
@@ -412,7 +412,7 @@ export default function SelfiePage() {
             How it Works
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-6xl">
+        <DialogContent className="max-w-[80rem]">
           <div className="flex flex-col md:flex-row md:items-start gap-6">
             <div className="md:w-1/2">
               <DialogHeader>
