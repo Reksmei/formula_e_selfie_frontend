@@ -174,18 +174,20 @@ export default function SelfiePage() {
     switch (step) {
       case 'capture':
         return (
-          <div className="w-full max-w-xl text-center">
-            <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
-              <p className="text-xl md:text-2xl text-card-foreground font-body">
-                Take a selfie, pick a prompt, and let our Nano Banana place you in the heart of Formula E action.
-              </p>
+          <>
+            <div className="w-full max-w-xl text-center">
+              <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
+                <p className="text-2xl md:text-3xl text-card-foreground font-body">
+                  Take a selfie, pick a prompt, and let Nano Banana place you in the heart of Formula E action.<br/><br/>*Please note you make need to step back to ensure the camera fully sees you.
+                </p>
+              </div>
             </div>
             <div className="mt-8">
               <Suspense fallback={<div className="w-full aspect-video bg-muted rounded-lg flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin" /></div>}>
                 <CameraCapture onCapture={handleCapture} onCameraError={handleCameraError} />
               </Suspense>
             </div>
-          </div>
+          </>
         );
       case 'preview':
         const displayedPrompts = showAllPrompts ? prompts : prompts.slice(0, 4);
@@ -194,7 +196,7 @@ export default function SelfiePage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline"><User /> Your Selfie</CardTitle>
-                <CardDescription className="font-body">This is the picture we'll use for the AI generation.</CardDescription>
+                <CardDescription className="font-body">This is the picture we'll use for editing you into your chosen Formula E scene.</CardDescription>
               </CardHeader>
               <CardContent>
                 {selfie && (
@@ -398,14 +400,14 @@ export default function SelfiePage() {
       "bg-selfie"
       )}>
        <Link href="/" passHref>
-        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body text-base md:text-lg">
+        <Button variant="outline" className="absolute top-4 left-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body px-4 py-5 text-base md:text-lg">
           <ArrowLeft className="w-4 h-4" />
           Back to Home
         </Button>
       </Link>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body text-base md:text-lg">
+          <Button variant="outline" className="absolute top-4 right-4 flex items-center gap-2 bg-background/50 backdrop-blur-sm font-body px-4 py-5 text-base md:text-lg">
             <Info className="w-4 h-4" />
             How it Works
           </Button>
