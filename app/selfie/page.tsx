@@ -178,7 +178,7 @@ export default function SelfiePage() {
             <div className="w-full max-w-xl text-center">
               <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
                 <p className="text-lg md:text-xl text-card-foreground font-body">
-                  Take a selfie and pick a prompt.<br/>The AI will place you in the heart of the action.
+                  Take a selfie and pick a prompt.<br/>Nano Banana will place you in the heart of the action.
                 </p>
               </div>
             </div>
