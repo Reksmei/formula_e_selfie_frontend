@@ -192,7 +192,7 @@ export default function SelfiePage() {
       case 'preview':
         const displayedPrompts = showAllPrompts ? prompts : prompts.slice(0, 4);
         return (
-          <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 font-headline"><User /> Your Selfie</CardTitle>
@@ -299,8 +299,8 @@ export default function SelfiePage() {
         );
       case 'result':
         return (
-          <div className="w-full max-w-5xl text-center">
-            <div className="bg-card rounded-xl p-6 md:p-8 max-w-2xl mx-auto">
+          <div className="w-full max-w-6xl text-center">
+            <div className="bg-card rounded-xl p-6 md:p-8 max-w-3xl mx-auto">
               <h1 className="text-4xl font-bold tracking-tight text-card-foreground font-headline">Your Image is Ready!</h1>
               <p className="mt-4 text-lg text-muted-foreground font-body">
                 You can now edit your image with a prompt, download it, or try a different prompt.
@@ -440,3 +440,5 @@ export default function SelfiePage() {
     </main>
   );
 }
+
+    
