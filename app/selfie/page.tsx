@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, lazy, Suspense, useCallback } from 'react';
@@ -173,9 +174,9 @@ export default function SelfiePage() {
     switch (step) {
       case 'capture':
         return (
-          <div className="w-full max-w-lg text-center">
-            <div className="bg-card rounded-xl p-6 md:p-8 mt-20">
-              <p className="text-lg text-card-foreground font-body">
+          <div className="w-full max-w-xl text-center">
+            <div className="bg-card rounded-xl p-8 md:p-10 mt-20">
+              <p className="text-xl text-card-foreground font-body">
                 Take a selfie, pick a prompt, and let our Nano Banana place you in the heart of Formula E action.
               </p>
             </div>

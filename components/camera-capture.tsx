@@ -121,7 +121,7 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <div className="relative w-full max-w-lg aspect-video bg-muted rounded-lg overflow-hidden border shadow-lg">
+      <div className="relative w-full max-w-xl aspect-video bg-muted rounded-lg overflow-hidden border shadow-lg">
         <video
           ref={videoRef}
           autoPlay
@@ -141,8 +141,8 @@ const CameraCapture: FC<CameraCaptureProps> = ({ onCapture, onCameraError }) => 
           </div>
         )}
       </div>
-      <Button onClick={startCountdown} disabled={!isCameraReady || countdown !== null} size="lg">
-        <Camera className="mr-2 h-5 w-5" />
+      <Button onClick={startCountdown} disabled={!isCameraReady || countdown !== null} size="lg" className="text-xl p-8" variant="primary">
+        <Camera className="mr-2 h-6 w-6" />
         {countdown !== null ? 'Taking...' : 'Take Selfie'}
       </Button>
     </div>
